@@ -113,7 +113,7 @@
 
 ---
 
-| AI Enhancer | [Glam Makeup](docs/glam_makeup/README.md) | Remove Objects | Remove Background | Skin Improve | Upscale Image | Change Scene | Hair Studio |
+| [AI Enhancer](docs/ai_enhancer/README.md) | [Glam Makeup](docs/glam_makeup/README.md) | Remove Objects | Remove Background | Skin Improve | Upscale Image | Change Scene | Hair Studio |
 
 ---
 
