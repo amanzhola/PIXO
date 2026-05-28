@@ -113,6 +113,10 @@
 
 ---
 
+| AI Enhancer | [Glam Makeup](docs/glam_makeup/README.md) | Remove Objects | Remove Background | Skin Improve | Upscale Image | Change Scene | Hair Studio |
+
+---
+
 # 🧰 Tools Screen System
 
 | 🧩 Tool Cards        | 🖼 Card Slider | 📱 Open Screen     | 🖼 Full Slider     | ⚙️ Unique Features         | 🔄 Shared Flow       | 📸 Photo Flow     | 🧠 AI Result  |
