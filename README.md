@@ -136,6 +136,7 @@
 ---
 
 # 🎨 Templates
+[Templates Flow](docs/templates/README.md)
 
 | Gloria Model  | Cherry         | Travel Style | One Love | Warm Day     | Pink Captivity | 80s Gloss        | Match Point    |
 | ------------- | -------------- | ------------ | -------- | ------------ | -------------- | ---------------- | -------------- |
