@@ -200,17 +200,17 @@
 
 # 📸 Screenshots
 
-| 🏠 Main                   | 🧩 Tools                        | 📱 Tool Screen                   | 🎨 Templates                   |
-| ------------------------- | ------------------------------- | -------------------------------- | ------------------------------ |
-| ![](screenshots/main.png) | ![](screenshots/tools_grid.png) | ![](screenshots/tool_detail.png) | ![](screenshots/templates.png) |
+| 🏠 Main | 🧩 Tools | 📱 Tool Screen | 🎨 Templates |
+|---|---|---|---|
+| <img src="screenshots/main.png" width="180"> | <img src="screenshots/tools_grid.png" width="180"> | <img src="screenshots/tool_detail.png" width="180"> | <img src="screenshots/templates.png" width="180"> |
 
-| ✍️ Prompt                   | 🕘 History                   | ⚙️ Settings                   | 💳 Paywall                   |
-| --------------------------- | ---------------------------- | ----------------------------- | ---------------------------- |
-| ![](screenshots/prompt.png) | ![](screenshots/history.png) | ![](screenshots/settings.png) | ![](screenshots/paywall.png) |
+| ✍️ Prompt | 🕘 History | ⚙️ Settings | 💳 Paywall |
+|---|---|---|---|
+| <img src="screenshots/prompt.png" width="180"> | <img src="screenshots/history.png" width="180"> | <img src="screenshots/settings.png" width="180"> | <img src="screenshots/paywall.png" width="180"> |
 
-| 🪙 Token                   | 🎬 Onboarding                   | 🖼 Before/After                   | ✅ Result                    |
-| -------------------------- | ------------------------------- | --------------------------------- | --------------------------- |
-| ![](screenshots/token.png) | ![](screenshots/onboarding.png) | ![](screenshots/before_after.png) | ![](screenshots/result.png) |
+| 🪙 Token | 🎬 Onboarding | 🖼 Before/After | ✅ Result |
+|---|---|---|---|
+| <img src="screenshots/token.png" width="180"> | <img src="screenshots/onboarding.png" width="180"> | <img src="screenshots/before_after.png" width="180"> | <img src="screenshots/result.png" width="180"> |
 
 ---
 
