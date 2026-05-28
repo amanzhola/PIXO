@@ -84,6 +84,16 @@
 
 ---
 
+```markdown
+# 🎬 Detailed Onboarding Flow
+
+| 🚀 Flow | 📖 Description | 🔗 Open |
+|---|---|---|
+| Full onboarding system | Splash → 11 onboarding screens → Templates → Prompt → Rate flow → Interactive flow → Paywall | [Open Detailed Flow](docs/onboarding/README.md) |
+```
+
+---
+
 # 🔄 Returning Free User Flow
 
 | ⏱ Trigger              | 🏠 Tools             | 🎨 Templates             | ✍️ Prompt              | 🕘 History                | ⚙️ Settings         | 💎 Get PRO       | 🧠 Result          |
