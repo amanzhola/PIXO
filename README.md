@@ -1,7 +1,7 @@
 # 🚀 PIXO — First MVP Android AI Photo Editor
 
 <p align="center">
-  <img src="screenshots/banner.png" width="200">
+  <img src="screenshots/banner.png" width="180">
 </p>
 
 <p align="center">
