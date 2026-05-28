@@ -1,0 +1,359 @@
+<resources>
+    <string name="app_name">PIXO</string>
+
+    <!-- Common actions -->
+    <string name="common_continue">Continue</string>
+    <string name="common_generate">Generate</string>
+    <string name="common_generate_two">Generate 2</string>
+    <string name="common_generate_four">Generate 4</string>
+    <string name="common_confirm">Confirm</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_close">Close</string>
+    <string name="common_save">Save</string>
+    <string name="common_share">Share</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_retry">Retry</string>
+    <string name="common_restore">Restore</string>
+    <string name="common_try_again">Try Again</string>
+
+    // need to think
+    <string name="common_try_it">Try It</string>
+
+    <string name="common_add">Add</string>
+    <string name="common_ok">OK</string>
+
+    <!-- Common navigation -->
+    <string name="common_back">Back</string>
+    <string name="common_settings">Settings</string>
+    <string name="common_go_to_history">Go to history</string>
+
+    <!-- Common media sources -->
+    <string name="common_camera">Camera</string>
+    <string name="common_photo_library">Photo library</string>
+
+    <!-- Common legal -->
+    <string name="common_privacy_policy">Privacy Policy</string>
+    <string name="common_terms_of_use">Terms of Use</string>
+
+    <!-- Common app badges -->
+    <string name="common_get_pro">Get PRO</string>
+    <string name="common_my_tokens">My tokens:</string>
+
+    <!-- Common tools -->
+    <string name="tool_ai_enhancer">AI Enhancer</string>
+    <string name="tool_glam_makeup">Glam Makeup</string>
+    <string name="tool_remove_objects">Remove Objects</string>
+    <string name="tool_remove_background">Remove Background</string>
+    <string name="tool_skin_improve">Skin Improve</string>
+    <string name="tool_upscale_image">Upscale Image</string>
+    <string name="tool_change_scene">Change Scene</string>
+    <string name="tool_hair_studio">Hair Studio</string>
+    <string name="tool_smile_edit">Smile Edit</string>
+    <string name="tool_ghost_style">Ghost Style</string>
+    <string name="tool_ghibli_look">Ghibli Look</string>
+    <string name="tool_ghost_face">Ghost face</string>
+
+    <!-- Accessibility -->
+    <string name="cd_back">Back</string>
+    <string name="cd_settings">Settings</string>
+    <string name="cd_flash_off">Flash off</string>
+    <string name="cd_collapse">Collapse</string>
+    <string name="cd_camera">Camera</string>
+    <string name="cd_regenerate">Regenerate</string>
+    <string name="cd_pixo_logo">Pixo logo</string>
+    <string name="cd_prompt_image">Prompt image</string>
+    <string name="cd_add_prompt_image">Add prompt image</string>
+    <string name="cd_remove_prompt_image">Remove prompt image</string>
+    <string name="cd_history_image">History image</string>
+    <string name="cd_template_captured_image">Template captured image</string>
+    <string name="cd_camera_flip">Flip camera</string>
+    <string name="cd_camera_shutter">Take photo</string>
+
+    <!-- Home -->
+    <string name="home_card_image_lab_title">Image Lab</string>
+    <string name="home_card_image_lab_subtitle">Create unique photos</string>
+
+    <!-- Slider -->
+    <string name="slider_before">Before</string>
+    <string name="slider_after">After</string>
+
+    <!-- Templates -->
+    <string name="templates_title">Templates</string>
+    <string name="template_title">Template</string>
+    <string name="template_cherry">Cherry</string>
+    <string name="template_gloria_model">Gloria model</string>
+    <string name="template_travel_style">Travel Style</string>
+    <string name="template_one_love">One Love</string>
+    <string name="template_warm_day">Warm day</string>
+    <string name="template_pink_captivity">Pink captivity</string>
+    <string name="template_80s_gloss">80s gloss</string>
+    <string name="template_match_point">Match point</string>
+    <string name="template_japan_breathe">Japan Breathe</string>
+    <string name="template_easter_morning">Easter morning</string>
+    <string name="template_sea_breathe">Sea Breathe</string>
+    <string name="template_blossom">Blossom</string>
+    <string name="template_darning_noir">Darning noir</string>
+    <string name="template_love_in_paris">Love in Paris</string>
+    <string name="template_queen_of_the_day">Queen of the day</string>
+    <string name="template_old_money_muse">Old Money Muse</string>
+    <string name="template_sport_and_healthy">Sport &amp; Healthy</string>
+    <string name="template_rapunzel_glow">Rapunzel Glow</string>
+    <string name="template_safari">Safari</string>
+    <string name="template_housewives">Housewives</string>
+    <string name="template_morning_routine">Morning routine</string>
+    <string name="template_oscar">Oscar</string>
+    <string name="template_retro_style">Retro Style</string>
+    <string name="template_metro_style">Metro Style</string>
+
+    <!-- Photo quality requirements -->
+    <string name="photo_requirements_title">Photo requirements</string>
+    <string name="photo_good_photos_title">Good photos</string>
+    <string name="photo_bad_photos_title">Bad photos</string>
+    <string name="photo_good_lighting">Good lighting</string>
+    <string name="photo_face_is_visible">Face is visible</string>
+    <string name="photo_face_is_hidden">Face is hidden</string>
+    <string name="photo_poor_lighting">Poor lighting</string>
+    <string name="photo_bad_angle">Bad angle</string>
+
+    <!-- Photo picker -->
+    <string name="photo_picker_title">Choose your photo</string>
+    <string name="photo_add_your_photo">Add your Photo +</string>
+    <string name="photo_mode_white">White</string>
+    <string name="photo_mode_transparent">Transparent</string>
+
+    <!-- Gallery -->
+    <string name="gallery_select_limit">Select up to 4 items.</string>
+    <string name="gallery_photos">Photos</string>
+    <string name="gallery_albums">Albums</string>
+    <string name="gallery_search_hint">Photos, People, Places...</string>
+    <string name="gallery_show_selected">Show Selected (1)</string>
+
+    <!-- History -->
+    <string name="history_wait">Wait...</string>
+    <string name="history_error_title">Error</string>
+    <string name="history_error_message">Check your connection and try again</string>
+    <string name="history_empty_title">Nothing here yet</string>
+    <string name="history_empty_subtitle">Your creations will appear here</string>
+    <string name="history_ghostface_style">Ghostface Style</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_ai_photo_enhancer_title">AI Photo Enhancer</string>
+    <string name="onboarding_ai_photo_enhancer_subtitle">Sharpen and enhance photos.</string>
+    <string name="onboarding_glam_makeover_title">Glam Makeover</string>
+    <string name="onboarding_glam_makeover_subtitle">Create glam portraits in seconds.</string>
+    <string name="onboarding_remove_objects_title">Object Remover</string>
+    <string name="onboarding_remove_objects_subtitle">Clean up photos instantly.</string>
+    <string name="onboarding_hair_studio_subtitle">Discover your perfect hairstyle.</string>
+    <string name="onboarding_smile_edit_subtitle">Studio-quality smile enhancements.</string>
+    <string name="onboarding_ghost_style_subtitle">Turn photos into ghostly masterpieces.</string>
+    <string name="onboarding_ghibli_look_subtitle">Turn photos into dreamy anime art.</string>
+    <string name="onboarding_upscale_image_subtitle">Make blurry photos sharp.</string>
+    <string name="onboarding_remove_background_subtitle">Remove backgrounds instantly.</string>
+    <string name="onboarding_skin_improve_subtitle">Smooth skin naturally.</string>
+    <string name="onboarding_change_scene_subtitle">Swap backgrounds in seconds.</string>
+    <string name="onboarding_pro_templates_title">Get 100+ Pro\nTemplates</string>
+    <string name="onboarding_edit_prompts_title">Edit Any Photo\nwith Prompts</string>
+    <string name="onboarding_prompt_edit_ru_title">Редактируйте фото\nс помощью промпта</string>
+    <string name="onboarding_ai_quality_ru_title">ИИ улучшение качества</string>
+    <string name="onboarding_ai_quality_ru_subtitle">Улучшение резкости и качества\nфотографий</string>
+    <string name="onboarding_sharp_quality_ru_title">Улучшение резкости и качества фотографий</string>
+    <string name="onboarding_sharp_quality_ru_subtitle">Создавайте гламурные портреты\nза считанные секунды</string>
+    <string name="onboarding_remove_bg_ru_title">Удаление фона</string>
+    <string name="onboarding_remove_bg_ru_subtitle">Мгновенное удаление фона</string>
+    <string name="onboarding_skin_improve_ru_title">Улучшение кожи</string>
+    <string name="onboarding_skin_improve_ru_subtitle">Гладкая кожа естественным путем</string>
+    <string name="onboarding_change_bg_ru_title">Смена фона</string>
+    <string name="onboarding_change_bg_ru_subtitle">Меняйте фон за считанные секунды</string>
+
+    <!-- Rate screen -->
+    <string name="rate_happy_users_title">Join 10K+\nHappy Users</string>
+    <string name="rate_ru_users_title">10 000+\nПользователей</string>
+    <string name="rate_setup_title">Setting up your personalized experience</string>
+    <string name="rate_setup_creative_space">Preparing your creative space...</string>
+    <string name="rate_setup_style">Learning your style preferences...</string>
+    <string name="rate_setup_tools">Activating smart AI tools...</string>
+    <string name="rate_setup_personalizing">Personalizing your experience...</string>
+
+    <!-- Paywall -->
+    <string name="paywall_title">Unlock Your Best Photos</string>
+    <string name="paywall_feature_portraits">Create stunning portraits</string>
+    <string name="paywall_feature_objects">Erase objects and swap backgrounds</string>
+    <string name="paywall_feature_enhance">Enhance skin, smile, hair, and quality</string>
+    <string name="paywall_feature_templates">Get 100+ premium templates</string>
+    <string name="paywall_yearly_title">Yearly Access</string>
+    <string name="paywall_yearly_tokens">Includes 100 tokens</string>
+    <string name="paywall_yearly_price">$39.99</string>
+    <string name="paywall_yearly_period">per year</string>
+    <string name="paywall_weekly_title">Weekly Access</string>
+    <string name="paywall_weekly_tokens">Includes 25 tokens</string>
+    <string name="paywall_weekly_price">$4.99</string>
+    <string name="paywall_weekly_period">per week</string>
+    <string name="paywall_most_popular">Most popular</string>
+    <string name="paywall_cancel_anytime">Cancel Anytime. No commitment.</string>
+
+    <!-- Tokens -->
+    <string name="tokens_title">Need more\ngenerations?</string>
+    <string name="tokens_subtitle">Buy additional tokens</string>
+    <string name="tokens_100">100 tokens</string>
+    <string name="tokens_500">500 tokens</string>
+    <string name="tokens_1000">1000 tokens</string>
+    <string name="tokens_2000">2000 tokens</string>
+    <string name="tokens_price_100">$9.99</string>
+    <string name="tokens_price_500">$34.99</string>
+    <string name="tokens_price_1000">$59.99</string>
+    <string name="tokens_price_2000">$99.99</string>
+
+    <!-- Prompt dialog -->
+    <string name="prompt_dialog_title">Prompt</string>
+    <string name="prompt_dialog_description">Type any prompt in any language:</string>
+    <string name="prompt_dialog_cartoon">Make this into a cartoon style</string>
+    <string name="prompt_dialog_lighting">Enhance the lighting and colors</string>
+    <string name="prompt_dialog_headshot">Create a professional headshot</string>
+    <string name="prompt_dialog_counter">0/300</string>
+
+    <!-- Prompt flow -->
+    <string name="prompt_flow_title">Editing with prompt</string>
+
+    <!-- Tools screen -->
+    <string name="tools_title">Editing tools</string>
+
+    <!-- Settings -->
+    <string name="settings_contact_us">Contact Us</string>
+    <string name="settings_share_with_friends">Share with Friends</string>
+
+    <!-- AI Enhancer -->
+    <string name="ai_enhancer_title">AI Enhancer</string>
+    <string name="ai_enhancer_processing_options_title">Processing options</string>
+    <string name="ai_enhancer_option_hd_enhance">HD Enhance</string>
+    <string name="ai_enhancer_option_portrait_retouch">Portrait Retouch</string>
+    <string name="ai_enhancer_option_light_fix">Light Fix</string>
+    <string name="ai_enhancer_option_color_boost">Color Boost</string>
+    <string name="ai_enhancer_hd_quality">Enhance photo quality, sharpen details, and improve lighting.</string>
+    <string name="ai_enhancer_hd_natural">Get a cleaner, clearer image with a natural look.</string>
+    <string name="ai_enhancer_portrait_quality">Smooth skin, reduce blemishes, and refine facial details.</string>
+    <string name="ai_enhancer_portrait_natural">Create a polished portrait while keeping a natural appearance.</string>
+    <string name="ai_enhancer_light_quality">Adjust brightness, shadows, and highlights automatically.</string>
+    <string name="ai_enhancer_light_natural">Improve lighting balance for a brighter, more vivid photo.</string>
+    <string name="ai_enhancer_color_quality">Enhance colors, contrast, and overall vibrance.</string>
+    <string name="ai_enhancer_color_natural">Make your photo look richer, deeper, and more eye-catching.</string>
+
+    <!-- Glam Makeup -->
+    <string name="glam_makeup_style_title">Makeup Style</string>
+    <string name="glam_makeup_style_natural_glow">Natural Glow</string>
+    <string name="glam_makeup_style_gentle_glam">Gentle Glam</string>
+    <string name="glam_makeup_style_rich_glam">Rich Glam</string>
+    <string name="glam_makeup_style_evening_look">Evening Look</string>
+    <string name="glam_makeup_style_hint">e.g. soft pink blush, nude lipstick</string>
+    <string name="glam_makeup_style_preview_text">Soft pink blush</string>
+    <string name="glam_makeup_optional_details_title">Optional Details</string>
+
+    <!-- Remove Background -->
+    <string name="remove_background_choose_type">Choose background type</string>
+    <string name="remove_background_examples_title">Examples</string>
+
+    <!-- Remove Objects -->
+    <string name="remove_objects_style_title">What to remove</string>
+    <string name="remove_objects_style_hint">e.g. the person in red shirt, the watermark</string>
+    <string name="remove_objects_style_preview_text">Put away the umbrella</string>
+
+    <!-- Hair Studio -->
+    <string name="hair_style_details_title">Customize your style</string>
+    <string name="hair_style_details_hint_1">Hairstyle (e.g. bob, layers, pixie)</string>
+    <string name="hair_style_details_hint_2">Length (e.g. shoulder-length, long)</string>
+    <string name="hair_style_details_hint_3">Color (e.g. chestnut brown, platinum blonde)</string>
+    <string name="hair_style_details_preview_text_1">Pixie</string>
+    <string name="hair_style_details_preview_text_2">Long</string>
+    <string name="hair_style_details_preview_text_3">Platinum blonde</string>
+    <string name="hair_style_hint">Hairstyle (e.g. bob, layers, pixie)</string>
+
+    <!-- Skin Improve -->
+    <string name="skin_improve_prompt_smooth_skin">Smooth skin, reduce blemishes, and keep natural texture.</string>
+
+    <!-- Upscale Image -->
+    <string name="upscale_image_prompt_blurry_image">Upscale this blurry image to high resolution</string>
+    <string name="upscale_image_prompt_restore_sharpness">Restore sharpness, clarity, and fine details while keeping the result natural.</string>
+
+    <!-- Smile Edit -->
+    <string name="smile_edit_intensity_title">Smile intensity</string>
+    <string name="smile_edit_percent_zero">0%</string>
+    <string name="smile_edit_percent_hundred">100%</string>
+    <string name="smile_edit_prompt">We’ll improve your smile with natural teeth whitening</string>
+
+    <!-- Change Scene -->
+    <string name="change_scene_describe_title">Describe the background you want</string>
+    <string name="change_scene_describe_short_title">Describe</string>
+    <string name="change_scene_hint">e.g. sunset beach, minimalist studio, forest</string>
+    <string name="change_scene_preview_text">Forest</string>
+
+    <!-- Ghibli Look -->
+    <string name="ghibli_style">Ghibli style</string>
+    <string name="ghibli_prompt">Transform the image into a Studio Ghibli-inspired look: Soft, dreamy hand-drawn textures with warm, pastel colors and delicate outlines.</string>
+
+    <!-- Ghost Face -->
+    <string name="ghost_face_prompt">Transform your photo into a spooky Ghost Face-\ninspired scene.</string>
+
+    <!-- Generation -->
+    <string name="generation_process_title">Generation process</string>
+    <string name="generation_process_description">Takes about 15 seconds. You can close this screen — your photo will appear in History when ready.</string>
+    <string name="generation_process_percent">%1$d%%</string>
+    <string name="generation_error_title">Generation failed</string>
+    <string name="generation_error_description">Something went wrong. Please try again.</string>
+
+    <!-- AI Processing consent -->
+    <string name="ai_processing_title">AI Processing</string>
+    <string name="ai_processing_confirm_title">Before you send your input, please confirm one of the following:</string>
+    <string name="ai_processing_own_input">This is my own input, or</string>
+    <string name="ai_processing_permission">I have explicit permission from the person shown in the input.</string>
+    <string name="ai_processing_data_title">Before processing, we will send the following data to our own secure servers (no third-party AI services are used):</string>
+    <string name="ai_processing_data_prompt">Prompt text and effect settings</string>
+    <string name="ai_processing_data_photos">Photos you upload for effects or prompts</string>
+    <string name="ai_processing_data_identifiers">Technical identifiers (for example, app/user identifier)</string>
+    <string name="ai_processing_purpose">Purpose: generate AI responses, images, and videos for your request.</string>
+    <string name="ai_processing_consent_required">Processing will not occur without your explicit consent.</string>
+    <string name="ai_processing_no_third_party">We do NOT share your data with any third-party services.</string>
+    <string name="ai_processing_privacy_prefix">By tapping Continue, you agree to our&#160;</string>
+    <string name="data_processing_consent">I understand what data is shared\nand I consent to processing</string>
+
+    // need to look
+    <string name="ai_processing_privacy_policy">Privacy Policy.</string>
+
+    <!-- Permissions -->
+    <string name="camera_permission_title">“AppName” Would Like to Access the Camera</string>
+    <string name="camera_permission_message">Access to the camera is required to add a photo to the request.</string>
+    <string name="permission_dont_allow">Don’t Allow</string>
+    <string name="media_permission_title">The \'%1$s\' application requests access to the media library</string>
+    <string name="permission_restrict_access">Restrict access...</string>
+    <string name="permission_allow_full_access">Allow full access</string>
+    <string name="permission_do_not_authorise">Do not authorise</string>
+    <string name="camera_permission_denied_title">Camera access needed</string>
+    <string name="camera_permission_denied_message">Allow camera access to take a photo.</string>
+    <string name="camera_permission_settings_title">Camera access disabled</string>
+    <string name="camera_permission_settings_message">Camera permission is disabled. Open Settings and allow camera access to take a photo.</string>
+
+    // need to look
+    <string name="camera_permission_open_settings">Open Settings</string>
+
+    <!-- Delete dialog -->
+    <string name="delete_clip_title">Delete clip?</string>
+    <string name="delete_clip_message">This clip will be removed from your project.</string>
+
+    <!-- Toasts -->
+    <string name="toast_saved_successfully">Saved successfully</string>
+    <string name="toast_couldnt_save">Couldn’t save. Try again</string>
+
+    <!-- Misc -->
+    <string name="close_icon">×</string>
+
+    <!-- Common purchase error -->
+    <string name="error_network">Network error. Check your connection and try again.</string>
+    <string name="error_generation_failed">Generation failed. Please try again.</string>
+    <string name="error_paywall_loading_failed">Paywall loading failed. Please try again.</string>
+    <string name="error_purchase_failed">Purchase failed. Please try again.</string>
+    <string name="error_restore_failed">No purchases found to restore.</string>
+    <string name="paywall_includes_tokens">Includes %1$d tokens</string>
+
+    <!-- Common share -->
+    <string name="toast_couldnt_share">Couldn’t share. Try again</string>
+
+
+</resources>

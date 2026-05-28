@@ -1,0 +1,352 @@
+<resources>
+    <string name="app_name">PIXO</string>
+
+    <!-- Common actions -->
+    <string name="common_continue">Продолжить</string>
+    <string name="common_generate">Создать</string>
+    <string name="common_generate_two">Создать 2</string>
+    <string name="common_generate_four">Создать 4</string>
+    <string name="common_confirm">Подтвердить</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="common_close">Закрыть</string>
+    <string name="common_save">Сохранить</string>
+    <string name="common_share">Поделиться</string>
+    <string name="common_delete">Удалить</string>
+    <string name="common_retry">Повторить</string>
+    <string name="common_restore">Восстановить</string>
+    <string name="common_try_again">Попробовать снова</string>
+    <string name="common_try_it">Попробовать</string>
+    <string name="common_add">Добавить</string>
+    <string name="common_ok">ОК</string>
+
+    <!-- Common navigation -->
+    <string name="common_back">Назад</string>
+    <string name="common_settings">Настройки</string>
+    <string name="common_go_to_history">Перейти в историю</string>
+
+    <!-- Common media sources -->
+    <string name="common_camera">Камера</string>
+    <string name="common_photo_library">Фотогалерея</string>
+
+    <!-- Common legal -->
+    <string name="common_privacy_policy">Политика конфиденциальности</string>
+    <string name="common_terms_of_use">Условия использования</string>
+
+    <!-- Common app badges -->
+    <string name="common_get_pro">Получить PRO</string>
+    <string name="common_my_tokens">Мои токены:</string>
+
+    <!-- Common tools -->
+    <string name="tool_ai_enhancer">AI Улучшение</string>
+    <string name="tool_glam_makeup">Гламурный макияж</string>
+    <string name="tool_remove_objects">Удаление объектов</string>
+    <string name="tool_remove_background">Удаление фона</string>
+    <string name="tool_skin_improve">Улучшение кожи</string>
+    <string name="tool_upscale_image">Повышение качества</string>
+    <string name="tool_change_scene">Смена сцены</string>
+    <string name="tool_hair_studio">Hair Studio</string>
+    <string name="tool_smile_edit">Редактор улыбки</string>
+    <string name="tool_ghost_style">Призрачный стиль</string>
+    <string name="tool_ghibli_look">Стиль Ghibli</string>
+    <string name="tool_ghost_face">Ghost Face</string>
+
+    <!-- Accessibility -->
+    <string name="cd_back">Назад</string>
+    <string name="cd_settings">Настройки</string>
+    <string name="cd_flash_off">Вспышка выключена</string>
+    <string name="cd_collapse">Свернуть</string>
+    <string name="cd_camera">Камера</string>
+    <string name="cd_regenerate">Создать заново</string>
+    <string name="cd_pixo_logo">Логотип Pixo</string>
+    <string name="cd_prompt_image">Изображение промпта</string>
+    <string name="cd_add_prompt_image">Добавить изображение</string>
+    <string name="cd_remove_prompt_image">Удалить изображение</string>
+    <string name="cd_history_image">Изображение истории</string>
+    <string name="cd_template_captured_image">Изображение шаблона</string>
+    <string name="cd_camera_flip">Переключить камеру</string>
+    <string name="cd_camera_shutter">Сделать фото</string>
+
+    <!-- Home -->
+    <string name="home_card_image_lab_title">Image Lab</string>
+    <string name="home_card_image_lab_subtitle">Создавайте уникальные фотографии</string>
+
+    <!-- Slider -->
+    <string name="slider_before">До</string>
+    <string name="slider_after">После</string>
+
+    <!-- Templates -->
+    <string name="templates_title">Шаблоны</string>
+    <string name="template_title">Шаблон</string>
+    <string name="template_cherry">Cherry</string>
+    <string name="template_gloria_model">Модель Gloria</string>
+    <string name="template_travel_style">Стиль путешествий</string>
+    <string name="template_one_love">One Love</string>
+    <string name="template_warm_day">Тёплый день</string>
+    <string name="template_pink_captivity">Розовый плен</string>
+    <string name="template_80s_gloss">Глянец 80-х</string>
+    <string name="template_match_point">Match Point</string>
+    <string name="template_japan_breathe">Дыхание Японии</string>
+    <string name="template_easter_morning">Пасхальное утро</string>
+    <string name="template_sea_breathe">Морской бриз</string>
+    <string name="template_blossom">Цветение</string>
+    <string name="template_darning_noir">Darning Noir</string>
+    <string name="template_love_in_paris">Любовь в Париже</string>
+    <string name="template_queen_of_the_day">Королева дня</string>
+    <string name="template_old_money_muse">Old Money Muse</string>
+    <string name="template_sport_and_healthy">Спорт и здоровье</string>
+    <string name="template_rapunzel_glow">Сияние Рапунцель</string>
+    <string name="template_safari">Сафари</string>
+    <string name="template_housewives">Домохозяйки</string>
+    <string name="template_morning_routine">Утренняя рутина</string>
+    <string name="template_oscar">Оскар</string>
+    <string name="template_retro_style">Ретро стиль</string>
+    <string name="template_metro_style">Метро стиль</string>
+
+    <!-- Photo quality requirements -->
+    <string name="photo_requirements_title">Требования к фото</string>
+    <string name="photo_good_photos_title">Хорошие фото</string>
+    <string name="photo_bad_photos_title">Плохие фото</string>
+    <string name="photo_good_lighting">Хорошее освещение</string>
+    <string name="photo_face_is_visible">Лицо видно</string>
+    <string name="photo_face_is_hidden">Лицо скрыто</string>
+    <string name="photo_poor_lighting">Плохое освещение</string>
+    <string name="photo_bad_angle">Неудачный ракурс</string>
+
+    <!-- Photo picker -->
+    <string name="photo_picker_title">Выберите фото</string>
+    <string name="photo_add_your_photo">Добавить фото +</string>
+    <string name="photo_mode_white">Белый</string>
+    <string name="photo_mode_transparent">Прозрачный</string>
+
+    <!-- Gallery -->
+    <string name="gallery_select_limit">Выберите до 4 элементов.</string>
+    <string name="gallery_photos">Фото</string>
+    <string name="gallery_albums">Альбомы</string>
+    <string name="gallery_search_hint">Фото, люди, места...</string>
+    <string name="gallery_show_selected">Показать выбранные (1)</string>
+
+    <!-- History -->
+    <string name="history_wait">Подождите...</string>
+    <string name="history_error_title">Ошибка</string>
+    <string name="history_error_message">Проверьте подключение и попробуйте снова</string>
+    <string name="history_empty_title">Пока ничего нет</string>
+    <string name="history_empty_subtitle">Ваши работы появятся здесь</string>
+    <string name="history_ghostface_style">Стиль Ghostface</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_ai_photo_enhancer_title">AI-улучшение фото</string>
+    <string name="onboarding_ai_photo_enhancer_subtitle">Повышайте резкость и улучшайте фото.</string>
+    <string name="onboarding_glam_makeover_title">Гламурное преображение</string>
+    <string name="onboarding_glam_makeover_subtitle">Создавайте гламурные портреты за секунды.</string>
+    <string name="onboarding_remove_objects_title">Удаление объектов</string>
+    <string name="onboarding_remove_objects_subtitle">Мгновенно очищайте фото от лишнего.</string>
+    <string name="onboarding_hair_studio_subtitle">Найдите идеальную причёску.</string>
+    <string name="onboarding_smile_edit_subtitle">Профессиональное улучшение улыбки.</string>
+    <string name="onboarding_ghost_style_subtitle">Превращайте фото в призрачные шедевры.</string>
+    <string name="onboarding_ghibli_look_subtitle">Превращайте фото в мечтательное аниме-искусство.</string>
+    <string name="onboarding_upscale_image_subtitle">Делайте размытые фото чёткими.</string>
+    <string name="onboarding_remove_background_subtitle">Мгновенно удаляйте фон.</string>
+    <string name="onboarding_skin_improve_subtitle">Естественно разглаживайте кожу.</string>
+    <string name="onboarding_change_scene_subtitle">Меняйте фон за секунды.</string>
+    <string name="onboarding_pro_templates_title">Получите 100+ Pro\nшаблонов</string>
+    <string name="onboarding_edit_prompts_title">Редактируйте любое фото\nс помощью промптов</string>
+    <string name="onboarding_prompt_edit_ru_title">Редактируйте фото\nс помощью промпта</string>
+    <string name="onboarding_ai_quality_ru_title">ИИ улучшение качества</string>
+    <string name="onboarding_ai_quality_ru_subtitle">Улучшение резкости и качества\nфотографий</string>
+    <string name="onboarding_sharp_quality_ru_title">Улучшение резкости и качества фотографий</string>
+    <string name="onboarding_sharp_quality_ru_subtitle">Создавайте гламурные портреты\nза считанные секунды</string>
+    <string name="onboarding_remove_bg_ru_title">Удаление фона</string>
+    <string name="onboarding_remove_bg_ru_subtitle">Мгновенное удаление фона</string>
+    <string name="onboarding_skin_improve_ru_title">Улучшение кожи</string>
+    <string name="onboarding_skin_improve_ru_subtitle">Гладкая кожа естественным путем</string>
+    <string name="onboarding_change_bg_ru_title">Смена фона</string>
+    <string name="onboarding_change_bg_ru_subtitle">Меняйте фон за считанные секунды</string>
+
+    <!-- Rate screen -->
+    <string name="rate_happy_users_title">Присоединяйтесь к 10K+\nдовольных пользователей</string>
+    <string name="rate_ru_users_title">10 000+\nПользователей</string>
+    <string name="rate_setup_title">Настраиваем ваш персональный опыт</string>
+    <string name="rate_setup_creative_space">Подготавливаем ваше творческое пространство...</string>
+    <string name="rate_setup_style">Изучаем ваши стилевые предпочтения...</string>
+    <string name="rate_setup_tools">Активируем умные AI-инструменты...</string>
+    <string name="rate_setup_personalizing">Персонализируем ваш опыт...</string>
+
+    <!-- Paywall -->
+    <string name="paywall_title">Откройте лучшие возможности для фото</string>
+    <string name="paywall_feature_portraits">Создавайте потрясающие портреты</string>
+    <string name="paywall_feature_objects">Удаляйте объекты и меняйте фон</string>
+    <string name="paywall_feature_enhance">Улучшайте кожу, улыбку, волосы и качество</string>
+    <string name="paywall_feature_templates">Получите 100+ премиум шаблонов</string>
+    <string name="paywall_yearly_title">Годовой доступ</string>
+    <string name="paywall_yearly_tokens">Включает 100 токенов</string>
+    <string name="paywall_yearly_price">$39.99</string>
+    <string name="paywall_yearly_period">в год</string>
+    <string name="paywall_weekly_title">Недельный доступ</string>
+    <string name="paywall_weekly_tokens">Включает 25 токенов</string>
+    <string name="paywall_weekly_price">$4.99</string>
+    <string name="paywall_weekly_period">в неделю</string>
+    <string name="paywall_most_popular">Самый популярный</string>
+    <string name="paywall_cancel_anytime">Отмена в любое время. Без обязательств.</string>
+
+    <!-- Tokens -->
+    <string name="tokens_title">Нужно больше\nгенераций?</string>
+    <string name="tokens_subtitle">Купите дополнительные токены</string>
+    <string name="tokens_100">100 токенов</string>
+    <string name="tokens_500">500 токенов</string>
+    <string name="tokens_1000">1000 токенов</string>
+    <string name="tokens_2000">2000 токенов</string>
+    <string name="tokens_price_100">$9.99</string>
+    <string name="tokens_price_500">$34.99</string>
+    <string name="tokens_price_1000">$59.99</string>
+    <string name="tokens_price_2000">$99.99</string>
+
+    <!-- Prompt dialog -->
+    <string name="prompt_dialog_title">Промпт</string>
+    <string name="prompt_dialog_description">Введите любой промпт на любом языке:</string>
+    <string name="prompt_dialog_cartoon">Сделай это в мультяшном стиле</string>
+    <string name="prompt_dialog_lighting">Улучши освещение и цвета</string>
+    <string name="prompt_dialog_headshot">Создай профессиональный портрет</string>
+    <string name="prompt_dialog_counter">0/300</string>
+
+    <!-- Prompt flow -->
+    <string name="prompt_flow_title">Редактирование+> промпт</string>
+<!--    <string name="prompt_flow_title">Редактирование с помощью промпта</string>-->
+
+    <!-- Tools screen -->
+    <string name="tools_title">Инструменты редактирования</string>
+
+    <!-- Settings -->
+    <string name="settings_contact_us">Связаться с нами</string>
+    <string name="settings_share_with_friends">Поделиться с друзьями</string>
+
+    <!-- AI Enhancer -->
+    <string name="ai_enhancer_title">AI-улучшение</string>
+    <string name="ai_enhancer_processing_options_title">Параметры обработки</string>
+    <string name="ai_enhancer_option_hd_enhance">HD-улучшение</string>
+    <string name="ai_enhancer_option_portrait_retouch">Ретушь портрета</string>
+    <string name="ai_enhancer_option_light_fix">Коррекция света</string>
+    <string name="ai_enhancer_option_color_boost">Усиление цвета</string>
+    <string name="ai_enhancer_hd_quality">Улучшайте качество фото, повышайте резкость деталей и освещение.</string>
+    <string name="ai_enhancer_hd_natural">Получите более чистое и чёткое изображение с естественным видом.</string>
+    <string name="ai_enhancer_portrait_quality">Разглаживайте кожу, уменьшайте несовершенства и улучшайте детали лица.</string>
+    <string name="ai_enhancer_portrait_natural">Создавайте аккуратный портрет, сохраняя естественный вид.</string>
+    <string name="ai_enhancer_light_quality">Автоматически настраивайте яркость, тени и светлые участки.</string>
+    <string name="ai_enhancer_light_natural">Улучшайте баланс освещения для более яркого и выразительного фото.</string>
+    <string name="ai_enhancer_color_quality">Усиливайте цвета, контраст и общую насыщенность.</string>
+    <string name="ai_enhancer_color_natural">Сделайте фото более насыщенным, глубоким и привлекательным.</string>
+
+    <!-- Glam Makeup -->
+    <string name="glam_makeup_style_title">Стиль макияжа</string>
+    <string name="glam_makeup_style_natural_glow">Естественное сияние</string>
+    <string name="glam_makeup_style_gentle_glam">Нежный гламур</string>
+    <string name="glam_makeup_style_rich_glam">Яркий гламур</string>
+    <string name="glam_makeup_style_evening_look">Вечерний образ</string>
+    <string name="glam_makeup_style_hint">например, нежно-розовые румяна, нюдовая помада</string>
+    <string name="glam_makeup_style_preview_text">Нежно-розовые румяна</string>
+    <string name="glam_makeup_optional_details_title">Дополнительные детали</string>
+
+    <!-- Remove Background -->
+    <string name="remove_background_choose_type">Выберите тип фона</string>
+    <string name="remove_background_examples_title">Примеры</string>
+
+    <!-- Remove Objects -->
+    <string name="remove_objects_style_title">Что удалить</string>
+    <string name="remove_objects_style_hint">например, человека в красной рубашке, водяной знак</string>
+    <string name="remove_objects_style_preview_text">Убрать зонтик</string>
+
+    <!-- Hair Studio -->
+    <string name="hair_style_details_title">Настройте свой стиль</string>
+    <string name="hair_style_details_hint_1">Причёска (например, боб, слои, пикси)</string>
+    <string name="hair_style_details_hint_2">Длина (например, до плеч, длинные)</string>
+    <string name="hair_style_details_hint_3">Цвет (например, каштановый, платиновый блонд)</string>
+    <string name="hair_style_details_preview_text_1">Пикси</string>
+    <string name="hair_style_details_preview_text_2">Длинные</string>
+    <string name="hair_style_details_preview_text_3">Платиновый блонд</string>
+    <string name="hair_style_hint">Причёска (например, боб, слои, пикси)</string>
+
+    <!-- Skin Improve -->
+    <string name="skin_improve_prompt_smooth_skin">Разгладьте кожу, уменьшите несовершенства и сохраните естественную текстуру.</string>
+
+    <!-- Upscale Image -->
+    <string name="upscale_image_prompt_blurry_image">Увеличьте разрешение этого размытого изображения</string>
+    <string name="upscale_image_prompt_restore_sharpness">Восстановите резкость, чёткость и мелкие детали, сохранив естественный результат.</string>
+
+    <!-- Smile Edit -->
+    <string name="smile_edit_intensity_title">Интенсивность улыбки</string>
+    <string name="smile_edit_percent_zero">0%</string>
+    <string name="smile_edit_percent_hundred">100%</string>
+    <string name="smile_edit_prompt">Мы улучшим вашу улыбку с естественным отбеливанием зубов</string>
+
+    <!-- Change Scene -->
+    <string name="change_scene_describe_title">Опишите желаемый фон</string>
+    <string name="change_scene_describe_short_title">Описание</string>
+    <string name="change_scene_hint">например, пляж на закате, минималистичная студия, лес</string>
+    <string name="change_scene_preview_text">Лес</string>
+
+    <!-- Ghibli Look -->
+    <string name="ghibli_style">Стиль Ghibli</string>
+    <string name="ghibli_prompt">Преобразуйте изображение в стиле Studio Ghibli: мягкие, мечтательные рисованные текстуры с тёплыми пастельными цветами и тонкими контурами.</string>
+
+    <!-- Ghost Face -->
+    <string name="ghost_face_prompt">Преобразуйте фото в жуткую сцену,\nвдохновлённую Ghost Face.</string>
+
+    <!-- Generation -->
+    <string name="generation_process_title">Процесс генерации</string>
+    <string name="generation_process_description">Займёт около 15 секунд. Вы можете закрыть этот экран — фото появится в Истории, когда будет готово.</string>
+    <string name="generation_process_percent">%1$d%%</string>
+    <string name="generation_error_title">Не удалось сгенерировать</string>
+    <string name="generation_error_description">Что-то пошло не так. Попробуйте ещё раз.</string>
+
+    <!-- AI Processing consent -->
+    <string name="ai_processing_title">AI-обработка</string>
+    <string name="ai_processing_confirm_title">Перед отправкой данных подтвердите один из пунктов:</string>
+    <string name="ai_processing_own_input">Это мои собственные данные, или</string>
+    <string name="ai_processing_permission">У меня есть явное разрешение от человека, изображённого на фото.</string>
+    <string name="ai_processing_data_title">Перед обработкой мы отправим следующие данные на наши защищённые серверы (сторонние AI-сервисы не используются):</string>
+    <string name="ai_processing_data_prompt">Текст промпта и настройки эффекта</string>
+    <string name="ai_processing_data_photos">Фото, которые вы загружаете для эффектов или промптов</string>
+    <string name="ai_processing_data_identifiers">Технические идентификаторы (например, идентификатор приложения/пользователя)</string>
+    <string name="ai_processing_purpose">Цель: генерировать AI-ответы, изображения и видео по вашему запросу.</string>
+    <string name="ai_processing_consent_required">Обработка не начнётся без вашего явного согласия.</string>
+    <string name="ai_processing_no_third_party">Мы НЕ передаём ваши данные сторонним сервисам.</string>
+    <string name="ai_processing_privacy_prefix">Нажимая «Продолжить», вы соглашаетесь с нашей&#160;</string>
+    <string name="data_processing_consent">Я понимаю, какие данные передаются,\nи даю согласие на обработку</string>
+    <string name="ai_processing_privacy_policy">Политикой конфиденциальности.</string>
+
+    <!-- Permissions -->
+    <string name="camera_permission_title">“AppName” запрашивает доступ к камере</string>
+    <string name="camera_permission_message">Доступ к камере нужен, чтобы добавить фото к запросу.</string>
+    <string name="permission_dont_allow">Не разрешать</string>
+    <string name="media_permission_title">Приложение \'%1$s\' запрашивает доступ к медиатеке</string>
+    <string name="permission_restrict_access">Ограничить доступ...</string>
+    <string name="permission_allow_full_access">Разрешить полный доступ</string>
+    <string name="permission_do_not_authorise">Не разрешать</string>
+    <string name="camera_permission_denied_title">Нужен доступ к камере</string>
+    <string name="camera_permission_denied_message">Разрешите доступ к камере, чтобы сделать фото.</string>
+    <string name="camera_permission_settings_title">Доступ к камере отключён</string>
+    <string name="camera_permission_settings_message">Разрешение камеры отключено. Откройте Настройки и разрешите доступ к камере, чтобы сделать фото.</string>
+    <string name="camera_permission_open_settings">Открыть настройки</string>
+
+    <!-- Delete dialog -->
+    <string name="delete_clip_title">Удалить клип?</string>
+    <string name="delete_clip_message">Этот клип будет удалён из вашего проекта.</string>
+
+    <!-- Toasts -->
+    <string name="toast_saved_successfully">Успешно сохранено</string>
+    <string name="toast_couldnt_save">Не удалось сохранить. Попробуйте снова</string>
+
+    <!-- Misc -->
+    <string name="close_icon">×</string>
+
+    <!-- Common purchase error -->
+    <string name="error_network">Ошибка сети. Проверьте подключение и попробуйте снова.</string>
+    <string name="error_generation_failed">Не удалось создать изображение. Попробуйте снова.</string>
+    <string name="error_paywall_loading_failed">Не удалось загрузить экран оплаты. Попробуйте снова.</string>
+    <string name="error_purchase_failed">Не удалось оформить покупку. Попробуйте снова.</string>
+    <string name="error_restore_failed">Не найдено покупок для восстановления.</string>
+    <string name="paywall_includes_tokens">Включает %1$d токенов</string>
+
+    <!-- Common share -->
+    <string name="toast_couldnt_share">Не удалось поделиться. Попробуйте снова</string>
+
+</resources>
