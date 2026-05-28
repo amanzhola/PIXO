@@ -150,6 +150,8 @@
 
 # ✍️ Prompt Flow
 
+[Prompt Flow](docs/prompt_flow/README.md)
+
 | ✍️ Prompt Input | 📸 Attach Photo | ⚠️ Validation             | 🚀 Generate       | 💎 Premium Check      | 🪙 Token Check           | 🎬 Prompt Onboarding     | 📱 Screens             |
 | --------------- | --------------- | ------------------------- | ----------------- | --------------------- | ------------------------ | ------------------------ | ---------------------- |
 | Required        | Required        | Disabled if empty         | AI generation     | Required              | Required                 | Separate onboarding flow | 10                     |
