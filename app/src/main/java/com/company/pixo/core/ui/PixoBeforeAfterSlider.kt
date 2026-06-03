@@ -1,14 +1,13 @@
 package com.company.pixo.core.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -33,8 +32,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,42 +45,32 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.platform.LocalDensity
+import androidx.core.graphics.drawable.toBitmap
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.company.pixo.R
 import com.company.pixo.core.theme.AccentSecondYellow
 import com.company.pixo.core.theme.AccentWhite
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.BgWhite200
-import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.domain.model.BeforeAfterAsset
-import kotlin.math.roundToInt
-
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.core.graphics.drawable.toBitmap
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
 import com.company.pixo.domain.model.RemoteImageAsset
-
-import android.util.Log
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
-import coil.request.ImageRequest
-import androidx.core.graphics.drawable.toBitmap
-import coil.imageLoader
-import coil.request.SuccessResult
+import kotlin.math.roundToInt
 
 enum class PixoBeforeAfterSliderVariant {
     Default,
@@ -389,6 +380,7 @@ fun PixoBeforeAfterPreview(
     modifier: Modifier = Modifier,
     sliderPosition: Float = 0.5f,
     forceTwoLineTitle: Boolean = false,
+    onTitleLineCountChange: ((Int) -> Unit)? = null,
     onSliderPositionChange: ((Float) -> Unit)? = null
 ) {
     var internalSliderPosition by remember { mutableFloatStateOf(sliderPosition) }
@@ -416,7 +408,10 @@ fun PixoBeforeAfterPreview(
             style = MaterialTheme.typography.titleSmall,
             maxLines = 2,
             minLines = if (forceTwoLineTitle) 2 else 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            onTextLayout = { result ->
+                onTitleLineCountChange?.invoke(result.lineCount)
+            }
         )
 
         PixoBeforeAfterSlider(

@@ -12,7 +12,7 @@ enum class PixoDebugScenario {
 
 object PixoDebugConfig {
 
-    val scenario = PixoDebugScenario.NoSubscriptionGeneralOnboarding
+    val scenario = PixoDebugScenario.YearlySubscription
 
     val mockPremiumPlan: SubscriptionPlanType
         get() = when (scenario) {

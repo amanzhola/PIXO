@@ -17,7 +17,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -140,17 +143,18 @@ fun PixoToolsScreen(
                 }
                 tools.chunked(PixoToolsConstants.GRID_COLUMNS).forEach { rowItems ->
                     item {
+                        var firstTitleLines by remember { mutableIntStateOf(1) }
+                        var secondTitleLines by remember { mutableIntStateOf(1) }
+
+                        val forceTwoLineTitle = firstTitleLines >= 2 || secondTitleLines >= 2
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(
                                 dimensionResource(id = R.dimen._8)
                             )
                         ) {
-                            val forceTwoLineTitle = rowItems.any { tool ->
-                                stringResource(tool.titleRes).length > 18
-                            }
-
-                            rowItems.forEach { tool ->
+                            rowItems.forEachIndexed { index, tool ->
                                 Box(
                                     modifier = Modifier
                                         .weight(1f)
@@ -162,6 +166,13 @@ fun PixoToolsScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                         titleRes = tool.titleRes,
                                         forceTwoLineTitle = forceTwoLineTitle,
+                                        onTitleLineCountChange = { lineCount ->
+                                            if (index == 0) {
+                                                firstTitleLines = lineCount
+                                            } else {
+                                                secondTitleLines = lineCount
+                                            }
+                                        },
                                         asset = if (tool.images.size == 1) {
                                             BeforeAfterAsset.Combined(tool.images.first())
                                         } else {
@@ -331,9 +342,6 @@ private fun PixoToolsScreenAllCardsStaticPreviewContent() {
                     style = MaterialTheme.typography.headlineMedium
                 )
 
-//                PixoImageLabCard(
-//                    imageRes = R.drawable.template_preview_image_lab
-//                )
                 PixoImageLabCard(
                     image = RemoteImageAsset.Remote(
                         url = "$TOOL_ASSETS_BASE_URL/template_preview_image_lab.webp"
