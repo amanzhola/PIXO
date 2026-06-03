@@ -1,6 +1,5 @@
 package com.company.pixo.feature.templates
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -43,38 +42,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import com.company.pixo.core.theme.LabelPrimary
 import com.company.pixo.core.ui.PixoPhotoRequirementsBottomSheet
+import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.RemoteImageAsset
 
 data class PixoTemplateItem(
     @StringRes val titleRes: Int,
-    @DrawableRes val imageRes: Int
+    val image: RemoteImageAsset
 )
 
-val pixoTemplateItems = listOf(
-    PixoTemplateItem(R.string.template_gloria_model, R.drawable.tools_gloria_model),
-    PixoTemplateItem(R.string.template_cherry, R.drawable.template_cherry),
-    PixoTemplateItem(R.string.template_travel_style, R.drawable.template_travel_style),
-    PixoTemplateItem(R.string.template_one_love, R.drawable.template_one_love),
-    PixoTemplateItem(R.string.template_warm_day, R.drawable.template_warm_day),
-    PixoTemplateItem(R.string.template_pink_captivity, R.drawable.template_pink_captivity),
-    PixoTemplateItem(R.string.template_80s_gloss, R.drawable.template_e80s_gloss),
-    PixoTemplateItem(R.string.template_match_point, R.drawable.template_match_point),
-    PixoTemplateItem(R.string.template_japan_breathe, R.drawable.template_japan_breathe),
-    PixoTemplateItem(R.string.template_easter_morning, R.drawable.template_easter_morning),
-    PixoTemplateItem(R.string.template_sea_breathe, R.drawable.template_sea_breathe),
-    PixoTemplateItem(R.string.template_blossom, R.drawable.template_blossom),
-    PixoTemplateItem(R.string.template_darning_noir, R.drawable.template_darning_noir),
-    PixoTemplateItem(R.string.template_love_in_paris, R.drawable.template_love_in_paris),
-    PixoTemplateItem(R.string.template_queen_of_the_day, R.drawable.template_queen_of_the_day),
-    PixoTemplateItem(R.string.template_old_money_muse, R.drawable.template_old_money_muse),
-    PixoTemplateItem(R.string.template_sport_and_healthy, R.drawable.template_sport_and_healthy),
-    PixoTemplateItem(R.string.template_rapunzel_glow, R.drawable.template_rapunzel_glow),
-    PixoTemplateItem(R.string.template_safari, R.drawable.template_safary),
-    PixoTemplateItem(R.string.template_housewives, R.drawable.template_housewives),
-    PixoTemplateItem(R.string.template_morning_routine, R.drawable.template_morning_routine),
-    PixoTemplateItem(R.string.template_oscar, R.drawable.template_oscar),
-    PixoTemplateItem(R.string.template_retro_style, R.drawable.template_retro_style),
-    PixoTemplateItem(R.string.template_metro_style, R.drawable.template_metro_style)
-)
+val pixoTemplateItems: List<PixoTemplateItem> =
+    PixoToolConfigs.templateTools.map { config ->
+        PixoTemplateItem(
+            titleRes = config.titleRes,
+            image = config.previewBefore
+        )
+    }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -142,7 +124,7 @@ fun PixoTemplatesScreen(
             itemsIndexed(pixoTemplateItems) { index, item ->
                 PixoTemplatePreviewCard(
                     titleRes = item.titleRes,
-                    imageRes = item.imageRes,
+                    image = item.image,
                     onClick = {
                         selectedTemplateIndex = index
                         showRequirementsSheet = true

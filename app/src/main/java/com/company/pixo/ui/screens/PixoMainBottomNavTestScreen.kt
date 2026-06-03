@@ -23,7 +23,6 @@ fun PixoMainBottomNavTestScreen() {
                 tokens = DEBUG_TOKENS_BALANCE,
                 onGetProClick = {},
                 onSettingsClick = {},
-                onImageLabClick = {},
                 onToolClick = { _, _ -> },
                 onTabClick = { selectedTab = it }
             )

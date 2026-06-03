@@ -3,12 +3,11 @@ package com.company.pixo.feature.photo._11screens
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import com.company.pixo.R
 import com.company.pixo.core.theme.PixoTheme
+import com.company.pixo.domain.model.BeforeAfterAsset
+import com.company.pixo.domain.model.PixoToolConfigs.TOOL_ASSETS_BASE_URL
+import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.feature.photo.ToolPhotoSourceScreen
 import com.company.pixo.feature.photo.ToolPhotoSourceScreenVariant
 
@@ -24,8 +23,14 @@ fun PixoAiEnhancherMainScreen(
     ToolPhotoSourceScreen(
         modifier = modifier,
         titleRes = R.string.ai_enhancer_title,
-        beforeImageRes = R.drawable.tools_ai_enhancher1_1,
-        afterImageRes = R.drawable.tools_ai_enhancher1_2,
+        asset = BeforeAfterAsset.Separate(
+            before = RemoteImageAsset.Remote(
+                url = "$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_1.webp"
+            ),
+            after = RemoteImageAsset.Remote(
+                url = "$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_2.webp"
+            )
+        ),
         variant = variant,
         onBackClick = onBackClick,
         onCameraClick = onCameraClick,

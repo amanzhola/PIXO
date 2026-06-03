@@ -1,6 +1,5 @@
 package com.company.pixo.core.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -63,19 +62,7 @@ import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.theme.TextIconSoft700
 import com.company.pixo.core.theme.TokensRowBackground
 import com.company.pixo.domain.model.BeforeAfterAsset
-import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.feature.paywall.PaywallProductUi
-
-//@Composable
-//fun PixoOnboardingBeforeAfterScreen(
-//    @DrawableRes beforeImageRes: Int,
-//    title: String,
-//    subtitle: String,
-//    modifier: Modifier = Modifier,
-//    @DrawableRes afterImageRes: Int? = null,
-//    @StringRes buttonTextRes: Int = R.string.common_continue,
-//    onContinueClick: () -> Unit = {}
-//) {
 
 @Composable
 fun PixoOnboardingBeforeAfterScreen(
@@ -93,22 +80,6 @@ fun PixoOnboardingBeforeAfterScreen(
             .fillMaxSize()
             .background(BackgroundPrimary)
     ) {
-//        PixoBeforeAfterSlider(
-//            beforeImageRes = beforeImageRes,
-//            afterImageRes = afterImageRes,
-//            modifier = Modifier
-//                .align(Alignment.TopCenter)
-//                .padding(
-//                    start = dimensionResource(id = R.dimen._16),
-//                    end = dimensionResource(id = R.dimen._16),
-//                    top = dimensionResource(id = R.dimen._36)
-//                )
-//                .fillMaxWidth()
-//                .fillMaxHeight(0.66f),
-//            sliderPosition = sliderPosition,
-//            onSliderPositionChange = { sliderPosition = it }
-//        )
-
         PixoBeforeAfterSlider(
             asset = asset,
             modifier = Modifier
@@ -132,266 +103,6 @@ fun PixoOnboardingBeforeAfterScreen(
                 subtitle = subtitle,
                 buttonTextRes = buttonTextRes,
                 onButtonClick = onContinueClick
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo / Onboarding / Onb1", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb1Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.onb1,
-                asset = BeforeAfterAsset.Combined(
-//                    image = RemoteImageAsset.Local(R.drawable.onb1)
-                    image = RemoteImageAsset.Remote(
-                        url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/onb1.webp"
-                    )
-                ),
-                title = stringResource(id = R.string.onboarding_ai_photo_enhancer_title),
-                subtitle = stringResource(id = R.string.onboarding_ai_photo_enhancer_subtitle)
-            )
-        }
-    }
-}
-
-//@Preview(name = "Pixo / Onboarding / Onb2", showBackground = true)
-//@Composable
-//private fun PixoOnboardingImageTextScreenOnb2Preview() {
-//    PixoTheme {
-//        Box(
-//            modifier = Modifier
-//                .width(dimensionResource(id = R.dimen._390))
-//                .height(dimensionResource(id = R.dimen._844))
-//                .background(BackgroundPrimary)
-//        ) {
-//            PixoOnboardingBeforeAfterScreen(
-//                asset = BeforeAfterAsset.Separate(
-//                    before = RemoteImageAsset.Local(R.drawable.tools_glam_makeup1),
-//                    after = RemoteImageAsset.Local(R.drawable.tools_glam_makeup2)
-//                ),
-////                beforeImageRes = R.drawable.tools_glam_makeup1,
-////                afterImageRes = R.drawable.tools_glam_makeup2,
-//                title = stringResource(id = R.string.onboarding_glam_makeover_title),
-//                subtitle = stringResource(id = R.string.onboarding_glam_makeover_subtitle)
-//            )
-//        }
-//    }
-//}
-
-//@Preview(name = "Pixo / Onboarding / Onb3", showBackground = true)
-//@Composable
-//private fun PixoOnboardingImageTextScreenOnb3Preview() {
-//    PixoTheme {
-//        Box(
-//            modifier = Modifier
-//                .width(dimensionResource(id = R.dimen._390))
-//                .height(dimensionResource(id = R.dimen._844))
-//                .background(BackgroundPrimary)
-//        ) {
-//            PixoOnboardingBeforeAfterScreen(
-//                asset = BeforeAfterAsset.Separate(
-//                    before = RemoteImageAsset.Local(R.drawable.tools_remove_objects1),
-//                    after = RemoteImageAsset.Local(R.drawable.tools_remove_objects2)
-//                ),
-////                beforeImageRes = R.drawable.tools_remove_objects1,
-////                afterImageRes = R.drawable.tools_remove_objects2,
-//                title = stringResource(id = R.string.onboarding_remove_objects_title),
-//                subtitle = stringResource(id = R.string.onboarding_remove_objects_subtitle)
-//            )
-//        }
-//    }
-//}
-
-@Preview(name = "Pixo / Onboarding / Onb4", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb4Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.tools_smile_edit,
-                asset = BeforeAfterAsset.Combined(
-                    image = RemoteImageAsset.Local(R.drawable.tools_smile_edit)
-                ),
-                title = stringResource(id = R.string.tool_smile_edit),
-                subtitle = stringResource(id = R.string.onboarding_smile_edit_subtitle)
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo / Onboarding / Onb5", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb5Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.tools_ghost_style1,
-//                afterImageRes = R.drawable.tools_ghost_style2,
-                asset = BeforeAfterAsset.Separate(
-                    before = RemoteImageAsset.Local(R.drawable.tools_ghost_style1),
-                    after = RemoteImageAsset.Local(R.drawable.tools_ghost_style2)
-                ),
-                title = stringResource(id = R.string.tool_ghost_style),
-                subtitle = stringResource(id = R.string.onboarding_ghost_style_subtitle)
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo / Onboarding / Onb6", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb6Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.tools_hair_studio1,
-//                afterImageRes = R.drawable.tools_hair_studio2,
-                asset = BeforeAfterAsset.Separate(
-                    before = RemoteImageAsset.Local(R.drawable.tools_hair_studio1),
-                    after = RemoteImageAsset.Local(R.drawable.tools_hair_studio2)
-                ),
-                title = stringResource(id = R.string.tool_hair_studio),
-                subtitle = stringResource(id = R.string.onboarding_hair_studio_subtitle)
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo / Onboarding / Onb7", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb7Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.tools_ghibli_look1,
-//                afterImageRes = R.drawable.tools_ghibli_look2,
-                asset = BeforeAfterAsset.Separate(
-                    before = RemoteImageAsset.Local(R.drawable.tools_ghibli_look1),
-                    after = RemoteImageAsset.Local(R.drawable.tools_ghibli_look2)
-                ),
-                title = stringResource(id = R.string.tool_ghibli_look),
-                subtitle = stringResource(id = R.string.onboarding_ghibli_look_subtitle)
-            )
-        }
-    }
-}
-
-
-@Preview(name = "Pixo / Onboarding / Onb8", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb8Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.onb8,
-                asset = BeforeAfterAsset.Combined(
-                    image = RemoteImageAsset.Local(R.drawable.onb8)
-                ),
-                title = stringResource(id = R.string.tool_upscale_image),
-                subtitle = stringResource(id = R.string.onboarding_upscale_image_subtitle)
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo / Onboarding / Onb9", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb9Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.onb9,
-                asset = BeforeAfterAsset.Combined(
-                    image = RemoteImageAsset.Local(R.drawable.onb9)
-                ),
-                title = stringResource(id = R.string.tool_remove_background),
-                subtitle = stringResource(id = R.string.onboarding_remove_background_subtitle)
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo / Onboarding / Onb10", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb10Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.tools_face1,
-//                afterImageRes = R.drawable.tools_face2,
-                asset = BeforeAfterAsset.Separate(
-                    before = RemoteImageAsset.Local(R.drawable.tools_face1),
-                    after = RemoteImageAsset.Local(R.drawable.tools_face2)
-                ),
-                title = stringResource(id = R.string.tool_skin_improve),
-                subtitle = stringResource(id = R.string.onboarding_skin_improve_subtitle)
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo / Onboarding / Onb11", showBackground = true)
-@Composable
-private fun PixoOnboardingImageTextScreenOnb11Preview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(id = R.dimen._390))
-                .height(dimensionResource(id = R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoOnboardingBeforeAfterScreen(
-//                beforeImageRes = R.drawable.onb11_1,
-//                afterImageRes = R.drawable.onb11_2,
-                asset = BeforeAfterAsset.Separate(
-                    before = RemoteImageAsset.Local(R.drawable.onb11_1),
-                    after = RemoteImageAsset.Local(R.drawable.onb11_2)
-                ),
-                title = stringResource(id = R.string.tool_change_scene),
-                subtitle = stringResource(id = R.string.onboarding_change_scene_subtitle)
             )
         }
     }
@@ -537,7 +248,6 @@ fun RateSuccessSetupScreen(
         Column(
             modifier = Modifier
                 .width(dimensionResource(id = R.dimen._358))
-//                .height(dimensionResource(id = R.dimen._507_72)),
                 .wrapContentHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -576,15 +286,6 @@ fun RateSuccessSetupScreen(
 
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen._28)))
 
-//            Column(
-//                modifier = Modifier
-//                    .width(dimensionResource(id = R.dimen._358))
-//                    .height(dimensionResource(id = R.dimen._256))
-//                    .padding(horizontal = dimensionResource(id = R.dimen._16)),
-//                verticalArrangement = Arrangement.spacedBy(
-//                    dimensionResource(id = R.dimen._14)
-//                )
-//            ) {
             Column(
                 modifier = Modifier
                     .width(dimensionResource(id = R.dimen._358))
@@ -944,23 +645,6 @@ private fun PaywallPlanCard(
         }
 
         if (selected && showBadge) {
-//            Box(
-//                modifier = Modifier
-//                    .align(Alignment.TopEnd)
-//                    .padding(end = dimensionResource(id = R.dimen._110))
-//                    .offset(y = -dimensionResource(id = R.dimen._12))
-//                    .width(dimensionResource(id = R.dimen._91))
-//                    .height(dimensionResource(id = R.dimen._24))
-//                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen._150)))
-//                    .background(AccentPrimary),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                Text(
-//                    text = stringResource(id = R.string.paywall_most_popular),
-//                    color = AccentBlack,
-//                    style = MaterialTheme.typography.bodySmall
-//                )
-//            }
             Box(
                 modifier = Modifier
                     .align(Alignment.TopCenter)

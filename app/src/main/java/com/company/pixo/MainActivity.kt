@@ -56,9 +56,7 @@ class MainActivity : ComponentActivity() {
                     )
 
                     3 -> PixoOnboardingBeforeAfterScreen(
-//                        beforeImageRes = R.drawable.onb1,
                         asset = BeforeAfterAsset.Combined(
-//                            image = RemoteImageAsset.Local(R.drawable.onb1)
                             image = RemoteImageAsset.Remote(
                                 url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/onb1.webp"
                             )
@@ -95,7 +93,6 @@ class MainActivity : ComponentActivity() {
                         tokens = DEBUG_TOKENS_BALANCE,
                         onGetProClick = {},
                         onSettingsClick = {},
-                        onImageLabClick = {},
                         onToolClick = { _, _ -> },
                         onTabClick = {}
                     )
@@ -161,15 +158,14 @@ class MainActivity : ComponentActivity() {
                     15 -> MainScreen()
 
                     16 -> PixoToolsScreen(
-                            tokens = DEBUG_TOKENS_BALANCE,
-                            hasActiveSubscription = false,
-                            onGetProClick = {},
-                            onTokenBalanceClick = {},
-                            onSettingsClick = {},
-                            onImageLabClick = {},
-                            onToolClick = { _, _ -> },
-                            onTabClick = {}
-                        )
+                        tokens = DEBUG_TOKENS_BALANCE,
+                        hasActiveSubscription = false,
+                        onGetProClick = {},
+                        onTokenBalanceClick = {},
+                        onSettingsClick = {},
+                        onToolClick = { _, _ -> },
+                        onTabClick = {}
+                    )
 
                     17 -> PixoTemplatesScreen(
                             hasActiveSubscription = false,

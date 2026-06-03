@@ -1,14 +1,13 @@
 package com.company.pixo.feature.photo._11screens
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.company.pixo.R
 import com.company.pixo.core.theme.PixoTheme
+import com.company.pixo.domain.model.BeforeAfterAsset
+import com.company.pixo.domain.model.PixoToolConfigs.TOOL_ASSETS_BASE_URL
+import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.feature.photo.ToolPhotoSourceScreen
 import com.company.pixo.feature.photo.ToolPhotoSourceScreenVariant
 
@@ -23,8 +22,14 @@ fun PixoUpscaleImageMainScreen(
    ToolPhotoSourceScreen(
         modifier = modifier,
         titleRes = R.string.tool_upscale_image,
-        beforeImageRes = R.drawable.tools_upscale_image1,
-        afterImageRes = R.drawable.tools_upscale_image2,
+       asset = BeforeAfterAsset.Separate(
+           before = RemoteImageAsset.Remote(
+               url = "$TOOL_ASSETS_BASE_URL/tools_upscale_image1.webp"
+           ),
+           after = RemoteImageAsset.Remote(
+               url = "$TOOL_ASSETS_BASE_URL/tools_upscale_image2.webp"
+           )
+       ),
         highlightSliderOnCameraDialog = false,
         onBackClick = onBackClick,
         onCameraClick = onCameraClick,

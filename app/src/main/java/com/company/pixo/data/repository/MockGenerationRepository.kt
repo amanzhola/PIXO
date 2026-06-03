@@ -246,29 +246,6 @@ class MockGenerationRepository(
         )
     }
 
-//    private fun createMockResultImageUrl(
-//        request: GenerationCreateRequest
-//    ): String {
-//        val drawableRes = when {
-//            request.templateId != null -> {
-//                PixoToolConfigs
-//                    .findTemplateById(request.templateId)
-//                    ?.previewBeforeRes
-//                    ?: R.drawable.template_cherry
-//            }
-//
-//            else -> {
-//                val config = PixoToolConfigs.findByType(request.toolType)
-//
-//                config?.previewAfterRes
-//                    ?: config?.previewBeforeRes
-//                    ?: R.drawable.tools_ghibli_look
-//            }
-//        }
-//
-//        return "android.resource://${context.packageName}/$drawableRes"
-//    }
-
     private fun createMockResultImageUrl(
         request: GenerationCreateRequest
     ): String {

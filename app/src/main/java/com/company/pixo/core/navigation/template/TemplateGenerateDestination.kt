@@ -55,7 +55,7 @@ fun NavGraphBuilder.templateGenerateDestination(
         }
 
         PixoTemplateDetailsRoute(
-            templateImageRes = template.imageRes,
+            templateImage = template.image,
             templateTitleRes = titleRes,
             capturedImageUri = imageUri,
             onTitleClick = {

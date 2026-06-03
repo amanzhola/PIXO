@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -39,6 +40,7 @@ import com.company.pixo.core.theme.GallerySheetSeparator
 import com.company.pixo.core.theme.GallerySheetSystemBlue
 import com.company.pixo.core.theme.GallerySheetTextPrimary
 import com.company.pixo.core.theme.PixoTheme
+import com.company.pixo.domain.model.RemoteImageAsset
 
 @Composable
 fun PixoRemoveBackgroundGalleryBottomSheet(
@@ -49,7 +51,7 @@ fun PixoRemoveBackgroundGalleryBottomSheet(
 ) {
     Column(
         modifier = modifier
-            .width(dimensionResource(R.dimen._391))
+            .fillMaxWidth()
             .background(GallerySheetBackground)
     ) {
         PixoGalleryTopFrame(
@@ -61,17 +63,19 @@ fun PixoRemoveBackgroundGalleryBottomSheet(
 
         LazyVerticalGrid(
             modifier = Modifier
-                .width(dimensionResource(R.dimen._391))
+                .fillMaxWidth()
                 .weight(1f),
             columns = GridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(1.5.dp),
             verticalArrangement = Arrangement.spacedBy(1.5.dp),
             userScrollEnabled = true
         ) {
-            itemsIndexed(galleryImages) { index, imageRes ->
+            itemsIndexed(galleryImages) { index, image ->
                 PixoBottomSheetImageCard(
-                    modifier = Modifier.size(129.dp),
-                    imageRes = imageRes,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    image = image,
                     isSelected = index == 3
                 )
             }
@@ -83,22 +87,25 @@ fun PixoRemoveBackgroundGalleryBottomSheet(
     }
 }
 
+private const val GALLERY_ASSETS_BASE_URL =
+    "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
+
 private val galleryImages = listOf(
-    R.drawable.bottomsheet_albums1,
-    R.drawable.bottomsheet_albums2,
-    R.drawable.bottomsheet_albums3,
-    R.drawable.tools_glam,
-    R.drawable.bottomsheet_albums5,
-    R.drawable.bottomsheet_albums6,
-    R.drawable.bottomsheet_albums7,
-    R.drawable.bottomsheet_albums8,
-    R.drawable.bottomsheet_albums9,
-    R.drawable.bottomsheet_albums10,
-    R.drawable.bottomsheet_albums11,
-    R.drawable.bottomsheet_albums12,
-    R.drawable.bottomsheet_albums13,
-    R.drawable.bottomsheet_albums14,
-    R.drawable.bottomsheet_albums15
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums1.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums2.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums3.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/tools_glam.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums5.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums6.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums7.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums8.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums9.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums10.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums11.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums12.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums13.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums14.webp"),
+    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums15.webp")
 )
 
 @Composable
@@ -108,7 +115,7 @@ private fun PixoGalleryTopFrame(
 ) {
     Column(
         modifier = Modifier
-            .width(dimensionResource(R.dimen._391))
+            .fillMaxWidth()
             .height(dimensionResource(R.dimen._133)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -129,13 +136,13 @@ private fun PixoGalleryTopFrame(
 
         Box(
             modifier = Modifier
-                .width(dimensionResource(R.dimen._391))
+                .fillMaxWidth()
                 .height(dimensionResource(R.dimen._97))
+                .padding(horizontal = dimensionResource(R.dimen._16))
         ) {
             Text(
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(start = dimensionResource(R.dimen._16))
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
@@ -153,7 +160,6 @@ private fun PixoGalleryTopFrame(
             Text(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(end = dimensionResource(R.dimen._16))
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
@@ -184,8 +190,8 @@ private fun PixoGallerySegmentedControl(
     ) {
         Box(
             modifier = Modifier
-                .width(63.5.dp)
-                .height(28.dp)
+                .weight(1f)
+                .fillMaxHeight()
                 .background(
                     color = AccentWhite,
                     shape = RoundedCornerShape(7.dp)
@@ -203,8 +209,8 @@ private fun PixoGallerySegmentedControl(
 
         Box(
             modifier = Modifier
-                .width(63.5.dp)
-                .height(28.dp),
+                .weight(1f)
+                .fillMaxHeight(),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -222,7 +228,7 @@ private fun PixoGallerySegmentedControl(
 private fun PixoGallerySearchField() {
     Box(
         modifier = Modifier
-            .width(dimensionResource(R.dimen._391))
+            .fillMaxWidth()
             .height(dimensionResource(R.dimen._51))
             .padding(
                 start = dimensionResource(R.dimen._16),
@@ -232,7 +238,7 @@ private fun PixoGallerySearchField() {
     ) {
         Row(
             modifier = Modifier
-                .width(dimensionResource(R.dimen._359))
+                .fillMaxWidth()
                 .height(dimensionResource(R.dimen._36))
                 .background(
                     color = GallerySheetSegmentBackground,
@@ -281,7 +287,7 @@ private fun PixoGalleryBottomBar(
 ) {
     Box(
         modifier = Modifier
-            .width(393.dp)
+            .fillMaxWidth()
             .height(83.dp)
             .background(GallerySheetBackground)
             .border(

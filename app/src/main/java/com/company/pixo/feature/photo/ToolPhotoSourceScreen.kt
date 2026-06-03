@@ -34,6 +34,7 @@ import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
 import com.company.pixo.core.ui.photo.PixoPhotoRequirementsSheetHost
 import com.company.pixo.domain.model.BeforeAfterAsset
+import com.company.pixo.domain.model.PixoToolConfigs.TOOL_ASSETS_BASE_URL
 import com.company.pixo.domain.model.RemoteImageAsset
 
 enum class ToolPhotoSourceScreenVariant {
@@ -45,8 +46,7 @@ enum class ToolPhotoSourceScreenVariant {
 fun ToolPhotoSourceScreen(
     modifier: Modifier = Modifier,
     @StringRes titleRes: Int,
-    @DrawableRes beforeImageRes: Int,
-    @DrawableRes afterImageRes: Int? = null,
+    asset: BeforeAfterAsset,
     variant: ToolPhotoSourceScreenVariant = ToolPhotoSourceScreenVariant.Default,
     onBackClick: () -> Unit,
     onCameraClick: () -> Unit,
@@ -85,17 +85,6 @@ fun ToolPhotoSourceScreen(
         null
     }
 
-    val beforeAfterAsset = if (afterImageRes == null) {
-        BeforeAfterAsset.Combined(
-            image = RemoteImageAsset.Local(beforeImageRes)
-        )
-    } else {
-        BeforeAfterAsset.Separate(
-            before = RemoteImageAsset.Local(beforeImageRes),
-            after = RemoteImageAsset.Local(afterImageRes)
-        )
-    }
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,18 +113,8 @@ fun ToolPhotoSourceScreen(
                             ),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-//                        PixoBeforeAfterSlider(
-//                            beforeImageRes = beforeImageRes,
-//                            afterImageRes = afterImageRes,
-//                            sliderPosition = sliderPosition,
-//                            onSliderPositionChange = {
-//                                sliderPosition = it
-//                            },
-//                            handleBackgroundBrush = sliderHandleBrush
-//                        )
-
                         PixoBeforeAfterSlider(
-                            asset = beforeAfterAsset,
+                            asset = asset,
                             sliderPosition = sliderPosition,
                             onSliderPositionChange = {
                                 sliderPosition = it
@@ -160,29 +139,6 @@ fun ToolPhotoSourceScreen(
                 }
 
                 ToolPhotoSourceScreenVariant.FullImageActions -> {
-//                    PixoBeforeAfterSlider(
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                            .padding(
-//                                start = dimensionResource(R.dimen._16),
-//                                end = dimensionResource(R.dimen._16),
-//                                bottom = dimensionResource(R.dimen._56)
-//                            ),
-//                        beforeImageRes = beforeImageRes,
-//                        afterImageRes = afterImageRes,
-//                        sliderPosition = sliderPosition,
-//                        onSliderPositionChange = {
-//                            sliderPosition = it
-//                        },
-//                        handleBackgroundBrush = sliderHandleBrush,
-//                        labelsAsIcons = true,
-//                        onBeforeLabelClick = {
-//                            showPhotoRequirementsSheet = true
-//                        },
-//                        onAfterLabelClick = {
-//                            showCameraPermissionDialog = true
-//                        }
-//                    )
                     PixoBeforeAfterSlider(
                         modifier = Modifier
                             .fillMaxSize()
@@ -191,7 +147,7 @@ fun ToolPhotoSourceScreen(
                                 end = dimensionResource(R.dimen._16),
                                 bottom = dimensionResource(R.dimen._56)
                             ),
-                        asset = beforeAfterAsset,
+                        asset = asset,
                         sliderPosition = sliderPosition,
                         onSliderPositionChange = {
                             sliderPosition = it
@@ -273,8 +229,14 @@ private fun ToolPhotoSourceScreenGlamMakeupPreview() {
     PixoTheme {
         ToolPhotoSourceScreen(
             titleRes = R.string.tool_glam_makeup,
-            beforeImageRes = R.drawable.tools_glam_makeup_2_1,
-            afterImageRes = R.drawable.tools_glam_makeup_2_2,
+            asset = BeforeAfterAsset.Separate(
+                before = RemoteImageAsset.Remote(
+                    url = "$TOOL_ASSETS_BASE_URL/tools_glam_makeup1.webp"
+                ),
+                after = RemoteImageAsset.Remote(
+                    url = "$TOOL_ASSETS_BASE_URL/tools_glam_makeup2.webp"
+                )
+            ),
             onBackClick = {},
             onCameraClick = {},
             onPhotoLibraryClick = {}

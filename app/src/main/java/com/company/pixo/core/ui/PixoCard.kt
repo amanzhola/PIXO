@@ -8,7 +8,6 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
@@ -46,20 +45,15 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -74,12 +68,7 @@ import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.theme.TextIconSoft200
 import com.company.pixo.core.theme.TextIconSoft700
 import com.company.pixo.core.theme.TextIconWeak50
-import kotlin.math.roundToInt
-
-enum class PixoImageSide {
-    Left,
-    Right
-}
+import com.company.pixo.domain.model.RemoteImageAsset
 
 @Composable
 fun PixoCard(
@@ -121,7 +110,7 @@ fun PixoCard(
 
 @Composable
 fun PixoImageLabCard(
-    @DrawableRes imageRes: Int,
+    image: RemoteImageAsset,
     modifier: Modifier = Modifier,
     @StringRes titleRes: Int = R.string.home_card_image_lab_title,
     @StringRes subtitleRes: Int = R.string.home_card_image_lab_subtitle,
@@ -144,12 +133,25 @@ fun PixoImageLabCard(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            Image(
-                painter = painterResource(imageRes),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            when (image) {
+                is RemoteImageAsset.Local -> {
+                    Image(
+                        painter = painterResource(image.res),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
+                is RemoteImageAsset.Remote -> {
+                    AsyncImage(
+                        model = image.url,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
 
             Box(
                 modifier = Modifier
@@ -202,33 +204,9 @@ fun PixoImageLabCard(
 }
 
 @Composable
-fun PixoGlamMakeupCard(
-    @DrawableRes imageRes: Int,
-    modifier: Modifier = Modifier,
-    onClick: (() -> Unit)? = null
-) {
-    PixoCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(dimensionResource(R.dimen._444)),
-        shape = RoundedCornerShape(
-            dimensionResource(R.dimen._16)
-        ),
-        onClick = onClick
-    ) {
-        Image(
-            painter = painterResource(imageRes),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-    }
-}
-
-@Composable
 fun PixoTemplatePreviewCard(
     @StringRes titleRes: Int,
-    @DrawableRes imageRes: Int,
+    image: RemoteImageAsset,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null
 ) {
@@ -259,12 +237,25 @@ fun PixoTemplatePreviewCard(
             Box(
                 modifier = Modifier.fillMaxSize()
             ) {
-                Image(
-                    painter = painterResource(imageRes),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
+                when (image) {
+                    is RemoteImageAsset.Local -> {
+                        Image(
+                            painter = painterResource(image.res),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    is RemoteImageAsset.Remote -> {
+                        AsyncImage(
+                            model = image.url,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
 
                 Box(
                     modifier = Modifier
@@ -332,270 +323,6 @@ private fun PixoTryItButton(
     }
 }
 
-@Preview(name = "PixoCard / Image Lab", showBackground = true)
-@Composable
-private fun PixoImageLabCardPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoImageLabCard(
-                imageRes = R.drawable.template_preview_image_lab
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoCard / Glam Makeup", showBackground = true)
-@Composable
-private fun PixoGlamMakeupCardPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoGlamMakeupCard(
-                imageRes = R.drawable.tools_glam
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoCard / Template Preview", showBackground = true)
-@Composable
-private fun PixoTemplatePreviewCardPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoTemplatePreviewCard(
-                titleRes = R.string.template_cherry,
-                imageRes = R.drawable.template_cherry
-            )
-        }
-    }
-}
-
-@Composable
-private fun PixoSplitImage(
-    @DrawableRes imageRes: Int,
-    imageSide: PixoImageSide,
-    modifier: Modifier = Modifier
-) {
-    val imageBitmap = ImageBitmap.imageResource(id = imageRes)
-
-    Canvas(
-        modifier = modifier
-    ) {
-        drawSplitImage(
-            imageBitmap = imageBitmap,
-            imageSide = imageSide
-        )
-    }
-}
-
-private fun DrawScope.drawSplitImage(
-    imageBitmap: ImageBitmap,
-    imageSide: PixoImageSide
-) {
-    val sourceWidth = imageBitmap.width / 2
-    val sourceHeight = imageBitmap.height
-
-    val sourceOffsetX = when (imageSide) {
-        PixoImageSide.Left -> 0
-        PixoImageSide.Right -> sourceWidth
-    }
-
-    drawImage(
-        image = imageBitmap,
-        srcOffset = IntOffset(
-            x = sourceOffsetX,
-            y = 0
-        ),
-        srcSize = IntSize(
-            width = sourceWidth,
-            height = sourceHeight
-        ),
-        dstOffset = IntOffset(
-            x = 0,
-            y = 0
-        ),
-        dstSize = IntSize(
-            width = size.width.roundToInt(),
-            height = size.height.roundToInt()
-        )
-    )
-}
-
-@Composable
-fun PixoTemplateDoublePreviewCard(
-    @StringRes titleRes: Int,
-    @DrawableRes imageRes: Int,
-    imageSide: PixoImageSide,
-    modifier: Modifier = Modifier,
-    onClick: (() -> Unit)? = null
-) {
-    Column(
-        modifier = modifier.width(dimensionResource(R.dimen._175)),
-        verticalArrangement = Arrangement.spacedBy(
-            dimensionResource(R.dimen._8)
-        )
-    ) {
-        Text(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._175))
-                .height(dimensionResource(R.dimen._22)),
-            text = stringResource(titleRes),
-            color = AccentWhite,
-            style = MaterialTheme.typography.titleSmall
-        )
-
-        PixoCard(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._175))
-                .height(dimensionResource(R.dimen._311)),
-            shape = RoundedCornerShape(
-                dimensionResource(R.dimen._16)
-            ),
-            onClick = onClick
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                PixoSplitImage(
-                    imageRes = imageRes,
-                    imageSide = imageSide,
-                    modifier = Modifier.fillMaxSize()
-                )
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                colorStops = arrayOf(
-                                    0f to Color.Transparent,
-                                    1f to BackgroundPrimary.copy(alpha = 0.616f)
-                                )
-                            )
-                        )
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun PixoDoublePictureCard(
-    @DrawableRes imageRes: Int,
-    modifier: Modifier = Modifier,
-    imageSide: PixoImageSide = PixoImageSide.Left,
-    onClick: (() -> Unit)? = null
-) {
-    PixoCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(dimensionResource(R.dimen._607)),
-        shape = RoundedCornerShape(
-            dimensionResource(R.dimen._16)
-        ),
-        onClick = onClick
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            PixoSplitImage(
-                imageRes = imageRes,
-                imageSide = imageSide,
-                modifier = Modifier.fillMaxSize()
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            colorStops = arrayOf(
-                                0f to Color.Transparent,
-                                1f to BackgroundPrimary.copy(alpha = 0.616f)
-                            )
-                        )
-                    )
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoCard / Gloria Model Left", showBackground = true)
-@Composable
-private fun PixoTemplateGloriaModelLeftPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoTemplateDoublePreviewCard(
-                titleRes = R.string.template_gloria_model,
-                imageRes = R.drawable.template_doublepicture,
-                imageSide = PixoImageSide.Left
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoCard / Gloria Model Right", showBackground = true)
-@Composable
-private fun PixoTemplateGloriaModelRightPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoTemplateDoublePreviewCard(
-                titleRes = R.string.template_gloria_model,
-                imageRes = R.drawable.template_doublepicture,
-                imageSide = PixoImageSide.Right
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoCard / Double Picture Large Left", showBackground = true)
-@Composable
-private fun PixoDoublePictureCardLeftPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoDoublePictureCard(
-                imageRes = R.drawable.template_doublepicture,
-                imageSide = PixoImageSide.Left
-            )
-        }
-    }
-}
-
 @Composable
 fun PixoPaywallCardsBackground(
     modifier: Modifier = Modifier,
@@ -642,21 +369,6 @@ private const val PIXO_PAYWALL_CARDS_SCALE = 1.15f
 private const val PIXO_PAYWALL_CARDS_TRANSLATION_Y = -80f
 private const val PIXO_PAYWALL_GRADIENT_START = 0f
 private const val PIXO_PAYWALL_GRADIENT_END = 0.91f
-
-@Preview(name = "PixoCard / Paywall Cards Background", showBackground = true)
-@Composable
-private fun PixoPaywallCardsBackgroundPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .height(dimensionResource(R.dimen._844))
-                .background(BackgroundPrimary)
-        ) {
-            PixoPaywallCardsBackground()
-        }
-    }
-}
 
 private const val FULLSCREEN_BOTTOM_GRADIENT_HEIGHT_FRACTION = 0.35f
 
@@ -725,18 +437,14 @@ fun Onb15(
             .background(BackgroundPrimary),
         contentAlignment = Alignment.TopCenter
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.onb15),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+        PixoAssetImage(
+            asset = RemoteImageAsset.Remote(
+                url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/onb15.webp"
+            ),
             modifier = Modifier
                 .width(dimensionResource(id = R.dimen._294))
                 .height(dimensionResource(id = R.dimen._592))
-                .clip(
-                    RoundedCornerShape(
-                        dimensionResource(id = R.dimen._51)
-                    )
-                )
+                .clip(RoundedCornerShape(dimensionResource(id = R.dimen._51)))
         )
     }
 }
@@ -1368,33 +1076,6 @@ fun PixoTemplateCapturedPicture(
         ) {
             PixoRemoveTextIcon(
                 fontSize = dimensionResource(R.dimen._14).value.sp
-            )
-        }
-    }
-}
-
-@Preview(
-    name = "Pixo / Template Captured Picture",
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 96,
-    apiLevel = PREVIEW_API_LEVEL
-)
-@Composable
-private fun PixoTemplateCapturedPicturePreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(BackgroundPrimary)
-                .padding(start = dimensionResource(id = R.dimen._16)),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            PixoTemplateCapturedPicture(
-                imageUri = null,
-                placeholderImageRes = R.drawable.template_v2_image,
-                onClick = {},
-                onRemoveClick = {}
             )
         }
     }

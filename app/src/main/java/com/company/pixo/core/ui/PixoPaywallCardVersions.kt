@@ -50,24 +50,27 @@ private object ImagesCollageDimens {
 }
 
 private object ImagesCollageConstants {
+    private const val BASE_URL =
+        "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
+
     val Images = listOf(
-        R.drawable.template_cherry,
-        R.drawable.tools_glam,
-        R.drawable.template_preview_image_lab,
-        R.drawable.template_doublepicture,
-        R.drawable.template_cherry,
+        "$BASE_URL/template_cherry.webp",
+        "$BASE_URL/tools_glam.webp",
+        "$BASE_URL/template_preview_image_lab.webp",
+        "$BASE_URL/template_doublepicture.webp",
+        "$BASE_URL/template_cherry.webp",
 
-        R.drawable.tools_glam,
-        R.drawable.template_preview_image_lab,
-        R.drawable.template_doublepicture,
-        R.drawable.template_cherry,
-        R.drawable.tools_glam,
+        "$BASE_URL/tools_glam.webp",
+        "$BASE_URL/template_preview_image_lab.webp",
+        "$BASE_URL/template_doublepicture.webp",
+        "$BASE_URL/template_cherry.webp",
+        "$BASE_URL/tools_glam.webp",
 
-        R.drawable.template_preview_image_lab,
-        R.drawable.template_doublepicture,
-        R.drawable.template_cherry,
-        R.drawable.tools_glam,
-        R.drawable.template_preview_image_lab
+        "$BASE_URL/template_preview_image_lab.webp",
+        "$BASE_URL/template_doublepicture.webp",
+        "$BASE_URL/template_cherry.webp",
+        "$BASE_URL/tools_glam.webp",
+        "$BASE_URL/template_preview_image_lab.webp"
     )
 
     const val Columns = 5
@@ -102,8 +105,8 @@ fun ImagesCollage(
                 val row = index / ImagesCollageConstants.Columns
                 val column = index % ImagesCollageConstants.Columns
 
-                Image(
-                    painter = painterResource(id = image),
+                coil.compose.AsyncImage(
+                    model = image,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -148,8 +151,8 @@ fun ImagesCollage2(
             val startX = -cardWidth * ImagesCollageDimens.Collage2StartXFraction
             val startY = ImagesCollageDimens.Collage2StartY
 
-            Image(
-                painter = painterResource(id = image),
+            coil.compose.AsyncImage(
+                model = image,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

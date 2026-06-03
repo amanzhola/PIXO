@@ -1,6 +1,5 @@
 package com.company.pixo.core.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,11 +38,11 @@ import com.company.pixo.core.theme.PixoTheme
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.remember
-import com.company.pixo.core.theme.AccentWhite
+import com.company.pixo.domain.model.RemoteImageAsset
 
 @Composable
 fun PixoBottomSheetFaceCard(
-    @DrawableRes imageRes: Int,
+    image: RemoteImageAsset,
     @StringRes textRes: Int,
     modifier: Modifier = Modifier,
     isSelected: Boolean = true
@@ -64,20 +63,41 @@ fun PixoBottomSheetFaceCard(
                 .height(dimensionResource(R.dimen._110)),
             contentAlignment = Alignment.BottomCenter
         ) {
-            Image(
-                painter = painterResource(imageRes),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(dimensionResource(R.dimen._110))
-                    .height(dimensionResource(R.dimen._110))
-                    .clip(
-                        bottomSheetFaceImageShape(
-                            radius = dimensionResource(R.dimen._16).value,
-                            cutoutRadius = dimensionResource(R.dimen._24).value
-                        )
+            when (image) {
+                is RemoteImageAsset.Local -> {
+                    Image(
+                        painter = painterResource(image.res),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .width(dimensionResource(R.dimen._110))
+                            .height(dimensionResource(R.dimen._110))
+                            .clip(
+                                bottomSheetFaceImageShape(
+                                    radius = dimensionResource(R.dimen._16).value,
+                                    cutoutRadius = dimensionResource(R.dimen._24).value
+                                )
+                            )
                     )
-            )
+                }
+
+                is RemoteImageAsset.Remote -> {
+                    coil.compose.AsyncImage(
+                        model = image.url,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .width(dimensionResource(R.dimen._110))
+                            .height(dimensionResource(R.dimen._110))
+                            .clip(
+                                bottomSheetFaceImageShape(
+                                    radius = dimensionResource(R.dimen._16).value,
+                                    cutoutRadius = dimensionResource(R.dimen._24).value
+                                )
+                            )
+                    )
+                }
+            }
 
             if (isSelected) {
                 Box(
@@ -149,27 +169,9 @@ private fun bottomSheetFaceImageShape(
     addPath(path)
 }
 
-@Preview(name = "PixoCard / Bottom Sheet Face Visible", showBackground = true)
-@Composable
-private fun PixoBottomSheetFaceCardPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBottomSheetFaceCard(
-                imageRes = R.drawable.bottomsheetimage,
-                textRes = R.string.photo_face_is_visible
-            )
-        }
-    }
-}
-
 @Composable
 fun PixoBottomSheetFaceCard2(
-    @DrawableRes imageRes: Int,
+    image: RemoteImageAsset,
     @StringRes textRes: Int,
     modifier: Modifier = Modifier,
     isSelected: Boolean = true
@@ -190,20 +192,41 @@ fun PixoBottomSheetFaceCard2(
                 .height(dimensionResource(R.dimen._110)),
             contentAlignment = Alignment.BottomCenter
         ) {
-            Image(
-                painter = painterResource(imageRes),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(dimensionResource(R.dimen._110))
-                    .height(dimensionResource(R.dimen._110))
-                    .clip(
-                        bottomSheetFaceImageShape(
-                            radius = dimensionResource(R.dimen._16).value,
-                            cutoutRadius = dimensionResource(R.dimen._24).value
-                        )
+            when (image) {
+                is RemoteImageAsset.Local -> {
+                    Image(
+                        painter = painterResource(image.res),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .width(dimensionResource(R.dimen._110))
+                            .height(dimensionResource(R.dimen._110))
+                            .clip(
+                                bottomSheetFaceImageShape(
+                                    radius = dimensionResource(R.dimen._16).value,
+                                    cutoutRadius = dimensionResource(R.dimen._24).value
+                                )
+                            )
                     )
-            )
+                }
+
+                is RemoteImageAsset.Remote -> {
+                    coil.compose.AsyncImage(
+                        model = image.url,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .width(dimensionResource(R.dimen._110))
+                            .height(dimensionResource(R.dimen._110))
+                            .clip(
+                                bottomSheetFaceImageShape(
+                                    radius = dimensionResource(R.dimen._16).value,
+                                    cutoutRadius = dimensionResource(R.dimen._24).value
+                                )
+                            )
+                    )
+                }
+            }
 
             if (isSelected) {
                 Box(
@@ -242,27 +265,9 @@ fun PixoBottomSheetFaceCard2(
     }
 }
 
-@Preview(name = "PixoCard / Bottom Sheet Face Visible", showBackground = true)
-@Composable
-private fun PixoBottomSheetFaceCardPrevie2w() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBottomSheetFaceCard2(
-                imageRes = R.drawable.bottomsheet_bad_image3,
-                textRes = R.string.photo_bad_angle
-            )
-        }
-    }
-}
-
 @Composable
 fun PixoBottomSheetImageCard(
-    @DrawableRes imageRes: Int,
+    image: RemoteImageAsset,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     onClick: (() -> Unit)? = null
@@ -283,13 +288,25 @@ fun PixoBottomSheetImageCard(
                 }
             )
     ) {
-        Image(
-            painter = painterResource(imageRes),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .matchParentSize()
-        )
+        when (image) {
+            is RemoteImageAsset.Local -> {
+                Image(
+                    painter = painterResource(image.res),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.matchParentSize()
+                )
+            }
+
+            is RemoteImageAsset.Remote -> {
+                coil.compose.AsyncImage(
+                    model = image.url,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.matchParentSize()
+                )
+            }
+        }
 
         if (isSelected) {
             Image(
@@ -302,40 +319,3 @@ fun PixoBottomSheetImageCard(
         }
     }
 }
-
-@Preview(name = "Pixo Bottom Sheet Image Card / Selected", showBackground = true)
-@Composable
-private fun PixoBottomSheetImageCardSelectedPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .background(AccentWhite)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBottomSheetImageCard(
-                imageRes = R.drawable.tools_glam,
-                isSelected = true
-            )
-        }
-    }
-}
-
-@Preview(name = "Pixo Bottom Sheet Image Card / Unselected", showBackground = true)
-@Composable
-private fun PixoBottomSheetImageCardUnselectedPreview() {
-    PixoTheme {
-        Box(
-            modifier = Modifier
-                .background(AccentWhite)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBottomSheetImageCard(
-                imageRes = R.drawable.bottomsheet_for_background,
-                isSelected = false
-            )
-        }
-    }
-}
-

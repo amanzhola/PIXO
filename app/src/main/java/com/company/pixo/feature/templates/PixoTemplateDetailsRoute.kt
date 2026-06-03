@@ -1,6 +1,5 @@
 package com.company.pixo.feature.templates
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,11 +31,12 @@ import com.company.pixo.core.ui.PixoPhotoGenerateActions
 import com.company.pixo.core.ui.PixoTemplateGenerateActions
 import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
+import com.company.pixo.domain.model.RemoteImageAsset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PixoTemplateDetailsRoute(
-    @DrawableRes templateImageRes: Int,
+    templateImage: RemoteImageAsset,
     @StringRes templateTitleRes: Int,
     capturedImageUri: String?,
     modifier: Modifier = Modifier,
@@ -80,9 +80,7 @@ fun PixoTemplateDetailsRoute(
                 onTitleClick = onTitleClick
             )
 
-            Image(
-                painter = painterResource(templateImageRes),
-                contentDescription = null,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
@@ -91,9 +89,28 @@ fun PixoTemplateDetailsRoute(
                         end = dimensionResource(R.dimen._16),
                         top = dimensionResource(R.dimen._8),
                         bottom = dimensionResource(R.dimen._6)
-                    ),
-                contentScale = ContentScale.Crop
-            )
+                    )
+            ) {
+                when (templateImage) {
+                    is RemoteImageAsset.Local -> {
+                        Image(
+                            painter = painterResource(templateImage.res),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    is RemoteImageAsset.Remote -> {
+                        coil.compose.AsyncImage(
+                            model = templateImage.url,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+            }
 
             if (capturedImageUri == null) {
                 PixoPhotoGenerateActions(

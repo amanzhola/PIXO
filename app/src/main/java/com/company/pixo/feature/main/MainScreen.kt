@@ -91,7 +91,6 @@ fun MainScreen(
                 onGetProClick = onPaywallClick,
                 onTokenBalanceClick = onTokenPaywallClick,
                 onSettingsClick = onSettingsClick,
-                onImageLabClick = {},
                 onToolClick = { tool, variant ->
                     when (tool.titleRes) {
                         R.string.tool_ai_enhancer -> onAiEnhancherClick(variant)
@@ -107,11 +106,11 @@ fun MainScreen(
                         R.string.tool_ghibli_look -> onGhibliLookClick(variant)
                     }
                 },
-                onTabClick = { tab -> handleTabClick(tab) },
                 toolSourceVariant = toolsSourceVariant,
                 onToolSourceVariantChange = {
                     toolsSourceVariant = it
                 },
+                onTabClick = { tab -> handleTabClick(tab) },
             )
         }
 

@@ -1,6 +1,5 @@
 package com.company.pixo.feature.tools
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,11 +38,6 @@ import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.feature.main.MainTab
 import com.company.pixo.feature.photo.ToolPhotoSourceScreenVariant
 
-//data class PixoToolItem(
-//    @StringRes val titleRes: Int,
-//    @DrawableRes val imageResList: List<Int>
-//)
-
 data class PixoToolItem(
     @StringRes val titleRes: Int,
     val images: List<RemoteImageAsset>
@@ -60,7 +54,6 @@ fun PixoToolsScreen(
     onGetProClick: () -> Unit = {},
     onTokenBalanceClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
-    onImageLabClick: () -> Unit = {},
     onToolClick: (PixoToolItem, ToolPhotoSourceScreenVariant) -> Unit = { _, _ -> },
     toolSourceVariant: ToolPhotoSourceScreenVariant = ToolPhotoSourceScreenVariant.Default,
     onToolSourceVariantChange: (ToolPhotoSourceScreenVariant) -> Unit = {},
@@ -117,7 +110,9 @@ fun PixoToolsScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         PixoImageLabCard(
-                            imageRes = R.drawable.template_preview_image_lab,
+                            image = RemoteImageAsset.Remote(
+                                url = "$TOOL_ASSETS_BASE_URL/template_preview_image_lab.webp"
+                            ),
                             onClick = {
                                 val nextVariant = when (toolSourceVariant) {
                                     ToolPhotoSourceScreenVariant.Default ->
@@ -143,59 +138,6 @@ fun PixoToolsScreen(
                         )
                     }
                 }
-
-//                tools.chunked(PixoToolsConstants.GRID_COLUMNS).forEach { rowItems ->
-//                    item {
-//
-//                        Row(
-//                            modifier = Modifier.fillMaxWidth(),
-//                            horizontalArrangement = Arrangement.spacedBy(
-//                                dimensionResource(id = R.dimen._8)
-//                            )
-//                        ) {
-////                            rowItems.forEach { tool ->
-////                                Box(
-////                                    modifier = Modifier
-////                                        .weight(1f)
-////                                        .noRippleClick {
-////                                            onToolClick(tool, toolSourceVariant)
-////                                        }
-////                                ) {
-////                                    PixoBeforeAfterPreview(
-////                                        modifier = Modifier.fillMaxWidth(),
-////                                        titleRes = tool.titleRes,
-////                                        imageResList = tool.imageResList
-////                                    )
-////                                }
-////                            }
-//
-//                            rowItems.forEach { tool ->
-//                                Box(
-//                                    modifier = Modifier
-//                                        .weight(1f)
-//                                        .noRippleClick {
-//                                            onToolClick(tool, toolSourceVariant)
-//                                        }
-//                                ) {
-//                                    PixoBeforeAfterPreview(
-//                                        modifier = Modifier.fillMaxWidth(),
-//                                        titleRes = tool.titleRes,
-//                                        asset = if (tool.images.size == 1) {
-//                                            BeforeAfterAsset.Combined(tool.images.first())
-//                                        } else {
-//                                            BeforeAfterAsset.Separate(tool.images[0], tool.images[1])
-//                                        }
-//                                    )
-//                                }
-//                            }
-//
-//                            if (rowItems.size < PixoToolsConstants.GRID_COLUMNS) {
-//                                Spacer(modifier = Modifier.weight(1f))
-//                            }
-//                        }
-//                    }
-//                }
-
                 tools.chunked(PixoToolsConstants.GRID_COLUMNS).forEach { rowItems ->
                     item {
                         Row(
@@ -249,25 +191,6 @@ fun PixoToolsScreen(
 private object PixoToolsConstants {
     const val GRID_COLUMNS = 2
 }
-
-//@Composable
-//private fun rememberPixoToolItems(): List<PixoToolItem> {
-//    return remember {
-//        listOf( // -> to make fit for second preview by android limit for 2000
-//            PixoToolItem(R.string.tool_ai_enhancer, listOf(R.drawable.tools_ai_enhancher1_1, R.drawable.tools_ai_enhancher1_2)),
-//            PixoToolItem(R.string.tool_glam_makeup, listOf(R.drawable.tools_glam_makeup1, R.drawable.tools_glam_makeup2)),
-//            PixoToolItem(R.string.tool_remove_objects, listOf(R.drawable.tools_remove_objects1, R.drawable.tools_remove_objects2)),
-//            PixoToolItem(R.string.tool_remove_background, listOf(R.drawable.tools_remove_background1, R.drawable.tools_remove_background2)),
-//            PixoToolItem(R.string.tool_skin_improve, listOf(R.drawable.tools_skin_improve1, R.drawable.tools_skin_improve2)),
-//            PixoToolItem(R.string.tool_upscale_image, listOf(R.drawable.tools_upscale_image1, R.drawable.tools_upscale_image2)),
-//            PixoToolItem(R.string.tool_change_scene, listOf(R.drawable.tools_change_scene1, R.drawable.tools_change_scene2)),
-//            PixoToolItem(R.string.tool_hair_studio, listOf(R.drawable.tools_hair_studio)),
-//            PixoToolItem(R.string.tool_smile_edit, listOf(R.drawable.tools_smile_edit)),
-//            PixoToolItem(R.string.tool_ghost_style, listOf(R.drawable.tools_ghost_style1, R.drawable.tools_ghost_style2)),
-//            PixoToolItem(R.string.tool_ghibli_look, listOf(R.drawable.tools_ghibli_look1, R.drawable.tools_ghibli_look2))
-//        )
-//    }
-//}
 
 @Composable
 private fun rememberPixoToolItems(): List<PixoToolItem> {
@@ -408,8 +331,13 @@ private fun PixoToolsScreenAllCardsStaticPreviewContent() {
                     style = MaterialTheme.typography.headlineMedium
                 )
 
+//                PixoImageLabCard(
+//                    imageRes = R.drawable.template_preview_image_lab
+//                )
                 PixoImageLabCard(
-                    imageRes = R.drawable.template_preview_image_lab
+                    image = RemoteImageAsset.Remote(
+                        url = "$TOOL_ASSETS_BASE_URL/template_preview_image_lab.webp"
+                    )
                 )
 
                 tools.chunked(PixoToolsConstants.GRID_COLUMNS).forEach { rowItems ->
@@ -420,12 +348,6 @@ private fun PixoToolsScreenAllCardsStaticPreviewContent() {
                             alignment = Alignment.CenterHorizontally
                         )
                     ) {
-//                        rowItems.forEach { tool ->
-//                            PixoBeforeAfterPreview(
-//                                titleRes = tool.titleRes,
-//                                imageResList = tool.imageResList
-//                            )
-//                        }
                         rowItems.forEach { tool ->
                             PixoBeforeAfterPreview(
                                 titleRes = tool.titleRes,
