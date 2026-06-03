@@ -34,13 +34,23 @@ import com.company.pixo.core.ui.PixoImageLabCard
 import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
 import com.company.pixo.core.ui.extensions.noRippleClick
+import com.company.pixo.domain.model.BeforeAfterAsset
+import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.feature.main.MainTab
 import com.company.pixo.feature.photo.ToolPhotoSourceScreenVariant
 
+//data class PixoToolItem(
+//    @StringRes val titleRes: Int,
+//    @DrawableRes val imageResList: List<Int>
+//)
+
 data class PixoToolItem(
     @StringRes val titleRes: Int,
-    @DrawableRes val imageResList: List<Int>
+    val images: List<RemoteImageAsset>
 )
+
+private const val TOOL_ASSETS_BASE_URL =
+    "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
 
 @Composable
 fun PixoToolsScreen(
@@ -134,15 +144,70 @@ fun PixoToolsScreen(
                     }
                 }
 
+//                tools.chunked(PixoToolsConstants.GRID_COLUMNS).forEach { rowItems ->
+//                    item {
+//
+//                        Row(
+//                            modifier = Modifier.fillMaxWidth(),
+//                            horizontalArrangement = Arrangement.spacedBy(
+//                                dimensionResource(id = R.dimen._8)
+//                            )
+//                        ) {
+////                            rowItems.forEach { tool ->
+////                                Box(
+////                                    modifier = Modifier
+////                                        .weight(1f)
+////                                        .noRippleClick {
+////                                            onToolClick(tool, toolSourceVariant)
+////                                        }
+////                                ) {
+////                                    PixoBeforeAfterPreview(
+////                                        modifier = Modifier.fillMaxWidth(),
+////                                        titleRes = tool.titleRes,
+////                                        imageResList = tool.imageResList
+////                                    )
+////                                }
+////                            }
+//
+//                            rowItems.forEach { tool ->
+//                                Box(
+//                                    modifier = Modifier
+//                                        .weight(1f)
+//                                        .noRippleClick {
+//                                            onToolClick(tool, toolSourceVariant)
+//                                        }
+//                                ) {
+//                                    PixoBeforeAfterPreview(
+//                                        modifier = Modifier.fillMaxWidth(),
+//                                        titleRes = tool.titleRes,
+//                                        asset = if (tool.images.size == 1) {
+//                                            BeforeAfterAsset.Combined(tool.images.first())
+//                                        } else {
+//                                            BeforeAfterAsset.Separate(tool.images[0], tool.images[1])
+//                                        }
+//                                    )
+//                                }
+//                            }
+//
+//                            if (rowItems.size < PixoToolsConstants.GRID_COLUMNS) {
+//                                Spacer(modifier = Modifier.weight(1f))
+//                            }
+//                        }
+//                    }
+//                }
+
                 tools.chunked(PixoToolsConstants.GRID_COLUMNS).forEach { rowItems ->
                     item {
-
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(
                                 dimensionResource(id = R.dimen._8)
                             )
                         ) {
+                            val forceTwoLineTitle = rowItems.any { tool ->
+                                stringResource(tool.titleRes).length > 18
+                            }
+
                             rowItems.forEach { tool ->
                                 Box(
                                     modifier = Modifier
@@ -154,7 +219,12 @@ fun PixoToolsScreen(
                                     PixoBeforeAfterPreview(
                                         modifier = Modifier.fillMaxWidth(),
                                         titleRes = tool.titleRes,
-                                        imageResList = tool.imageResList
+                                        forceTwoLineTitle = forceTwoLineTitle,
+                                        asset = if (tool.images.size == 1) {
+                                            BeforeAfterAsset.Combined(tool.images.first())
+                                        } else {
+                                            BeforeAfterAsset.Separate(tool.images[0], tool.images[1])
+                                        }
                                     )
                                 }
                             }
@@ -180,21 +250,104 @@ private object PixoToolsConstants {
     const val GRID_COLUMNS = 2
 }
 
+//@Composable
+//private fun rememberPixoToolItems(): List<PixoToolItem> {
+//    return remember {
+//        listOf( // -> to make fit for second preview by android limit for 2000
+//            PixoToolItem(R.string.tool_ai_enhancer, listOf(R.drawable.tools_ai_enhancher1_1, R.drawable.tools_ai_enhancher1_2)),
+//            PixoToolItem(R.string.tool_glam_makeup, listOf(R.drawable.tools_glam_makeup1, R.drawable.tools_glam_makeup2)),
+//            PixoToolItem(R.string.tool_remove_objects, listOf(R.drawable.tools_remove_objects1, R.drawable.tools_remove_objects2)),
+//            PixoToolItem(R.string.tool_remove_background, listOf(R.drawable.tools_remove_background1, R.drawable.tools_remove_background2)),
+//            PixoToolItem(R.string.tool_skin_improve, listOf(R.drawable.tools_skin_improve1, R.drawable.tools_skin_improve2)),
+//            PixoToolItem(R.string.tool_upscale_image, listOf(R.drawable.tools_upscale_image1, R.drawable.tools_upscale_image2)),
+//            PixoToolItem(R.string.tool_change_scene, listOf(R.drawable.tools_change_scene1, R.drawable.tools_change_scene2)),
+//            PixoToolItem(R.string.tool_hair_studio, listOf(R.drawable.tools_hair_studio)),
+//            PixoToolItem(R.string.tool_smile_edit, listOf(R.drawable.tools_smile_edit)),
+//            PixoToolItem(R.string.tool_ghost_style, listOf(R.drawable.tools_ghost_style1, R.drawable.tools_ghost_style2)),
+//            PixoToolItem(R.string.tool_ghibli_look, listOf(R.drawable.tools_ghibli_look1, R.drawable.tools_ghibli_look2))
+//        )
+//    }
+//}
+
 @Composable
 private fun rememberPixoToolItems(): List<PixoToolItem> {
     return remember {
-        listOf( // -> to make fit for second preview by android limit for 2000
-            PixoToolItem(R.string.tool_ai_enhancer, listOf(R.drawable.tools_ai_enhancher1_1, R.drawable.tools_ai_enhancher1_2)),
-            PixoToolItem(R.string.tool_glam_makeup, listOf(R.drawable.tools_glam_makeup1, R.drawable.tools_glam_makeup2)),
-            PixoToolItem(R.string.tool_remove_objects, listOf(R.drawable.tools_remove_objects1, R.drawable.tools_remove_objects2)),
-            PixoToolItem(R.string.tool_remove_background, listOf(R.drawable.tools_remove_background1, R.drawable.tools_remove_background2)),
-            PixoToolItem(R.string.tool_skin_improve, listOf(R.drawable.tools_skin_improve1, R.drawable.tools_skin_improve2)),
-            PixoToolItem(R.string.tool_upscale_image, listOf(R.drawable.tools_upscale_image1, R.drawable.tools_upscale_image2)),
-            PixoToolItem(R.string.tool_change_scene, listOf(R.drawable.tools_change_scene1, R.drawable.tools_change_scene2)),
-            PixoToolItem(R.string.tool_hair_studio, listOf(R.drawable.tools_hair_studio)),
-            PixoToolItem(R.string.tool_smile_edit, listOf(R.drawable.tools_smile_edit)),
-            PixoToolItem(R.string.tool_ghost_style, listOf(R.drawable.tools_ghost_style1, R.drawable.tools_ghost_style2)),
-            PixoToolItem(R.string.tool_ghibli_look, listOf(R.drawable.tools_ghibli_look1, R.drawable.tools_ghibli_look2))
+        listOf(
+            PixoToolItem(
+                R.string.tool_ai_enhancer,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_glam_makeup,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_glam_makeup1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_glam_makeup2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_remove_objects,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_objects1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_objects2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_remove_background,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_background1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_background2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_skin_improve,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_skin_improve1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_skin_improve2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_upscale_image,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_upscale_image1.jpg"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_upscale_image2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_change_scene,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_change_scene1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_change_scene2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_hair_studio,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_hair_studio.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_smile_edit,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_smile_edit.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_ghost_style,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghost_style1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghost_style2.webp")
+                )
+            ),
+            PixoToolItem(
+                R.string.tool_ghibli_look,
+                listOf(
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghibli_look1.webp"),
+                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghibli_look2.webp")
+                )
+            )
         )
     }
 }
@@ -267,12 +420,23 @@ private fun PixoToolsScreenAllCardsStaticPreviewContent() {
                             alignment = Alignment.CenterHorizontally
                         )
                     ) {
+//                        rowItems.forEach { tool ->
+//                            PixoBeforeAfterPreview(
+//                                titleRes = tool.titleRes,
+//                                imageResList = tool.imageResList
+//                            )
+//                        }
                         rowItems.forEach { tool ->
                             PixoBeforeAfterPreview(
                                 titleRes = tool.titleRes,
-                                imageResList = tool.imageResList
+                                asset = if (tool.images.size == 1) {
+                                    BeforeAfterAsset.Combined(tool.images.first())
+                                } else {
+                                    BeforeAfterAsset.Separate(tool.images[0], tool.images[1])
+                                }
                             )
                         }
+
 
                         if (rowItems.size < PixoToolsConstants.GRID_COLUMNS) {
                             Spacer(

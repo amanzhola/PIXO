@@ -62,18 +62,48 @@ import com.company.pixo.core.theme.AccentWhite
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.BgWhite200
 import com.company.pixo.core.theme.PixoTheme
+import com.company.pixo.domain.model.BeforeAfterAsset
 import kotlin.math.roundToInt
+
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import com.company.pixo.domain.model.RemoteImageAsset
+
+import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
+import coil.request.ImageRequest
+import androidx.core.graphics.drawable.toBitmap
+import coil.imageLoader
+import coil.request.SuccessResult
 
 enum class PixoBeforeAfterSliderVariant {
     Default,
     Preview
 }
 
+//@Composable
+//fun PixoBeforeAfterSlider(
+//    @DrawableRes beforeImageRes: Int,
+//    modifier: Modifier = Modifier,
+//    @DrawableRes afterImageRes: Int? = null,
+//    variant: PixoBeforeAfterSliderVariant = PixoBeforeAfterSliderVariant.Default,
+//    sliderPosition: Float = 0.5f,
+//    onSliderPositionChange: ((Float) -> Unit)? = null,
+//    handleBackgroundBrush: Brush? = null,
+//    labelsAsIcons: Boolean = false,
+//    onBeforeLabelClick: (() -> Unit)? = null,
+//    onAfterLabelClick: (() -> Unit)? = null,
+//) {
+
 @Composable
 fun PixoBeforeAfterSlider(
-    @DrawableRes beforeImageRes: Int,
+    asset: BeforeAfterAsset,
     modifier: Modifier = Modifier,
-    @DrawableRes afterImageRes: Int? = null,
     variant: PixoBeforeAfterSliderVariant = PixoBeforeAfterSliderVariant.Default,
     sliderPosition: Float = 0.5f,
     onSliderPositionChange: ((Float) -> Unit)? = null,
@@ -151,17 +181,34 @@ fun PixoBeforeAfterSlider(
                 .matchParentSize()
                 .then(dragModifier)
         ) {
-            if (afterImageRes == null) {
-                PixoCombinedBeforeAfterImage(
-                    imageRes = beforeImageRes,
-                    sliderPosition = normalizedPosition
-                )
-            } else {
-                PixoSeparateBeforeAfterImages(
-                    beforeImageRes = beforeImageRes,
-                    afterImageRes = afterImageRes,
-                    sliderPosition = normalizedPosition
-                )
+//            if (afterImageRes == null) {
+//                PixoCombinedBeforeAfterImage(
+//                    imageRes = beforeImageRes,
+//                    sliderPosition = normalizedPosition
+//                )
+//            } else {
+//                PixoSeparateBeforeAfterImages(
+//                    beforeImageRes = beforeImageRes,
+//                    afterImageRes = afterImageRes,
+//                    sliderPosition = normalizedPosition
+//                )
+//            }
+
+            when (asset) {
+                is BeforeAfterAsset.Combined -> {
+                    PixoCombinedBeforeAfterImage(
+                        imageBitmap = rememberImageBitmap(asset.image),
+                        sliderPosition = normalizedPosition
+                    )
+                }
+
+                is BeforeAfterAsset.Separate -> {
+                    PixoSeparateBeforeAfterImages(
+                        before = asset.before,
+                        after = asset.after,
+                        sliderPosition = normalizedPosition
+                    )
+                }
             }
 
             Box(
@@ -214,17 +261,154 @@ fun PixoBeforeAfterSlider(
     }
 }
 
+//@Composable
+//private fun rememberImageBitmap(
+//    asset: RemoteImageAsset
+//): ImageBitmap? {
+//    return when (asset) {
+//        is RemoteImageAsset.Local -> {
+//            ImageBitmap.imageResource(id = asset.res)
+//        }
+//
+//        is RemoteImageAsset.Remote -> {
+//            val painter = rememberAsyncImagePainter(model = asset.url)
+//            val state = painter.state
+//
+//            if (state is AsyncImagePainter.State.Success) {
+//                state.result.drawable.toBitmap().asImageBitmap()
+//            } else {
+//                null
+//            }
+//        }
+//    }
+//}
+
+//@Composable
+//private fun rememberImageBitmap(
+//    asset: RemoteImageAsset
+//): ImageBitmap? {
+//    return when (asset) {
+//        is RemoteImageAsset.Local -> {
+//            Log.d("ONB_IMAGE", "COMBINED LOCAL res=${asset.res}")
+//            ImageBitmap.imageResource(id = asset.res)
+//        }
+//
+//        is RemoteImageAsset.Remote -> {
+//            Log.d("ONB_IMAGE", "COMBINED REMOTE url=${asset.url}")
+//
+//            val painter = rememberAsyncImagePainter(
+//                model = ImageRequest.Builder(LocalContext.current)
+//                    .data(asset.url)
+//                    .listener(
+//                        onStart = {
+//                            Log.d("ONB_IMAGE", "COMBINED START ${asset.url}")
+//                        },
+//                        onSuccess = { _, result ->
+//                            Log.d("ONB_IMAGE", "COMBINED SUCCESS ${result.drawable.intrinsicWidth}x${result.drawable.intrinsicHeight}")
+//                        },
+//                        onError = { _, result ->
+//                            Log.e("ONB_IMAGE", "COMBINED ERROR ${result.throwable.message}", result.throwable)
+//                        }
+//                    )
+//                    .build()
+//            )
+//
+//            val state = painter.state
+//            Log.d("ONB_IMAGE", "COMBINED STATE = $state")
+//
+//            if (state is AsyncImagePainter.State.Success) {
+//                state.result.drawable.toBitmap().asImageBitmap()
+//            } else {
+//                null
+//            }
+//        }
+//    }
+//}
+
+@Composable
+private fun rememberImageBitmap(
+    asset: RemoteImageAsset
+): ImageBitmap? {
+    return when (asset) {
+        is RemoteImageAsset.Local -> {
+            ImageBitmap.imageResource(id = asset.res)
+        }
+
+        is RemoteImageAsset.Remote -> {
+            val context = LocalContext.current
+            var bitmap by remember(asset.url) { mutableStateOf<ImageBitmap?>(null) }
+
+            LaunchedEffect(asset.url) {
+                val request = ImageRequest.Builder(context)
+                    .data(asset.url)
+                    .allowHardware(false)
+                    .build()
+
+                val result = context.imageLoader.execute(request)
+
+                if (result is SuccessResult) {
+                    bitmap = result.drawable.toBitmap().asImageBitmap()
+                }
+            }
+
+            bitmap
+        }
+    }
+}
+
+//@Composable
+//private fun PixoSeparateBeforeAfterImages(
+//    @DrawableRes beforeImageRes: Int,
+//    @DrawableRes afterImageRes: Int,
+//    sliderPosition: Float
+//) {
+//    Image(
+//        painter = painterResource(beforeImageRes),
+//        contentDescription = null,
+//        contentScale = ContentScale.Crop,
+//        alignment = Alignment.Center,
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .drawWithContent {
+//                clipRect(
+//                    left = 0f,
+//                    top = 0f,
+//                    right = size.width * sliderPosition,
+//                    bottom = size.height
+//                ) {
+//                    this@drawWithContent.drawContent()
+//                }
+//            }
+//    )
+//
+//    Image(
+//        painter = painterResource(afterImageRes),
+//        contentDescription = null,
+//        contentScale = ContentScale.Crop,
+//        alignment = Alignment.Center,
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .drawWithContent {
+//                clipRect(
+//                    left = size.width * sliderPosition,
+//                    top = 0f,
+//                    right = size.width,
+//                    bottom = size.height
+//                ) {
+//                    this@drawWithContent.drawContent()
+//                }
+//            }
+//    )
+//}
+
 @Composable
 private fun PixoSeparateBeforeAfterImages(
-    @DrawableRes beforeImageRes: Int,
-    @DrawableRes afterImageRes: Int,
+    before: RemoteImageAsset,
+    after: RemoteImageAsset,
     sliderPosition: Float
 ) {
-    Image(
-        painter = painterResource(beforeImageRes),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        alignment = Alignment.Center,
+    PixoAssetImage(
+        asset = before,
         modifier = Modifier
             .fillMaxSize()
             .drawWithContent {
@@ -239,11 +423,8 @@ private fun PixoSeparateBeforeAfterImages(
             }
     )
 
-    Image(
-        painter = painterResource(afterImageRes),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        alignment = Alignment.Center,
+    PixoAssetImage(
+        asset = after,
         modifier = Modifier
             .fillMaxSize()
             .drawWithContent {
@@ -260,11 +441,89 @@ private fun PixoSeparateBeforeAfterImages(
 }
 
 @Composable
+private fun PixoAssetImage(
+    asset: RemoteImageAsset,
+    modifier: Modifier = Modifier
+) {
+    when (asset) {
+        is RemoteImageAsset.Local -> {
+            Image(
+                painter = painterResource(asset.res),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center,
+                modifier = modifier
+            )
+        }
+
+        is RemoteImageAsset.Remote -> {
+            coil.compose.AsyncImage(
+                model = asset.url,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center,
+                modifier = modifier
+            )
+        }
+    }
+}
+
+//@Composable
+//private fun PixoCombinedBeforeAfterImage(
+//    @DrawableRes imageRes: Int,
+//    sliderPosition: Float
+//) {
+//    val imageBitmap = ImageBitmap.imageResource(id = imageRes)
+//
+//    Canvas(modifier = Modifier.fillMaxSize()) {
+//        val sourceWidth = imageBitmap.width / 2
+//        val sourceHeight = imageBitmap.height
+//
+//        clipRect(
+//            left = 0f,
+//            top = 0f,
+//            right = size.width * sliderPosition,
+//            bottom = size.height
+//        ) {
+//            drawImage(
+//                image = imageBitmap,
+//                srcOffset = IntOffset(0, 0),
+//                srcSize = IntSize(sourceWidth, sourceHeight),
+//                dstOffset = IntOffset.Zero,
+//                dstSize = IntSize(size.width.roundToInt(), size.height.roundToInt())
+//            )
+//        }
+//
+//        clipRect(
+//            left = size.width * sliderPosition,
+//            top = 0f,
+//            right = size.width,
+//            bottom = size.height
+//        ) {
+//            drawImage(
+//                image = imageBitmap,
+//                srcOffset = IntOffset(sourceWidth, 0),
+//                srcSize = IntSize(sourceWidth, sourceHeight),
+//                dstOffset = IntOffset.Zero,
+//                dstSize = IntSize(size.width.roundToInt(), size.height.roundToInt())
+//            )
+//        }
+//    }
+//}
+
+@Composable
 private fun PixoCombinedBeforeAfterImage(
-    @DrawableRes imageRes: Int,
+    imageBitmap: ImageBitmap?,
     sliderPosition: Float
 ) {
-    val imageBitmap = ImageBitmap.imageResource(id = imageRes)
+    if (imageBitmap == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BackgroundPrimary)
+        )
+        return
+    }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val sourceWidth = imageBitmap.width / 2
@@ -302,12 +561,106 @@ private fun PixoCombinedBeforeAfterImage(
     }
 }
 
+//@Composable
+//fun PixoBeforeAfterPreview(
+//    @StringRes titleRes: Int,
+//    imageResList: List<Int>,
+//    modifier: Modifier = Modifier,
+//    sliderPosition: Float = 0.5f,
+//    onSliderPositionChange: ((Float) -> Unit)? = null
+//) {
+//    var internalSliderPosition by remember { mutableFloatStateOf(sliderPosition) }
+//
+//    val currentSliderPosition = onSliderPositionChange
+//        ?.let { sliderPosition }
+//        ?: internalSliderPosition
+//
+//    Column(
+//        modifier = modifier.fillMaxWidth(),
+//        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen._8))
+//    ) {
+//        Text(
+//            modifier = Modifier.fillMaxSize(),
+//            text = stringResource(titleRes),
+//            color = AccentWhite,
+//            style = MaterialTheme.typography.titleSmall
+//        )
+//
+//        PixoBeforeAfterSlider(
+//            beforeImageRes = imageResList.first(),
+//            afterImageRes = imageResList.getOrNull(1),
+//            variant = PixoBeforeAfterSliderVariant.Preview,
+//            sliderPosition = currentSliderPosition,
+//            onSliderPositionChange = { nextPosition ->
+//                if (onSliderPositionChange != null) {
+//                    onSliderPositionChange(nextPosition)
+//                } else {
+//                    internalSliderPosition = nextPosition
+//                }
+//            }
+//        )
+//    }
+//}
+
+//@Composable
+//fun PixoBeforeAfterPreview(
+//    @StringRes titleRes: Int,
+////    imageResList: List<Int>,
+//    asset: BeforeAfterAsset,
+//    modifier: Modifier = Modifier,
+//    sliderPosition: Float = 0.5f,
+//    onSliderPositionChange: ((Float) -> Unit)? = null
+//) {
+//    var internalSliderPosition by remember { mutableFloatStateOf(sliderPosition) }
+//
+//    val currentSliderPosition = onSliderPositionChange
+//        ?.let { sliderPosition }
+//        ?: internalSliderPosition
+//
+////    val asset = if (imageResList.size == 1) {
+////        BeforeAfterAsset.Combined(
+////            image = RemoteImageAsset.Local(imageResList.first())
+////        )
+////    } else {
+////        BeforeAfterAsset.Separate(
+////            before = RemoteImageAsset.Local(imageResList.first()),
+////            after = RemoteImageAsset.Local(imageResList[1])
+////        )
+////    }
+//
+//    Column(
+//        modifier = modifier.fillMaxWidth(),
+//        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen._8))
+//    ) {
+//        Text(
+//            modifier = Modifier.fillMaxSize(),
+//            text = stringResource(titleRes),
+//            color = AccentWhite,
+//            style = MaterialTheme.typography.titleSmall
+//        )
+//
+//        PixoBeforeAfterSlider(
+//            asset = asset,
+//            variant = PixoBeforeAfterSliderVariant.Preview,
+//            sliderPosition = currentSliderPosition,
+//            onSliderPositionChange = { nextPosition ->
+//                if (onSliderPositionChange != null) {
+//                    onSliderPositionChange(nextPosition)
+//                } else {
+//                    internalSliderPosition = nextPosition
+//                }
+//            }
+//        )
+//    }
+//}
+
 @Composable
 fun PixoBeforeAfterPreview(
     @StringRes titleRes: Int,
-    imageResList: List<Int>,
+    asset: BeforeAfterAsset,
     modifier: Modifier = Modifier,
     sliderPosition: Float = 0.5f,
+    forceTwoLineTitle: Boolean = false,
     onSliderPositionChange: ((Float) -> Unit)? = null
 ) {
     var internalSliderPosition by remember { mutableFloatStateOf(sliderPosition) }
@@ -321,15 +674,25 @@ fun PixoBeforeAfterPreview(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen._8))
     ) {
         Text(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .then(
+                    if (forceTwoLineTitle) {
+                        Modifier.height(dimensionResource(R.dimen._40))
+                    } else {
+                        Modifier
+                    }
+                ),
             text = stringResource(titleRes),
             color = AccentWhite,
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = 2,
+            minLines = if (forceTwoLineTitle) 2 else 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         PixoBeforeAfterSlider(
-            beforeImageRes = imageResList.first(),
-            afterImageRes = imageResList.getOrNull(1),
+            asset = asset,
             variant = PixoBeforeAfterSliderVariant.Preview,
             sliderPosition = currentSliderPosition,
             onSliderPositionChange = { nextPosition ->
@@ -439,274 +802,333 @@ private fun PixoBeforeAfterHandle(
     }
 }
 
-@Preview(name = "PixoBeforeAfterSlider", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSliderPreview() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//@Preview(name = "PixoBeforeAfterSlider", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSliderPreview() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+////            PixoBeforeAfterSlider(
+////                beforeImageRes = R.drawable.tools_face1,
+////                afterImageRes = R.drawable.tools_face2,
+////                sliderPosition = sliderPosition,
+////                onSliderPositionChange = { sliderPosition = it }
+////            )
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Separate(
+//                    before = RemoteImageAsset.Local(R.drawable.tools_face1),
+//                    after = RemoteImageAsset.Local(R.drawable.tools_face2)
+//                ),
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_face1,
-                afterImageRes = R.drawable.tools_face2,
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it }
-            )
-        }
-    }
-}
+//@Preview(name = "PixoBeforeAfterPreview", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSmallPreview() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            PixoBeforeAfterPreview(
+//                titleRes = R.string.tool_ai_enhancer,
+//                imageResList = listOf(
+//                    R.drawable.tools_cute1,
+//                    R.drawable.tools_cute2
+//                ),
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-@Preview(name = "PixoBeforeAfterPreview", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSmallPreview() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//@Preview(name = "PixoBeforeAfterPreview / 25 and 75", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterPreviewTwoPositionsPreview() {
+//    PixoTheme {
+//        var firstSliderPosition by remember { mutableFloatStateOf(0.25f) }
+//        var secondSliderPosition by remember { mutableFloatStateOf(0.75f) }
+//
+//        Column(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            verticalArrangement = Arrangement.spacedBy(
+//                dimensionResource(R.dimen._8)
+//            ),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            PixoBeforeAfterPreview(
+//                titleRes = R.string.tool_ai_enhancer,
+//                imageResList = listOf(
+//                    R.drawable.tools_cute1,
+//                    R.drawable.tools_cute2
+//                ),
+//                sliderPosition = firstSliderPosition,
+//                onSliderPositionChange = { firstSliderPosition = it }
+//            )
+//
+//            PixoBeforeAfterPreview(
+//                titleRes = R.string.tool_ai_enhancer,
+//                imageResList = listOf(
+//                    R.drawable.tools_cute1,
+//                    R.drawable.tools_cute2
+//                ),
+//                sliderPosition = secondSliderPosition,
+//                onSliderPositionChange = { secondSliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterPreview(
-                titleRes = R.string.tool_ai_enhancer,
-                imageResList = listOf(
-                    R.drawable.tools_cute1,
-                    R.drawable.tools_cute2
-                ),
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it }
-            )
-        }
-    }
-}
+//@Preview(name = "PixoBeforeAfterSlider / 25 and 75", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSliderTwoPositionsPreview() {
+//    PixoTheme {
+//        var firstSliderPosition by remember { mutableFloatStateOf(0.25f) }
+//        var secondSliderPosition by remember { mutableFloatStateOf(0.75f) }
+//
+//        Column(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            verticalArrangement = Arrangement.spacedBy(
+//                dimensionResource(R.dimen._16)
+//            ),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+////            PixoBeforeAfterSlider(
+////                beforeImageRes = R.drawable.tools_face1,
+////                afterImageRes = R.drawable.tools_face2,
+////                sliderPosition = firstSliderPosition,
+////                onSliderPositionChange = { firstSliderPosition = it }
+////            )
+//
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Separate(
+//                    before = RemoteImageAsset.Local(R.drawable.tools_face1),
+//                    after = RemoteImageAsset.Local(R.drawable.tools_face2)
+//                ),
+//                sliderPosition = firstSliderPosition,
+//                onSliderPositionChange = { firstSliderPosition = it }
+//            )
+//
+////            PixoBeforeAfterSlider(
+////                beforeImageRes = R.drawable.tools_face1,
+////                afterImageRes = R.drawable.tools_face2,
+////                sliderPosition = secondSliderPosition,
+////                onSliderPositionChange = { secondSliderPosition = it }
+////            )
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Separate(
+//                    before = RemoteImageAsset.Local(R.drawable.tools_face1),
+//                    after = RemoteImageAsset.Local(R.drawable.tools_face2)
+//                ),
+//                sliderPosition = secondSliderPosition,
+//                onSliderPositionChange = { secondSliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-@Preview(name = "PixoBeforeAfterPreview / 25 and 75", showBackground = true)
-@Composable
-private fun PixoBeforeAfterPreviewTwoPositionsPreview() {
-    PixoTheme {
-        var firstSliderPosition by remember { mutableFloatStateOf(0.25f) }
-        var secondSliderPosition by remember { mutableFloatStateOf(0.75f) }
+//@Preview(name = "PixoBeforeAfterSlider / Single image hair studio", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSliderSingleImagePreview() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+////            PixoBeforeAfterSlider(
+////                beforeImageRes = R.drawable.tools_hair_studio,
+////                variant = PixoBeforeAfterSliderVariant.Preview,
+////                sliderPosition = sliderPosition,
+////                onSliderPositionChange = { sliderPosition = it }
+////            )
+//
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Combined(
+//                    image = RemoteImageAsset.Local(R.drawable.tools_hair_studio)
+//                ),
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-        Column(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            verticalArrangement = Arrangement.spacedBy(
-                dimensionResource(R.dimen._8)
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            PixoBeforeAfterPreview(
-                titleRes = R.string.tool_ai_enhancer,
-                imageResList = listOf(
-                    R.drawable.tools_cute1,
-                    R.drawable.tools_cute2
-                ),
-                sliderPosition = firstSliderPosition,
-                onSliderPositionChange = { firstSliderPosition = it }
-            )
+//@Preview(name = "PixoBeforeAfterSlider / Single image hair studio large", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSliderSingleImageLargePreview() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+////            PixoBeforeAfterSlider(
+////                beforeImageRes = R.drawable.tools_hair_studio,
+////                variant = PixoBeforeAfterSliderVariant.Default,
+////                sliderPosition = sliderPosition,
+////                onSliderPositionChange = { sliderPosition = it }
+////            )
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Combined(
+//                    image = RemoteImageAsset.Local(R.drawable.tools_hair_studio)
+//                ),
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-            PixoBeforeAfterPreview(
-                titleRes = R.string.tool_ai_enhancer,
-                imageResList = listOf(
-                    R.drawable.tools_cute1,
-                    R.drawable.tools_cute2
-                ),
-                sliderPosition = secondSliderPosition,
-                onSliderPositionChange = { secondSliderPosition = it }
-            )
-        }
-    }
-}
+//@Preview(name = "PixoBeforeAfterPreview / Glam makeup", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterGlamMakeupSmallPreview() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            PixoBeforeAfterPreview(
+//                titleRes = R.string.tool_ai_enhancer,
+//                imageResList = listOf(
+//                    R.drawable.tools_glam_makeup1,
+//                    R.drawable.tools_glam_makeup2
+//                ),
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-@Preview(name = "PixoBeforeAfterSlider / 25 and 75", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSliderTwoPositionsPreview() {
-    PixoTheme {
-        var firstSliderPosition by remember { mutableFloatStateOf(0.25f) }
-        var secondSliderPosition by remember { mutableFloatStateOf(0.75f) }
+//@Preview(name = "PixoBeforeAfterSlider / Single image Smile Edit", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSliderSingleSmilePreview() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+////            PixoBeforeAfterSlider(
+////                beforeImageRes = R.drawable.tools_smile_edit,
+////                variant = PixoBeforeAfterSliderVariant.Preview,
+////                sliderPosition = sliderPosition,
+////                onSliderPositionChange = { sliderPosition = it }
+////            )
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Combined(
+//                    image = RemoteImageAsset.Local(R.drawable.tools_smile_edit)
+//                ),
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it }
+//            )
+//        }
+//    }
+//}
 
-        Column(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            verticalArrangement = Arrangement.spacedBy(
-                dimensionResource(R.dimen._16)
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_face1,
-                afterImageRes = R.drawable.tools_face2,
-                sliderPosition = firstSliderPosition,
-                onSliderPositionChange = { firstSliderPosition = it }
-            )
+//@Preview(name = "PixoBeforeAfterSlider / Single image hair studio large", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSliderInsideImageLargePreview() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Separate(
+//                    before = RemoteImageAsset.Local(R.drawable.tools_glam_makeup_2_1),
+//                    after = RemoteImageAsset.Local(R.drawable.tools_glam_makeup_2_2)
+//                ),
+////                beforeImageRes = R.drawable.tools_glam_makeup_2_1,
+////                afterImageRes = R.drawable.tools_glam_makeup_2_2,
+//                variant = PixoBeforeAfterSliderVariant.Default,
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it },
+//                handleBackgroundBrush = Brush.horizontalGradient(
+//                    colors = listOf(
+//                        Color(0xFFE07A8E),
+//                        Color(0xFFB24CCF),
+//                        Color(0xFF5B4DFF)
+//                    )
+//                )
+//            )
+//        }
+//    }
+//}
 
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_face1,
-                afterImageRes = R.drawable.tools_face2,
-                sliderPosition = secondSliderPosition,
-                onSliderPositionChange = { secondSliderPosition = it }
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoBeforeAfterSlider / Single image hair studio", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSliderSingleImagePreview() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
-
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_hair_studio,
-                variant = PixoBeforeAfterSliderVariant.Preview,
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it }
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoBeforeAfterSlider / Single image hair studio large", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSliderSingleImageLargePreview() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
-
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_hair_studio,
-                variant = PixoBeforeAfterSliderVariant.Default,
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it }
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoBeforeAfterPreview / Glam makeup", showBackground = true)
-@Composable
-private fun PixoBeforeAfterGlamMakeupSmallPreview() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
-
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterPreview(
-                titleRes = R.string.tool_ai_enhancer,
-                imageResList = listOf(
-                    R.drawable.tools_glam_makeup1,
-                    R.drawable.tools_glam_makeup2
-                ),
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it }
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoBeforeAfterSlider / Single image Smile Edit", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSliderSingleSmilePreview() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
-
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_smile_edit,
-                variant = PixoBeforeAfterSliderVariant.Preview,
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it }
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoBeforeAfterSlider / Single image hair studio large", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSliderInsideImageLargePreview() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
-
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_glam_makeup_2_1,
-                afterImageRes = R.drawable.tools_glam_makeup_2_2,
-                variant = PixoBeforeAfterSliderVariant.Default,
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it },
-                handleBackgroundBrush = Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(0xFFE07A8E),
-                        Color(0xFFB24CCF),
-                        Color(0xFF5B4DFF)
-                    )
-                )
-            )
-        }
-    }
-}
-
-@Preview(name = "PixoBeforeAfterSlider / Single image Glam Makeup large", showBackground = true)
-@Composable
-private fun PixoBeforeAfterSliderSingleImageLargePreview2() {
-    PixoTheme {
-        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
-
-        Box(
-            modifier = Modifier
-                .width(dimensionResource(R.dimen._390))
-                .background(BackgroundPrimary)
-                .padding(dimensionResource(R.dimen._16)),
-            contentAlignment = Alignment.Center
-        ) {
-            PixoBeforeAfterSlider(
-                beforeImageRes = R.drawable.tools_glam_makeup_2_1,
-                afterImageRes = R.drawable.tools_glam_makeup_2_2,
-                sliderPosition = sliderPosition,
-                onSliderPositionChange = { sliderPosition = it }
-            )
-        }
-    }
-}
+//@Preview(name = "PixoBeforeAfterSlider / Single image Glam Makeup large", showBackground = true)
+//@Composable
+//private fun PixoBeforeAfterSliderSingleImageLargePreview2() {
+//    PixoTheme {
+//        var sliderPosition by remember { mutableFloatStateOf(0.5f) }
+//
+//        Box(
+//            modifier = Modifier
+//                .width(dimensionResource(R.dimen._390))
+//                .background(BackgroundPrimary)
+//                .padding(dimensionResource(R.dimen._16)),
+//            contentAlignment = Alignment.Center
+//        ) {
+////            PixoBeforeAfterSlider(
+////                beforeImageRes = R.drawable.tools_glam_makeup_2_1,
+////                afterImageRes = R.drawable.tools_glam_makeup_2_2,
+////                sliderPosition = sliderPosition,
+////                onSliderPositionChange = { sliderPosition = it }
+////            )
+//            PixoBeforeAfterSlider(
+//                asset = BeforeAfterAsset.Separate(
+//                    before = RemoteImageAsset.Local(R.drawable.tools_glam_makeup_2_1),
+//                    after = RemoteImageAsset.Local(R.drawable.tools_glam_makeup_2_2)
+//                ),
+//                sliderPosition = sliderPosition,
+//                onSliderPositionChange = { sliderPosition = it }
+//            )
+//        }
+//    }
+//}

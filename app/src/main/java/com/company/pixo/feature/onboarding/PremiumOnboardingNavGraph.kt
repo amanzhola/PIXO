@@ -16,26 +16,35 @@ fun NavGraphBuilder.premiumOnboardingNavGraph(
 ) {
     PixoPremiumOnboardingDestinations.tools.forEach { destination ->
         composable(destination.route) {
-            if (destination.afterImageRes == null) {
-                PixoOnboardingBeforeAfterScreen(
-                    beforeImageRes = destination.beforeImageRes,
-                    title = stringResource(destination.titleRes),
-                    subtitle = stringResource(destination.subtitleRes),
-                    onContinueClick = {
-                        onToolOnboardingContinue(destination.toolType)
-                    }
-                )
-            } else {
-                PixoOnboardingBeforeAfterScreen(
-                    beforeImageRes = destination.beforeImageRes,
-                    afterImageRes = destination.afterImageRes,
-                    title = stringResource(destination.titleRes),
-                    subtitle = stringResource(destination.subtitleRes),
-                    onContinueClick = {
-                        onToolOnboardingContinue(destination.toolType)
-                    }
-                )
-            }
+//            if (destination.afterImageRes == null) {
+//                PixoOnboardingBeforeAfterScreen(
+//                    beforeImageRes = destination.beforeImageRes,
+//                    title = stringResource(destination.titleRes),
+//                    subtitle = stringResource(destination.subtitleRes),
+//                    onContinueClick = {
+//                        onToolOnboardingContinue(destination.toolType)
+//                    }
+//                )
+//            } else {
+//                PixoOnboardingBeforeAfterScreen(
+//                    beforeImageRes = destination.beforeImageRes,
+//                    afterImageRes = destination.afterImageRes,
+//                    title = stringResource(destination.titleRes),
+//                    subtitle = stringResource(destination.subtitleRes),
+//                    onContinueClick = {
+//                        onToolOnboardingContinue(destination.toolType)
+//                    }
+//                )
+//            }
+
+            PixoOnboardingBeforeAfterScreen(
+                asset = destination.asset,
+                title = stringResource(destination.titleRes),
+                subtitle = stringResource(destination.subtitleRes),
+                onContinueClick = {
+                    onToolOnboardingContinue(destination.toolType)
+                }
+            )
         }
     }
 

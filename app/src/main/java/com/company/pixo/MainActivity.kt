@@ -10,6 +10,8 @@ import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.ui.PixoOnboardingBeforeAfterScreen
 import com.company.pixo.core.ui.PixoPaywallScreen
 import com.company.pixo.core.ui.RateSuccessSetupAnimatedScreen
+import com.company.pixo.domain.model.BeforeAfterAsset
+import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.domain.model.ToolType
 import com.company.pixo.feature.photo._11screens.PixoAiEnhancherMainScreen
 import com.company.pixo.feature.history.PixoHistoryErrorRetryTestScreen
@@ -54,7 +56,13 @@ class MainActivity : ComponentActivity() {
                     )
 
                     3 -> PixoOnboardingBeforeAfterScreen(
-                        beforeImageRes = R.drawable.onb1,
+//                        beforeImageRes = R.drawable.onb1,
+                        asset = BeforeAfterAsset.Combined(
+//                            image = RemoteImageAsset.Local(R.drawable.onb1)
+                            image = RemoteImageAsset.Remote(
+                                url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/onb1.webp"
+                            )
+                        ),
                         title = stringResource(id = R.string.onboarding_ai_photo_enhancer_title),
                         subtitle = stringResource(id = R.string.onboarding_ai_photo_enhancer_subtitle),
                         onContinueClick = {}

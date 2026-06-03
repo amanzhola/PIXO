@@ -11,6 +11,7 @@ import com.company.pixo.domain.model.GenerationResult
 import com.company.pixo.domain.model.GenerationStatus
 import com.company.pixo.domain.model.ImageUploadResult
 import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.domain.model.ToolType
 import com.company.pixo.domain.repository.GenerationRepository
 import kotlinx.coroutines.CoroutineScope
@@ -245,27 +246,57 @@ class MockGenerationRepository(
         )
     }
 
+//    private fun createMockResultImageUrl(
+//        request: GenerationCreateRequest
+//    ): String {
+//        val drawableRes = when {
+//            request.templateId != null -> {
+//                PixoToolConfigs
+//                    .findTemplateById(request.templateId)
+//                    ?.previewBeforeRes
+//                    ?: R.drawable.template_cherry
+//            }
+//
+//            else -> {
+//                val config = PixoToolConfigs.findByType(request.toolType)
+//
+//                config?.previewAfterRes
+//                    ?: config?.previewBeforeRes
+//                    ?: R.drawable.tools_ghibli_look
+//            }
+//        }
+//
+//        return "android.resource://${context.packageName}/$drawableRes"
+//    }
+
     private fun createMockResultImageUrl(
         request: GenerationCreateRequest
     ): String {
-        val drawableRes = when {
+        val asset = when {
             request.templateId != null -> {
                 PixoToolConfigs
                     .findTemplateById(request.templateId)
-                    ?.previewBeforeRes
-                    ?: R.drawable.template_cherry
+                    ?.previewBefore
+                    ?: RemoteImageAsset.Remote(
+                        url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/template_cherry.webp"
+                    )
             }
 
             else -> {
                 val config = PixoToolConfigs.findByType(request.toolType)
 
-                config?.previewAfterRes
-                    ?: config?.previewBeforeRes
-                    ?: R.drawable.tools_ghibli_look
+                config?.previewAfter
+                    ?: config?.previewBefore
+                    ?: RemoteImageAsset.Remote(
+                        url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/tools_ghibli_look1.webp"
+                    )
             }
         }
 
-        return "android.resource://${context.packageName}/$drawableRes"
+        return when (asset) {
+            is RemoteImageAsset.Remote -> asset.url
+            is RemoteImageAsset.Local -> "android.resource://${context.packageName}/${asset.res}"
+        }
     }
 
     override suspend fun regenerate(

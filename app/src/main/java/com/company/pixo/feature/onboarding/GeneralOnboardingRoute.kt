@@ -72,22 +72,29 @@ fun GeneralOnboardingRoute(
         is GeneralOnboardingItem.Tool -> {
             val slide = item.destination
 
-            if (slide.afterImageRes == null) {
-                PixoOnboardingBeforeAfterScreen(
-                    beforeImageRes = slide.beforeImageRes,
-                    title = stringResource(slide.titleRes),
-                    subtitle = stringResource(slide.subtitleRes),
-                    onContinueClick = { onContinueClick() }
-                )
-            } else {
-                PixoOnboardingBeforeAfterScreen(
-                    beforeImageRes = slide.beforeImageRes,
-                    afterImageRes = slide.afterImageRes,
-                    title = stringResource(slide.titleRes),
-                    subtitle = stringResource(slide.subtitleRes),
-                    onContinueClick = { onContinueClick() }
-                )
-            }
+//            if (slide.afterImageRes == null) {
+//                PixoOnboardingBeforeAfterScreen(
+//                    beforeImageRes = slide.beforeImageRes,
+//                    title = stringResource(slide.titleRes),
+//                    subtitle = stringResource(slide.subtitleRes),
+//                    onContinueClick = { onContinueClick() }
+//                )
+//            } else {
+//                PixoOnboardingBeforeAfterScreen(
+//                    beforeImageRes = slide.beforeImageRes,
+//                    afterImageRes = slide.afterImageRes,
+//                    title = stringResource(slide.titleRes),
+//                    subtitle = stringResource(slide.subtitleRes),
+//                    onContinueClick = { onContinueClick() }
+//                )
+//            }
+
+            PixoOnboardingBeforeAfterScreen(
+                asset = slide.asset,
+                title = stringResource(slide.titleRes),
+                subtitle = stringResource(slide.subtitleRes),
+                onContinueClick = { onContinueClick() }
+            )
         }
 
         GeneralOnboardingItem.Templates -> {

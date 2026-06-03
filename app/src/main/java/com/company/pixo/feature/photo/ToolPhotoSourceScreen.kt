@@ -33,6 +33,8 @@ import com.company.pixo.core.ui.PixoMediaLibraryPermissionDialog
 import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
 import com.company.pixo.core.ui.photo.PixoPhotoRequirementsSheetHost
+import com.company.pixo.domain.model.BeforeAfterAsset
+import com.company.pixo.domain.model.RemoteImageAsset
 
 enum class ToolPhotoSourceScreenVariant {
     Default,
@@ -83,6 +85,17 @@ fun ToolPhotoSourceScreen(
         null
     }
 
+    val beforeAfterAsset = if (afterImageRes == null) {
+        BeforeAfterAsset.Combined(
+            image = RemoteImageAsset.Local(beforeImageRes)
+        )
+    } else {
+        BeforeAfterAsset.Separate(
+            before = RemoteImageAsset.Local(beforeImageRes),
+            after = RemoteImageAsset.Local(afterImageRes)
+        )
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -111,9 +124,18 @@ fun ToolPhotoSourceScreen(
                             ),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+//                        PixoBeforeAfterSlider(
+//                            beforeImageRes = beforeImageRes,
+//                            afterImageRes = afterImageRes,
+//                            sliderPosition = sliderPosition,
+//                            onSliderPositionChange = {
+//                                sliderPosition = it
+//                            },
+//                            handleBackgroundBrush = sliderHandleBrush
+//                        )
+
                         PixoBeforeAfterSlider(
-                            beforeImageRes = beforeImageRes,
-                            afterImageRes = afterImageRes,
+                            asset = beforeAfterAsset,
                             sliderPosition = sliderPosition,
                             onSliderPositionChange = {
                                 sliderPosition = it
@@ -138,6 +160,29 @@ fun ToolPhotoSourceScreen(
                 }
 
                 ToolPhotoSourceScreenVariant.FullImageActions -> {
+//                    PixoBeforeAfterSlider(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .padding(
+//                                start = dimensionResource(R.dimen._16),
+//                                end = dimensionResource(R.dimen._16),
+//                                bottom = dimensionResource(R.dimen._56)
+//                            ),
+//                        beforeImageRes = beforeImageRes,
+//                        afterImageRes = afterImageRes,
+//                        sliderPosition = sliderPosition,
+//                        onSliderPositionChange = {
+//                            sliderPosition = it
+//                        },
+//                        handleBackgroundBrush = sliderHandleBrush,
+//                        labelsAsIcons = true,
+//                        onBeforeLabelClick = {
+//                            showPhotoRequirementsSheet = true
+//                        },
+//                        onAfterLabelClick = {
+//                            showCameraPermissionDialog = true
+//                        }
+//                    )
                     PixoBeforeAfterSlider(
                         modifier = Modifier
                             .fillMaxSize()
@@ -146,8 +191,7 @@ fun ToolPhotoSourceScreen(
                                 end = dimensionResource(R.dimen._16),
                                 bottom = dimensionResource(R.dimen._56)
                             ),
-                        beforeImageRes = beforeImageRes,
-                        afterImageRes = afterImageRes,
+                        asset = beforeAfterAsset,
                         sliderPosition = sliderPosition,
                         onSliderPositionChange = {
                             sliderPosition = it
