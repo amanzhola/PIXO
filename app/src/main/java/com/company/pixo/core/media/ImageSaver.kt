@@ -5,9 +5,10 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.provider.MediaStore
+import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import androidx.core.net.toUri
+import java.net.URL
 
 class ImageSaver(
     private val context: Context
@@ -20,12 +21,18 @@ class ImageSaver(
             runCatching {
                 val uri = imageUri.toUri()
 
-                val bitmap = context.contentResolver
-                    .openInputStream(uri)
-                    ?.use { input ->
-                        BitmapFactory.decodeStream(input)
-                    }
-                    ?: return@withContext false
+                val inputStream = if (
+                    uri.scheme == "http" ||
+                    uri.scheme == "https"
+                ) {
+                    URL(imageUri).openStream()
+                } else {
+                    context.contentResolver.openInputStream(uri)
+                }
+
+                val bitmap = inputStream?.use { input ->
+                    BitmapFactory.decodeStream(input)
+                } ?: return@withContext false
 
                 val values = ContentValues().apply {
                     put(MediaStore.Images.Media.DISPLAY_NAME, fileName)

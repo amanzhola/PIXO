@@ -5,10 +5,11 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
-import androidx.core.net.toUri
+import java.net.URL
 
 class ImageSharer(
     private val context: Context
@@ -51,11 +52,18 @@ class ImageSharer(
             return sourceUri
         }
 
-        val bitmap = context.contentResolver
-            .openInputStream(sourceUri)
-            ?.use { input ->
-                BitmapFactory.decodeStream(input)
-            } ?: error("Unable to decode image")
+        val inputStream = if (
+            sourceUri.scheme == "http" ||
+            sourceUri.scheme == "https"
+        ) {
+            URL(imageUri).openStream()
+        } else {
+            context.contentResolver.openInputStream(sourceUri)
+        }
+
+        val bitmap = inputStream?.use { input ->
+            BitmapFactory.decodeStream(input)
+        } ?: error("Unable to decode image")
 
         val cacheDir = File(
             context.cacheDir,

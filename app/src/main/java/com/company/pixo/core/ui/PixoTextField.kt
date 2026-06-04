@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -53,7 +54,6 @@ fun PixoOnbTextBlock(
 ) {
     Column(
         modifier = modifier
-//            .width(dimensionResource(id = R.dimen._390))
             .fillMaxWidth()
             .height(dimensionResource(id = R.dimen._204))
             .background(BackgroundPrimary)
@@ -65,7 +65,6 @@ fun PixoOnbTextBlock(
     ) {
         Column(
             modifier = Modifier
-//                .width(dimensionResource(id = R.dimen._358)),
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -86,7 +85,6 @@ fun PixoOnbTextBlock(
 
         PixoButton(
             textRes = buttonTextRes,
-//            modifier = Modifier.width(dimensionResource(id = R.dimen._358)),
             modifier = Modifier.fillMaxWidth(),
             onClick = onButtonClick
         )
@@ -324,7 +322,6 @@ fun PixoGlamMakeupScreenContent(
 ) {
     Column(
         modifier = modifier
-//            .width(dimensionResource(R.dimen._390))
             .fillMaxWidth()
             .padding(horizontal = dimensionResource(R.dimen._16))
             .background(BackgroundPrimary),
@@ -352,7 +349,6 @@ fun PixoGlamMakeupScreenContent(
                 R.string.common_generate
             },
             modifier = Modifier
-//                .width(dimensionResource(R.dimen._358))
                 .fillMaxWidth()
                 .navigationBarsPadding()
                 .padding(bottom = dimensionResource(R.dimen._8)),
@@ -538,6 +534,7 @@ private fun PixoRemoveBackgroundTypeButton(
 
     Surface(
         modifier = modifier
+            .heightIn(min = dimensionResource(R.dimen._40))
             .then(
                 if (selected) {
                     Modifier.border(
@@ -560,15 +557,20 @@ private fun PixoRemoveBackgroundTypeButton(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(R.dimen._8)),
+                .padding(
+                    horizontal = dimensionResource(R.dimen._8),
+                    vertical = dimensionResource(R.dimen._4)),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = stringResource(textRes),
                 color = AccentWhite,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    lineHeight = MaterialTheme.typography.bodySmall.fontSize
+                ),
                 textAlign = TextAlign.Center,
-                maxLines = 1
+                maxLines = 1,
+                softWrap = false
             )
         }
     }

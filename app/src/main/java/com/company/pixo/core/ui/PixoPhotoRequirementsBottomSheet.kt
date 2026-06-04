@@ -31,15 +31,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.LabelPrimary
 import com.company.pixo.core.theme.LabelQuaternary
 import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.theme.SeparatorSecondary
 import com.company.pixo.domain.model.RemoteImageAsset
-
-private const val PHOTO_REQUIREMENTS_ASSETS_BASE_URL =
-    "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
 
 @Composable
 fun PixoPhotoRequirementsBottomSheet(
@@ -124,17 +122,17 @@ fun PixoPhotoRequirementsBottomSheet(
                 titleRes = R.string.photo_good_photos_title
             ) {
                 PixoBottomSheetFaceCard(
-                    image = RemoteImageAsset.Remote("$PHOTO_REQUIREMENTS_ASSETS_BASE_URL/bottomsheetimage.webp"),
+                    image = RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_PHOTO_REQUIREMENTS}/bottomsheetimage.webp"),
                     textRes = R.string.photo_face_is_visible
                 )
 
                 PixoBottomSheetFaceCard(
-                    image = RemoteImageAsset.Remote("$PHOTO_REQUIREMENTS_ASSETS_BASE_URL/bottomsheetimage2.webp"),
+                    image = RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_PHOTO_REQUIREMENTS}/bottomsheetimage2.webp"),
                     textRes = R.string.photo_face_is_visible
                 )
 
                 PixoBottomSheetFaceCard(
-                    image = RemoteImageAsset.Remote("$PHOTO_REQUIREMENTS_ASSETS_BASE_URL/bottomsheetimage3.webp"),
+                    image = RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_PHOTO_REQUIREMENTS}/bottomsheetimage3.webp"),
                     textRes = R.string.photo_good_lighting
                 )
             }
@@ -143,17 +141,17 @@ fun PixoPhotoRequirementsBottomSheet(
                 titleRes = R.string.photo_bad_photos_title
             ) {
                 PixoBottomSheetFaceCard2(
-                    image = RemoteImageAsset.Remote("$PHOTO_REQUIREMENTS_ASSETS_BASE_URL/bottomsheet_bad_image.webp"),
+                    image = RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_PHOTO_REQUIREMENTS}/bottomsheet_bad_image.webp"),
                     textRes = R.string.photo_face_is_hidden
                 )
 
                 PixoBottomSheetFaceCard2(
-                    image = RemoteImageAsset.Remote("$PHOTO_REQUIREMENTS_ASSETS_BASE_URL/bottomsheet_bad_image2.webp"),
+                    image = RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_PHOTO_REQUIREMENTS}/bottomsheet_bad_image2.webp"),
                     textRes = R.string.photo_poor_lighting
                 )
 
                 PixoBottomSheetFaceCard2(
-                    image = RemoteImageAsset.Remote("$PHOTO_REQUIREMENTS_ASSETS_BASE_URL/bottomsheet_bad_image3.webp"),
+                    image = RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_PHOTO_REQUIREMENTS}/bottomsheet_bad_image3.webp"),
                     textRes = R.string.photo_bad_angle
                 )
             }

@@ -1,12 +1,12 @@
 package com.company.pixo.core.ui
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,9 +24,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.PhotoCamera
-import androidx.compose.material.icons.outlined.PhotoLibrary
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -42,12 +39,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.clipRect
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -132,22 +130,18 @@ fun PixoBeforeAfterSlider(
         val dragModifier = if (onSliderPositionChange != null) {
             Modifier.pointerInput(maxWidth, normalizedPosition) {
                 val widthPx = with(density) { maxWidth.toPx() }
+                    detectDragGestures(
+                        onDrag = { change: PointerInputChange, dragAmount: Offset ->
+                            change.consume()
 
-                // Tools Screen update for small screens sliders
-                detectDragGestures(
-                    orientationLock = Orientation.Horizontal,
-                    onDrag = { change, dragAmount ->
-                        change.consume()
+                            if (widthPx > 0f) {
+                                val nextPosition = (normalizedPosition + dragAmount.x / widthPx)
+                                    .coerceIn(0f, 1f)
 
-                        if (widthPx > 0f) {
-                            val nextPosition = (normalizedPosition + dragAmount.x / widthPx)
-                                .coerceIn(0f, 1f)
-
-                            onSliderPositionChange(nextPosition)
+                                onSliderPositionChange(nextPosition)
+                            }
                         }
-                    }
-                )
-
+                    )
             }
         } else {
             Modifier
@@ -199,7 +193,7 @@ fun PixoBeforeAfterSlider(
 
             PixoBeforeAfterLabel(
                 text = if (labelsAsIcons) null else stringResource(R.string.slider_before),
-                icon = if (labelsAsIcons) Icons.Outlined.PhotoLibrary else null,
+                iconRes = if (labelsAsIcons) R.drawable.ic_library else null,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .padding(start = padding, bottom = padding),
@@ -208,7 +202,7 @@ fun PixoBeforeAfterSlider(
 
             PixoBeforeAfterLabel(
                 text = if (labelsAsIcons) null else stringResource(R.string.slider_after),
-                icon = if (labelsAsIcons) Icons.Outlined.PhotoCamera else null,
+                iconRes = if (labelsAsIcons) R.drawable.ic_camera else null,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(end = padding, bottom = padding),
@@ -421,7 +415,7 @@ fun PixoBeforeAfterPreview(
 private fun PixoBeforeAfterLabel(
     modifier: Modifier = Modifier,
     text: String? = null,
-    icon: ImageVector? = null,
+    @DrawableRes iconRes: Int? = null,
     onClick: (() -> Unit)? = null
 ) {
     Surface(
@@ -447,9 +441,9 @@ private fun PixoBeforeAfterLabel(
             ),
             contentAlignment = Alignment.Center
         ) {
-            if (icon != null) {
+            if (iconRes != null) {
                 Icon(
-                    imageVector = icon,
+                    painter = painterResource(id = iconRes),
                     contentDescription = null,
                     tint = AccentWhite,
                     modifier = Modifier.size(dimensionResource(R.dimen._16))

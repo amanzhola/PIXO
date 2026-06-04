@@ -9,6 +9,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.AccentPrimary
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.BgSurface400
@@ -83,12 +85,9 @@ fun PixoTokensScreen(
                 }
             }
     ) {
-//        PixoTokensGhostFace(
-//            imageRes = R.drawable.tokens_hostface
-//        )
         PixoTokensGhostFace(
             image = RemoteImageAsset.Remote(
-                url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/tokens_hostface.webp"
+                url = "${PixoRemoteAssets.TOKENS}/tokens_hostface.webp"
             )
         )
 
@@ -250,6 +249,7 @@ private fun PixoTokenPackRow(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PixoTokensFooter(
     modifier: Modifier = Modifier,

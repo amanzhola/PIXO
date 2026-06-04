@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.ui.PixoBeforeAfterSlider
@@ -33,7 +34,6 @@ import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
 import com.company.pixo.core.ui.photo.PixoPhotoRequirementsSheetHost
 import com.company.pixo.domain.model.BeforeAfterAsset
-import com.company.pixo.domain.model.PixoToolConfigs.TOOL_ASSETS_BASE_URL
 import com.company.pixo.domain.model.RemoteImageAsset
 
 enum class ToolPhotoSourceScreenVariant {
@@ -230,10 +230,10 @@ private fun ToolPhotoSourceScreenGlamMakeupPreview() {
             titleRes = R.string.tool_glam_makeup,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$TOOL_ASSETS_BASE_URL/tools_glam_makeup1.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_glam_makeup1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$TOOL_ASSETS_BASE_URL/tools_glam_makeup2.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_glam_makeup2.webp"
                 )
             ),
             onBackClick = {},

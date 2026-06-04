@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.AccentPrimary
 import com.company.pixo.core.theme.AccentWhite
 import com.company.pixo.core.theme.BackgroundPrimary
@@ -350,7 +351,7 @@ fun PixoPaywallCardsBackground(
             .clipToBounds()
     ) {
         AsyncImage(
-            model = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/paywall_cards.webp",
+            model = "${PixoRemoteAssets.PAYWALL}/paywall_cards.webp",
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
@@ -448,7 +449,7 @@ fun Onb14(
             .background(BackgroundPrimary)
     ) {
         AsyncImage(
-            model = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/onb14.webp",
+            model = "${PixoRemoteAssets.ONBOARDING}/onb14.webp",
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -468,7 +469,7 @@ fun Onb15(
     ) {
         PixoAssetImage(
             asset = RemoteImageAsset.Remote(
-                url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/onb15.webp"
+                url = "${PixoRemoteAssets.PROMPT}/onb15.webp"
             ),
             modifier = Modifier
                 .width(dimensionResource(id = R.dimen._294))
@@ -490,7 +491,7 @@ fun RateBackGround(
         contentAlignment = Alignment.TopCenter
     ) {
         AsyncImage(
-            model = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/rate.webp",
+            model = "${PixoRemoteAssets.ONBOARDING}/rate.webp",
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -518,7 +519,7 @@ private fun PixoTokensGhostFacePreview() {
         ) {
             PixoTokensGhostFace(
                 image = RemoteImageAsset.Remote(
-                    url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/tokens_hostface.webp"
+                    url = "${PixoRemoteAssets.TOKENS}/tokens_hostface.webp"
                 )
             )
         }

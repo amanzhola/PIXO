@@ -682,7 +682,8 @@ private fun PixoHdEnhancePromptInfo(
                 indication = null,
                 onClick = onClick
             )
-            .padding(dimensionResource(R.dimen._16)),
+            .padding(dimensionResource(R.dimen._16))
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen._8)),
         horizontalAlignment = Alignment.Start
     ) {
@@ -690,8 +691,7 @@ private fun PixoHdEnhancePromptInfo(
             Text(
                 text = customPrompt,
                 color = LabelSecondary,
-                style = MaterialTheme.typography.bodySmall,
-                maxLines = 2
+                style = MaterialTheme.typography.bodySmall
             )
         } else {
             PixoHdEnhanceBulletText(textRes = firstBulletRes)
@@ -716,10 +716,10 @@ private fun PixoHdEnhanceBulletText(
         )
 
         Text(
+            modifier = Modifier.weight(1f),
             text = stringResource(textRes),
             color = LabelSecondary,
-            style = MaterialTheme.typography.bodySmall,
-            maxLines = 2
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }

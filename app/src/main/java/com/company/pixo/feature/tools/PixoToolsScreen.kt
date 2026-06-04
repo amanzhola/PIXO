@@ -28,6 +28,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.LabelPrimary
 import com.company.pixo.core.theme.PixoTheme
@@ -46,9 +47,6 @@ data class PixoToolItem(
     @StringRes val titleRes: Int,
     val images: List<RemoteImageAsset>
 )
-
-private const val TOOL_ASSETS_BASE_URL =
-    "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
 
 @Composable
 fun PixoToolsScreen(
@@ -121,7 +119,7 @@ fun PixoToolsScreen(
                     ) {
                         PixoImageLabCard(
                             image = RemoteImageAsset.Remote(
-                                url = "$TOOL_ASSETS_BASE_URL/template_preview_image_lab.webp"
+                                url = "${PixoRemoteAssets.TOOLS_HEADER}/template_preview_image_lab.webp"
                             ),
                             onClick = {
                                 val nextVariant = when (toolSourceVariant) {
@@ -226,76 +224,76 @@ private fun rememberPixoToolItems(): List<PixoToolItem> {
             PixoToolItem(
                 R.string.tool_ai_enhancer,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_ai_enhancher1_1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_ai_enhancher1_2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_glam_makeup,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_glam_makeup1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_glam_makeup2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_glam_makeup1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_glam_makeup2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_remove_objects,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_objects1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_objects2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_remove_objects1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_remove_objects2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_remove_background,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_background1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_remove_background2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_remove_background1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_remove_background2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_skin_improve,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_skin_improve1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_skin_improve2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_skin_improve1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_skin_improve2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_upscale_image,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_upscale_image1.jpg"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_upscale_image2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_upscale_image1.jpg"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_upscale_image2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_change_scene,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_change_scene1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_change_scene2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_change_scene1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_change_scene2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_hair_studio,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_hair_studio.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_hair_studio.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_smile_edit,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_smile_edit.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_smile_edit.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_ghost_style,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghost_style1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghost_style2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_ghost_style1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_ghost_style2.webp")
                 )
             ),
             PixoToolItem(
                 R.string.tool_ghibli_look,
                 listOf(
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghibli_look1.webp"),
-                    RemoteImageAsset.Remote("$TOOL_ASSETS_BASE_URL/tools_ghibli_look2.webp")
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_ghibli_look1.webp"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_ghibli_look2.webp")
                 )
             )
         )
@@ -360,7 +358,7 @@ private fun PixoToolsScreenAllCardsStaticPreviewContent() {
 
                 PixoImageLabCard(
                     image = RemoteImageAsset.Remote(
-                        url = "$TOOL_ASSETS_BASE_URL/template_preview_image_lab.webp"
+                        url = "${PixoRemoteAssets.TOOLS_HEADER}/template_preview_image_lab.webp"
                     )
                 )
 

@@ -1,11 +1,9 @@
 package com.company.pixo.domain.model
 
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 
 object PixoToolConfigs {
-
-    const val TOOL_ASSETS_BASE_URL =
-        "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
 
     val imageTools: List<ToolConfig> = listOf(
         ToolConfig(
@@ -16,10 +14,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_ai_enhancer,
             subtitleRes = R.string.onboarding_ai_photo_enhancer_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ai_enhancher1_1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ai_enhancher1_2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ai_enhancher1_2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -39,10 +37,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_glam_makeup,
             subtitleRes = R.string.onboarding_glam_makeover_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_glam_makeup1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_glam_makeup1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_glam_makeup2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_glam_makeup2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -89,10 +87,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_remove_objects,
             subtitleRes = R.string.onboarding_remove_objects_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_remove_objects1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_remove_objects1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_remove_objects2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_remove_objects2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -124,10 +122,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_remove_background,
             subtitleRes = R.string.onboarding_remove_background_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_remove_background1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_remove_background1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_remove_background2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_remove_background2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -163,10 +161,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_skin_improve,
             subtitleRes = R.string.onboarding_skin_improve_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_skin_improve1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_skin_improve1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_skin_improve2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_skin_improve2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -187,10 +185,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_upscale_image,
             subtitleRes = R.string.onboarding_upscale_image_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_upscale_image1.jpg"
+                url = "${PixoRemoteAssets.TOOLS}/tools_upscale_image1.jpg"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_upscale_image2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_upscale_image2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -211,10 +209,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_change_scene,
             subtitleRes = R.string.onboarding_change_scene_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_change_scene1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_change_scene1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_change_scene2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_change_scene2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -245,7 +243,7 @@ object PixoToolConfigs {
             titleRes = R.string.tool_hair_studio,
             subtitleRes = R.string.onboarding_hair_studio_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_hair_studio.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_hair_studio.webp"
             ),
             previewAfter = null,
             generation = ToolGenerationConfig(
@@ -287,7 +285,7 @@ object PixoToolConfigs {
             titleRes = R.string.tool_smile_edit,
             subtitleRes = R.string.onboarding_smile_edit_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_smile_edit.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_smile_edit.webp"
             ),
             previewAfter = null,
             generation = ToolGenerationConfig(
@@ -320,10 +318,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_ghibli_look,
             subtitleRes = R.string.onboarding_ghibli_look_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ghibli_look1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ghibli_look1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ghibli_look2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ghibli_look2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -344,10 +342,10 @@ object PixoToolConfigs {
             titleRes = R.string.tool_ghost_style,
             subtitleRes = R.string.onboarding_ghost_style_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ghost_style1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ghost_style1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ghost_style2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ghost_style2.webp"
             ),
             generation = ToolGenerationConfig(
                 tokenCost = 2,
@@ -369,7 +367,7 @@ object PixoToolConfigs {
         titleRes = R.string.prompt_flow_title,
         subtitleRes = R.string.prompt_dialog_description,
         previewBefore = RemoteImageAsset.Remote(
-            url = "$TOOL_ASSETS_BASE_URL/onb15.webp"
+            url = "${PixoRemoteAssets.PROMPT}/onb15.webp"
         ),
         previewAfter = null,
         generation = ToolGenerationConfig(
@@ -458,7 +456,7 @@ private fun template(
         titleRes = titleRes,
         subtitleRes = R.string.templates_title,
         previewBefore = RemoteImageAsset.Remote(
-            url = "$TOOL_ASSETS_BASE_URL/$previewFileName"
+            url = "${PixoRemoteAssets.TEMPLATES}/$previewFileName"
         ),
         previewAfter = null,
         generation = ToolGenerationConfig(

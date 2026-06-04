@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.domain.model.BeforeAfterAsset
-import com.company.pixo.domain.model.PixoToolConfigs.TOOL_ASSETS_BASE_URL
 import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.feature.photo.ToolPhotoSourceScreen
 import com.company.pixo.feature.photo.ToolPhotoSourceScreenVariant
@@ -24,10 +24,10 @@ fun PixoGhostFaceMainScreen(
         titleRes = R.string.tool_ghost_face,
         asset = BeforeAfterAsset.Separate(
             before = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ghost_style1.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ghost_style1.webp"
             ),
             after = RemoteImageAsset.Remote(
-                url = "$TOOL_ASSETS_BASE_URL/tools_ghost_style2.webp"
+                url = "${PixoRemoteAssets.TOOLS}/tools_ghost_style2.webp"
             )
         ),
         highlightSliderOnCameraDialog = false,

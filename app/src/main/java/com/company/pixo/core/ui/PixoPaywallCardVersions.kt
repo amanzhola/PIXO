@@ -1,6 +1,5 @@
 package com.company.pixo.core.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -17,10 +16,9 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.BackgroundPrimary
 
 private object ImagesCollageDimens {
@@ -50,27 +48,25 @@ private object ImagesCollageDimens {
 }
 
 private object ImagesCollageConstants {
-    private const val BASE_URL =
-        "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
 
     val Images = listOf(
-        "$BASE_URL/template_cherry.webp",
-        "$BASE_URL/tools_glam.webp",
-        "$BASE_URL/template_preview_image_lab.webp",
-        "$BASE_URL/template_doublepicture.webp",
-        "$BASE_URL/template_cherry.webp",
+        "${PixoRemoteAssets.TEMPLATES}/template_cherry.webp",
+        "${PixoRemoteAssets.CAMERA}/tools_glam.webp",
+        "${PixoRemoteAssets.TOOLS_HEADER}/template_preview_image_lab.webp",
+        "${PixoRemoteAssets.PAYWALL_VERSIONS}/template_doublepicture.webp",
+        "${PixoRemoteAssets.PAYWALL_VERSIONS}/template_cherry.webp",
 
-        "$BASE_URL/tools_glam.webp",
-        "$BASE_URL/template_preview_image_lab.webp",
-        "$BASE_URL/template_doublepicture.webp",
-        "$BASE_URL/template_cherry.webp",
-        "$BASE_URL/tools_glam.webp",
+        "${PixoRemoteAssets.CAMERA}/tools_glam.webp",
+        "${PixoRemoteAssets.TOOLS_HEADER}/template_preview_image_lab.webp",
+        "${PixoRemoteAssets.PAYWALL_VERSIONS}/template_doublepicture.webp",
+        "${PixoRemoteAssets.TEMPLATES}/template_cherry.webp",
+        "${PixoRemoteAssets.CAMERA}/tools_glam.webp",
 
-        "$BASE_URL/template_preview_image_lab.webp",
-        "$BASE_URL/template_doublepicture.webp",
-        "$BASE_URL/template_cherry.webp",
-        "$BASE_URL/tools_glam.webp",
-        "$BASE_URL/template_preview_image_lab.webp"
+        "${PixoRemoteAssets.TOOLS_HEADER}/template_preview_image_lab.webp",
+        "${PixoRemoteAssets.PAYWALL_VERSIONS}/template_doublepicture.webp",
+        "${PixoRemoteAssets.TEMPLATES}/template_cherry.webp",
+        "${PixoRemoteAssets.CAMERA}/tools_glam.webp",
+        "${PixoRemoteAssets.TOOLS_HEADER}/template_preview_image_lab.webp"
     )
 
     const val Columns = 5

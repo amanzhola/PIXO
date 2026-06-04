@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.theme.AccentWhite
 import com.company.pixo.core.theme.GallerySheetBackground
 import com.company.pixo.core.theme.GallerySheetSearchIcon
@@ -87,25 +88,22 @@ fun PixoRemoveBackgroundGalleryBottomSheet(
     }
 }
 
-private const val GALLERY_ASSETS_BASE_URL =
-    "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
-
 private val galleryImages = listOf(
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums1.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums2.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums3.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/tools_glam.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums5.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums6.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums7.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums8.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums9.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums10.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums11.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums12.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums13.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums14.webp"),
-    RemoteImageAsset.Remote("$GALLERY_ASSETS_BASE_URL/bottomsheet_albums15.webp")
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums1.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums2.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums3.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/tools_glam.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums5.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums6.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums7.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums8.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums9.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums10.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums11.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums12.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums13.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums14.webp"),
+    RemoteImageAsset.Remote("${PixoRemoteAssets.BOTTOMSHEET_ALBUMS}/bottomsheet_albums15.webp")
 )
 
 @Composable

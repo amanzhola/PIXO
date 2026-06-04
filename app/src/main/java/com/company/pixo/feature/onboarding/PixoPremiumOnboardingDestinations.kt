@@ -1,6 +1,7 @@
 package com.company.pixo.feature.onboarding
 
 import com.company.pixo.R
+import com.company.pixo.core.config.PixoRemoteAssets
 import com.company.pixo.core.navigation.AppRoute
 import com.company.pixo.domain.model.BeforeAfterAsset
 import com.company.pixo.domain.model.RemoteImageAsset
@@ -8,16 +9,13 @@ import com.company.pixo.domain.model.ToolType
 
 object PixoPremiumOnboardingDestinations {
 
-    const val ONBOARDING_ASSETS_BASE_URL =
-        "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding"
-
     val tools: List<PremiumOnboardingDestination> = listOf(
         PremiumOnboardingDestination(
             route = AppRoute.AiEnhancherOnboarding.route,
             toolType = ToolType.AI_ENHANCER,
             asset = BeforeAfterAsset.Combined(
                 image = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/onb1.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/onb1.webp"
                 )
             ),
             titleRes = R.string.onboarding_ai_photo_enhancer_title,
@@ -29,10 +27,10 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.GLAM_MAKEUP,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_glam_makeup1.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_glam_makeup1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_glam_makeup2.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_glam_makeup2.webp"
                 )
             ),
             titleRes = R.string.onboarding_glam_makeover_title,
@@ -44,10 +42,10 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.REMOVE_OBJECTS,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_remove_objects1.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_remove_objects1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_remove_objects2.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_remove_objects2.webp"
                 )
             ),
             titleRes = R.string.onboarding_remove_objects_title,
@@ -59,7 +57,7 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.REMOVE_BACKGROUND,
             asset = BeforeAfterAsset.Combined(
                 image = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/onb9.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/onb9.webp"
                 )
             ),
             titleRes = R.string.tool_remove_background,
@@ -71,10 +69,10 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.SKIN_IMPROVE,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_face1.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/tools_face1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_face2.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/tools_face2.webp"
                 )
             ),
             titleRes = R.string.tool_skin_improve,
@@ -86,7 +84,7 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.UPSCALE_IMAGE,
             asset = BeforeAfterAsset.Combined(
                 image = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/onb8.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/onb8.webp"
                 )
             ),
             titleRes = R.string.tool_upscale_image,
@@ -98,10 +96,10 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.CHANGE_SCENE,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/onb11_1.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/onb11_1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/onb11_2.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/onb11_2.webp"
                 )
             ),
             titleRes = R.string.tool_change_scene,
@@ -113,10 +111,10 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.HAIR_STUDIO,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_hair_studio1.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/tools_hair_studio1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_hair_studio2.webp"
+                    url = "${PixoRemoteAssets.ONBOARDING}/tools_hair_studio2.webp"
                 )
             ),
             titleRes = R.string.tool_hair_studio,
@@ -128,7 +126,7 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.SMILE_EDIT,
             asset = BeforeAfterAsset.Combined(
                 image = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_smile_edit.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_smile_edit.webp"
                 )
             ),
             titleRes = R.string.tool_smile_edit,
@@ -140,10 +138,10 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.GHOSTFACE,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_ghost_style1.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_ghost_style1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_ghost_style2.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_ghost_style2.webp"
                 )
             ),
             titleRes = R.string.tool_ghost_style,
@@ -155,10 +153,10 @@ object PixoPremiumOnboardingDestinations {
             toolType = ToolType.GHIBLI,
             asset = BeforeAfterAsset.Separate(
                 before = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_ghibli_look1.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_ghibli_look1.webp"
                 ),
                 after = RemoteImageAsset.Remote(
-                    url = "$ONBOARDING_ASSETS_BASE_URL/tools_ghibli_look2.webp"
+                    url = "${PixoRemoteAssets.TOOLS}/tools_ghibli_look2.webp"
                 )
             ),
             titleRes = R.string.tool_ghibli_look,
