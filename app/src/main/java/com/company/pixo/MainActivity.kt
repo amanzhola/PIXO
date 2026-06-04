@@ -14,7 +14,6 @@ import com.company.pixo.domain.model.BeforeAfterAsset
 import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.domain.model.ToolType
 import com.company.pixo.feature.photo._11screens.PixoAiEnhancherMainScreen
-import com.company.pixo.feature.history.PixoHistoryErrorRetryTestScreen
 import com.company.pixo.feature.history.PixoHistoryItem
 import com.company.pixo.feature.history.PixoHistoryScreen
 import com.company.pixo.feature.history.HistoryRoute
@@ -151,7 +150,7 @@ class MainActivity : ComponentActivity() {
                         onSettingsClick = {},
                     )
 
-                    13 -> PixoHistoryErrorRetryTestScreen()
+//                    13 -> PixoHistoryErrorRetryTestScreen()
 
                     14 -> PixoMainBottomNavTestScreen()
 

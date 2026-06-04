@@ -27,7 +27,6 @@ fun PixoGhibliEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.ghibli_style,
-        placeholderImageRes = R.drawable.tools_ghibli_style_camera_image,
         modifier = modifier,
         onBackClick = onBackClick
     ) {

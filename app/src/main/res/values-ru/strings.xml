@@ -349,4 +349,7 @@
     <!-- Common share -->
     <string name="toast_couldnt_share">Не удалось поделиться. Попробуйте снова</string>
 
+    <!-- result screen -->
+    <string name="mock_result_pending">Waiting for server result</string>
+
 </resources>

@@ -1,17 +1,14 @@
 package com.company.pixo.data.repository
 
 import android.content.Context
-import com.company.pixo.R
+import com.company.pixo.core.navigation.PixoDebugConfig
 import com.company.pixo.data.db.dao.HistoryDao
 import com.company.pixo.data.db.entity.HistoryEntity
-import com.company.pixo.core.navigation.PixoDebugConfig
 import com.company.pixo.domain.model.GenerationCreateRequest
 import com.company.pixo.domain.model.GenerationCreateResult
 import com.company.pixo.domain.model.GenerationResult
 import com.company.pixo.domain.model.GenerationStatus
 import com.company.pixo.domain.model.ImageUploadResult
-import com.company.pixo.domain.model.PixoToolConfigs
-import com.company.pixo.domain.model.RemoteImageAsset
 import com.company.pixo.domain.model.ToolType
 import com.company.pixo.domain.repository.GenerationRepository
 import kotlinx.coroutines.CoroutineScope
@@ -249,30 +246,14 @@ class MockGenerationRepository(
     private fun createMockResultImageUrl(
         request: GenerationCreateRequest
     ): String {
-        val asset = when {
+        return when {
             request.templateId != null -> {
-                PixoToolConfigs
-                    .findTemplateById(request.templateId)
-                    ?.previewBefore
-                    ?: RemoteImageAsset.Remote(
-                        url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/template_cherry.webp"
-                    )
+                "https://mock.pixo.ai/results/template_${request.templateId}.webp"
             }
 
             else -> {
-                val config = PixoToolConfigs.findByType(request.toolType)
-
-                config?.previewAfter
-                    ?: config?.previewBefore
-                    ?: RemoteImageAsset.Remote(
-                        url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/tools_ghibli_look1.webp"
-                    )
+                "https://mock.pixo.ai/results/${request.toolType.name.lowercase()}.webp"
             }
-        }
-
-        return when (asset) {
-            is RemoteImageAsset.Remote -> asset.url
-            is RemoteImageAsset.Local -> "android.resource://${context.packageName}/${asset.res}"
         }
     }
 

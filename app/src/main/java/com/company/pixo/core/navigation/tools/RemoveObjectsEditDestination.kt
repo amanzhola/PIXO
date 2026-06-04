@@ -51,7 +51,6 @@ fun NavGraphBuilder.removeObjectsEditDestination(
                 R.string.remove_objects_style_hint
             ),
             imageUri = imageUri,
-            placeholderImageRes = R.drawable.tools_remove_objects_camera_image,
             value = value,
             onValueChange = {
                 value = it

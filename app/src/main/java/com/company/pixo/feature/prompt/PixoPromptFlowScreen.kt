@@ -56,8 +56,8 @@ fun PixoPromptFlowScreen(
     hasActiveSubscription: Boolean = false,
     tokens: String = "1000",
     onTokenBalanceClick: () -> Unit = {},
-    onGetProClick: () -> Unit,
-    onSettingsClick: () -> Unit,
+    onGetProClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {},
     onGenerateClick: () -> Unit,
     onTabClick: (MainTab) -> Unit,
 ) {
@@ -97,42 +97,37 @@ fun PixoPromptFlowScreen(
                     .fillMaxWidth()
                     .weight(1f)
                     .padding(
-                        bottom = dimensionResource(R.dimen._111) +
-                                dimensionResource(R.dimen._68)
-                    ),
+                        bottom = dimensionResource(R.dimen._130)
+                    )
             )
         }
-        val imeVisible = WindowInsets.ime.getBottom(LocalDensity.current) > 0
 
-        Box(
+        Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .imePadding()
-                .padding(
-                    start = dimensionResource(R.dimen._16),
-                    end = dimensionResource(R.dimen._16),
-                    bottom = if (imeVisible) {
-                        dimensionResource(R.dimen._12)
-                    } else {
-                        dimensionResource(R.dimen._111) + dimensionResource(R.dimen._12)
-                    }
-                )
+                .imePadding(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PixoButton(
                 textRes = generateTextRes,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = dimensionResource(R.dimen._16),
+                        end = dimensionResource(R.dimen._16),
+                        bottom = dimensionResource(R.dimen._6)
+                    ),
                 enabled = canGenerate,
                 trailingIconRes = if (hasPrompt) R.drawable.ic_sparkle else null,
                 onClick = onGenerateClick
             )
-        }
 
-        PixoBottomNavigation(
-            selectedTab = MainTab.Prompts,
-            onTabClick = onTabClick,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
+            PixoBottomNavigation(
+                selectedTab = MainTab.Prompts,
+                onTabClick = onTabClick
+            )
+        }
     }
 }
 

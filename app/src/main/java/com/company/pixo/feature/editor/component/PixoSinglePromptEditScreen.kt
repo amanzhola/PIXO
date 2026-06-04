@@ -48,7 +48,6 @@ fun PixoSinglePromptEditScreen(
     onValueChange: (String) -> Unit,
     onBackClick: () -> Unit,
     onGenerateClick: () -> Unit,
-    @DrawableRes placeholderImageRes: Int,
     sheetTitle: String = fieldTitle,
 ) {
 
@@ -72,16 +71,7 @@ fun PixoSinglePromptEditScreen(
             onBackClick = onBackClick
         )
 
-        AsyncImage(
-            model = imageUri.takeIf { it.isNotBlank() },
-            contentDescription = null,
-            placeholder = if (imageUri.isBlank()) {
-                painterResource(placeholderImageRes)
-            } else {
-                null
-            },
-            error = painterResource(placeholderImageRes),
-            fallback = painterResource(placeholderImageRes),
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
@@ -90,9 +80,19 @@ fun PixoSinglePromptEditScreen(
                     start = dimensionResource(R.dimen._16),
                     end = dimensionResource(R.dimen._16),
                     bottom = dimensionResource(R.dimen._16)
-                ),
-            contentScale = ContentScale.Crop
-        )
+                )
+        ) {
+            if (imageUri.isNotBlank()) {
+                AsyncImage(
+                    model = imageUri,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                PixoImagePlaceholder()
+            }
+        }
 
         Column(
             modifier = Modifier.fillMaxWidth(),

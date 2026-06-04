@@ -49,7 +49,6 @@ fun NavGraphBuilder.changeSceneEditDestination(
             fieldTitle = stringResource(R.string.change_scene_describe_title),
             fieldHint = stringResource(R.string.change_scene_hint),
             imageUri = imageUri,
-            placeholderImageRes = R.drawable.tools_placeholder_change_scene_camera_image,
             value = value,
             onValueChange = {
                 value = it

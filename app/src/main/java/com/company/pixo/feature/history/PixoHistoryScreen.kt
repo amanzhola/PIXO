@@ -22,16 +22,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.AsyncImage
 import com.company.pixo.R
 import com.company.pixo.core.theme.AccentWhite
 import com.company.pixo.core.theme.BackgroundPrimary
@@ -44,16 +46,9 @@ import com.company.pixo.core.ui.PixoHistoryCard
 import com.company.pixo.core.ui.PixoHistoryCardState
 import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
-import androidx.compose.ui.tooling.preview.Preview
-import com.company.pixo.feature.main.MainTab
-
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import coil.compose.AsyncImage
 import com.company.pixo.domain.model.ToolType
+import com.company.pixo.feature.main.MainTab
+import com.company.pixo.feature.result.PixoResultPlaceholder
 
 sealed interface PixoHistoryItem {
     data object Empty : PixoHistoryItem
@@ -191,6 +186,7 @@ private fun PixoHistoryGridItem(
                 state = PixoHistoryCardState.Empty
             )
         }
+
         is PixoHistoryItem.Loading -> {
             PixoHistoryCard(
                 modifier = modifier
@@ -252,15 +248,16 @@ private fun PixoHistoryImageCard(
         onClick = onClick
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = null,
-                placeholder = painterResource(R.drawable.tools_prompt_sceen_test),
-                error = painterResource(R.drawable.tools_prompt_sceen_test),
-                fallback = painterResource(R.drawable.tools_prompt_sceen_test),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            if (imageUrl.isBlank()) {
+                PixoResultPlaceholder(url = imageUrl)
+            } else {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             Box(
                 modifier = Modifier
@@ -315,191 +312,4 @@ private fun PixoHistoryEmptyScreenPreview() {
             onTabClick = {}
         )
     }
-}
-
-@Preview(
-    name = "Pixo / History Loading Screen",
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 844
-)
-@Composable
-private fun PixoHistoryLoadingScreenPreview() {
-    PixoTheme {
-        PixoHistoryScreen(
-            items = listOf(
-                PixoHistoryItem.Loading(
-                    id = "loading_1",
-                    toolType = null
-                ),
-                PixoHistoryItem.Image(
-                    id = "1",
-                    titleRes = R.string.tool_ghibli_look,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghibli_look}",
-                    toolType = ToolType.GHIBLI
-                ),
-                PixoHistoryItem.Image(
-                    id = "2",
-                    titleRes = R.string.history_ghostface_style,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghostface_style}",
-                    toolType = ToolType.GHOSTFACE
-                ),
-                PixoHistoryItem.Image(
-                    id = "3",
-                    titleRes = R.string.tool_hair_studio,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_hair_studio3}",
-                    toolType = ToolType.HAIR_STUDIO
-                )
-            ),
-            showEmptyMessage = false,
-            onGetProClick = {},
-            onSettingsClick = {},
-            onTabClick = {}
-        )
-    }
-}
-
-@Preview(
-    name = "Pixo / History Error Screen",
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 844
-)
-@Composable
-private fun PixoHistoryErrorScreenPreview() {
-    PixoTheme {
-        PixoHistoryScreen(
-            items = listOf(
-                PixoHistoryItem.Error(
-                    id = "error_1",
-                    toolType = null
-                ),
-                PixoHistoryItem.Image(
-                    id = "1",
-                    titleRes = R.string.tool_ghibli_look,
-                    toolType = ToolType.GHIBLI,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghibli_look}"
-                ),
-                PixoHistoryItem.Image(
-                    id = "2",
-                    titleRes = R.string.history_ghostface_style,
-                    toolType = ToolType.GHOSTFACE,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghostface_style}"
-                ),
-                PixoHistoryItem.Image(
-                    id = "3",
-                    titleRes = R.string.tool_hair_studio,
-                    toolType = ToolType.HAIR_STUDIO,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_hair_studio3}"
-                )
-            ),
-            showEmptyMessage = false,
-            onGetProClick = {},
-            onSettingsClick = {},
-            onTabClick = {}
-        )
-    }
-}
-
-@Preview(
-    name = "Pixo / History Images Screen",
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 844
-)
-@Composable
-private fun PixoHistoryImagesScreenPreview() {
-    PixoTheme {
-        PixoHistoryScreen(
-            items = listOf(
-                PixoHistoryItem.Image(
-                    id = "1",
-                    titleRes = R.string.tool_hair_studio,
-                    toolType = ToolType.HAIR_STUDIO,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_hair_studio4}"
-                ),
-                PixoHistoryItem.Image(
-                    id = "2",
-                    titleRes = R.string.tool_ghibli_look,
-                    toolType = ToolType.GHIBLI,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghibli_look}"
-                ),
-                PixoHistoryItem.Image(
-                    id = "3",
-                    titleRes = R.string.history_ghostface_style,
-                    toolType = ToolType.GHOSTFACE,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghostface_style}"
-                ),
-                PixoHistoryItem.Image(
-                    id = "4",
-                    titleRes = R.string.tool_hair_studio,
-                    toolType = ToolType.HAIR_STUDIO,
-                    imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_hair_studio3}"
-                )
-            ),
-            showEmptyMessage = false,
-            onGetProClick = {},
-            onSettingsClick = {},
-            onTabClick = {}
-        )
-    }
-}
-
-//// option for error check (seperate testing for further incorporation)
-private enum class PixoHistoryErrorTestState2 {
-    Loading,
-    Error,
-    Empty
-}
-
-@Composable
-fun PixoHistoryErrorRetryTestScreen() {
-    var state by remember { mutableStateOf(PixoHistoryErrorTestState2.Loading) }
-
-    LaunchedEffect(state) {
-        if (state == PixoHistoryErrorTestState2.Loading) {
-            kotlinx.coroutines.delay(1500)
-            state = PixoHistoryErrorTestState2.Error
-        }
-    }
-
-    val firstItem = when (state) {
-        PixoHistoryErrorTestState2.Loading -> PixoHistoryItem.Loading(
-            id = "loading_1",
-            toolType = null
-        )
-        PixoHistoryErrorTestState2.Error -> PixoHistoryItem.Error(
-            id = "error_1",
-            toolType = null
-        )
-        PixoHistoryErrorTestState2.Empty -> PixoHistoryItem.Empty
-    }
-
-    PixoHistoryScreen(
-        items = listOf(
-            firstItem,
-            PixoHistoryItem.Image(
-                id = "1",
-                titleRes = R.string.tool_ghibli_look,
-                toolType = ToolType.GHIBLI,
-                imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghibli_look}"
-            ),
-            PixoHistoryItem.Image(
-                id = "2",
-                titleRes = R.string.history_ghostface_style,
-                toolType = ToolType.GHOSTFACE,
-                imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghostface_style}"
-            ),
-            PixoHistoryItem.Image(
-                id = "3",
-                titleRes = R.string.tool_hair_studio,
-                toolType = ToolType.HAIR_STUDIO,
-                imageUrl = "android.resource://com.company.pixo/${R.drawable.tools_hair_studio3}"
-            )
-        ),
-        showEmptyMessage = false,
-        onGetProClick = {},
-        onSettingsClick = {},
-        onTabClick = {}
-    )
 }

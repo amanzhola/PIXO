@@ -26,7 +26,6 @@ fun PixoUpscaleImageEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.tool_upscale_image,
-        placeholderImageRes = R.drawable.tools_upscale_image_camera_image,
         modifier = modifier,
         onBackClick = onBackClick
     ) {

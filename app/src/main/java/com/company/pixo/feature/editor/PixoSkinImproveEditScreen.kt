@@ -27,7 +27,6 @@ fun PixoSkinImproveEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.tool_skin_improve,
-        placeholderImageRes = R.drawable.tools_skin_improve_camera_image,
         modifier = modifier,
         onBackClick = onBackClick
     ) {

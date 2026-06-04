@@ -10,8 +10,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.dialog
-import com.company.pixo.core.ui.PixoTokensScreen
 import com.company.pixo.domain.repository.TokenRepository
+import com.company.pixo.feature.tokens.PixoTokensScreen
 import kotlinx.coroutines.delay
 
 fun NavGraphBuilder.tokenPaywallDestination(

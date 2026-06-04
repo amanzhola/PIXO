@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,15 +18,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Constraints
 import com.company.pixo.R
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.LabelPrimary
@@ -83,6 +84,12 @@ fun PixoToolsScreen(
                 onTokensClick = onTokenBalanceClick,
                 onSettingsClick = onSettingsClick
             )
+
+            val textMeasurer = rememberTextMeasurer()
+            val titleTextStyle = MaterialTheme.typography.titleSmall
+            val density = LocalDensity.current
+            val horizontalSpacing = dimensionResource(id = R.dimen._8)
+            val screenHorizontalPadding = dimensionResource(id = R.dimen._16)
 
             LazyColumn(
                 modifier = Modifier
@@ -143,47 +150,56 @@ fun PixoToolsScreen(
                 }
                 tools.chunked(PixoToolsConstants.GRID_COLUMNS).forEach { rowItems ->
                     item {
-                        var firstTitleLines by remember { mutableIntStateOf(1) }
-                        var secondTitleLines by remember { mutableIntStateOf(1) }
-
-                        val forceTwoLineTitle = firstTitleLines >= 2 || secondTitleLines >= 2
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(
-                                dimensionResource(id = R.dimen._8)
-                            )
+                        BoxWithConstraints(
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            rowItems.forEachIndexed { index, tool ->
-                                Box(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .noRippleClick {
-                                            onToolClick(tool, toolSourceVariant)
-                                        }
-                                ) {
-                                    PixoBeforeAfterPreview(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        titleRes = tool.titleRes,
-                                        forceTwoLineTitle = forceTwoLineTitle,
-                                        onTitleLineCountChange = { lineCount ->
-                                            if (index == 0) {
-                                                firstTitleLines = lineCount
-                                            } else {
-                                                secondTitleLines = lineCount
-                                            }
-                                        },
-                                        asset = if (tool.images.size == 1) {
-                                            BeforeAfterAsset.Combined(tool.images.first())
-                                        } else {
-                                            BeforeAfterAsset.Separate(tool.images[0], tool.images[1])
-                                        }
-                                    )
-                                }
+                            val cardWidth = if (rowItems.size == PixoToolsConstants.GRID_COLUMNS) {
+                                (maxWidth - horizontalSpacing) / PixoToolsConstants.GRID_COLUMNS
+                            } else {
+                                (maxWidth - horizontalSpacing) / PixoToolsConstants.GRID_COLUMNS
                             }
 
-                            if (rowItems.size < PixoToolsConstants.GRID_COLUMNS) {
-                                Spacer(modifier = Modifier.weight(1f))
+                            val cardWidthPx = with(density) { cardWidth.roundToPx() }
+
+                            val rowTitleLines = rowItems.maxOf { tool ->
+                                val title = stringResource(tool.titleRes)
+
+                                textMeasurer.measure(
+                                    text = title,
+                                    style = titleTextStyle,
+                                    constraints = Constraints(maxWidth = cardWidthPx),
+                                    maxLines = Int.MAX_VALUE
+                                ).lineCount
+                            }.coerceAtLeast(1)
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(horizontalSpacing)
+                            ) {
+                                rowItems.forEach { tool ->
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .noRippleClick {
+                                                onToolClick(tool, toolSourceVariant)
+                                            }
+                                    ) {
+                                        PixoBeforeAfterPreview(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            titleRes = tool.titleRes,
+                                            titleMinLines = rowTitleLines,
+                                            asset = if (tool.images.size == 1) {
+                                                BeforeAfterAsset.Combined(tool.images.first())
+                                            } else {
+                                                BeforeAfterAsset.Separate(tool.images[0], tool.images[1])
+                                            }
+                                        )
+                                    }
+                                }
+
+                                if (rowItems.size < PixoToolsConstants.GRID_COLUMNS) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
                             }
                         }
                     }

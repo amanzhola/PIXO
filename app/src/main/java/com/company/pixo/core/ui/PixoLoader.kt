@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.company.pixo.R
@@ -42,7 +43,8 @@ fun PixoLoader(
 
     Column(
         modifier = modifier
-        .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(horizontal = dimensionResource(R.dimen._16)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -54,25 +56,25 @@ fun PixoLoader(
         Text(
             modifier = Modifier
                 .padding(top = dimensionResource(R.dimen._8))
-                .width(180.dp)
-                .height(dimensionResource(R.dimen._25)),
+                .fillMaxWidth(),
             text = stringResource(R.string.generation_process_title),
             color = AccentWhite,
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
-            maxLines = 1
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
         )
 
         Text(
             modifier = Modifier
                 .padding(top = dimensionResource(R.dimen._8))
-                .fillMaxWidth()
-                .height(dimensionResource(R.dimen._36)),
+                .fillMaxWidth(),
             text = stringResource(R.string.generation_process_description),
             color = LabelSecondary,
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
-            maxLines = 2
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

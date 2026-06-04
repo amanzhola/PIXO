@@ -379,8 +379,7 @@ fun PixoBeforeAfterPreview(
     asset: BeforeAfterAsset,
     modifier: Modifier = Modifier,
     sliderPosition: Float = 0.5f,
-    forceTwoLineTitle: Boolean = false,
-    onTitleLineCountChange: ((Int) -> Unit)? = null,
+    titleMinLines: Int = 1,
     onSliderPositionChange: ((Float) -> Unit)? = null
 ) {
     var internalSliderPosition by remember { mutableFloatStateOf(sliderPosition) }
@@ -394,24 +393,13 @@ fun PixoBeforeAfterPreview(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen._8))
     ) {
         Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .then(
-                    if (forceTwoLineTitle) {
-                        Modifier.height(dimensionResource(R.dimen._40))
-                    } else {
-                        Modifier
-                    }
-                ),
+            modifier = Modifier.fillMaxWidth(),
             text = stringResource(titleRes),
             color = AccentWhite,
             style = MaterialTheme.typography.titleSmall,
-            maxLines = 2,
-            minLines = if (forceTwoLineTitle) 2 else 1,
-            overflow = TextOverflow.Ellipsis,
-            onTextLayout = { result ->
-                onTitleLineCountChange?.invoke(result.lineCount)
-            }
+            minLines = titleMinLines,
+            maxLines = titleMinLines,
+            overflow = TextOverflow.Ellipsis
         )
 
         PixoBeforeAfterSlider(

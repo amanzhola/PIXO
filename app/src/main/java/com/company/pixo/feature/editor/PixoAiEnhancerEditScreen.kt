@@ -24,7 +24,6 @@ fun PixoAiEnhancerEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.ai_enhancer_title,
-        placeholderImageRes = R.drawable.tools_placeholder_ai_enhancher_camera_image,
         onBackClick = onBackClick
     ) {
         PixoAiEnhancerScreenContent(

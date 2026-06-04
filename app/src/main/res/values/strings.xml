@@ -355,5 +355,8 @@
     <!-- Common share -->
     <string name="toast_couldnt_share">Couldn’t share. Try again</string>
 
+    <!-- result screen -->
+    <string name="mock_result_pending">Waiting for server result</string>
+
 
 </resources>

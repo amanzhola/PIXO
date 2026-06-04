@@ -1,6 +1,5 @@
 package com.company.pixo.feature.photo
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -187,7 +186,7 @@ fun ToolPhotoSourceScreen(
             Box(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = dimensionResource(R.dimen._310))
+                    .padding(top = dimensionResource(R.dimen._260))
             ) {
                 PixoMediaLibraryPermissionDialog(
                     onRestrictAccessClick = {

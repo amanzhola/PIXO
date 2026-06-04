@@ -35,6 +35,7 @@ import com.company.pixo.core.ui.PixoPromptTextField
 import com.company.pixo.core.ui.PixoSmileIntensitySlider
 import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
+import com.company.pixo.feature.editor.component.PixoImagePlaceholder
 
 @Composable
 fun PixoSmileEditEditScreen(
@@ -52,12 +53,6 @@ fun PixoSmileEditEditScreen(
     }
 
     val sampleImageRes = smilePreviewRes(smileLevel)
-
-    if (showSmileSample) {
-        sampleImageRes
-    } else {
-        R.drawable.tools_smile_edit_camera_image
-    }
 
     Column(
         modifier = modifier
@@ -102,20 +97,18 @@ fun PixoSmileEditEditScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
+
                 } else {
-                    AsyncImage(
-                        model = imageUri.takeIf { it.isNotBlank() },
-                        contentDescription = null,
-                        placeholder = if (imageUri.isBlank()) {
-                            painterResource(R.drawable.tools_smile_edit_camera_image)
-                        } else {
-                            null
-                        },
-                        error = painterResource(R.drawable.tools_smile_edit_camera_image),
-                        fallback = painterResource(R.drawable.tools_smile_edit_camera_image),
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
+                    if (imageUri.isNotBlank()) {
+                        AsyncImage(
+                            model = imageUri,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        PixoImagePlaceholder()
+                    }
                 }
             }
 
@@ -142,8 +135,6 @@ fun PixoSmileEditEditScreen(
                     smileLevel = it
                 }
             )
-
-//            Spacer(modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen._8)))
 
             PixoButton(

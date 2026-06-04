@@ -1,6 +1,5 @@
 package com.company.pixo.core.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -18,6 +17,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -53,6 +52,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
@@ -69,6 +69,7 @@ import com.company.pixo.core.theme.TextIconSoft200
 import com.company.pixo.core.theme.TextIconSoft700
 import com.company.pixo.core.theme.TextIconWeak50
 import com.company.pixo.domain.model.RemoteImageAsset
+import com.company.pixo.feature.editor.component.PixoImagePlaceholder
 
 @Composable
 fun PixoCard(
@@ -174,26 +175,30 @@ fun PixoImageLabCard(
                         end = dimensionResource(R.dimen._24),
                         bottom = dimensionResource(R.dimen._16)
                     )
-                    .width(dimensionResource(R.dimen._310))
-                    .height(dimensionResource(R.dimen._47)),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen._8)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
-                    modifier = Modifier.width(dimensionResource(R.dimen._229))
+                    modifier = Modifier.weight(1f)
                 ) {
                     Text(
                         text = stringResource(titleRes),
                         color = TextIconWeak50,
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     Text(
                         text = stringResource(subtitleRes),
                         color = TextIconSoft200,
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
+
                 PixoTryItButton(
                     text = stringResource(actionRes),
                     onClick = onActionClick
@@ -279,24 +284,31 @@ private fun PixoTryItButton(
     text: String,
     onClick: () -> Unit
 ) {
+    val isAscii = text.all { it.code <= 127 }
+
     val compactTextStyle = when {
+        isAscii -> MaterialTheme.typography.bodyLarge
+
         text.length > 12 -> MaterialTheme.typography.labelSmall.copy(
             fontSize = 8.sp,
-            lineHeight = 12.sp
+            lineHeight = 10.sp
         )
 
         text.length > 7 -> MaterialTheme.typography.labelMedium.copy(
             fontSize = 9.sp,
-            lineHeight = 16.sp
+            lineHeight = 12.sp
         )
 
-        else -> MaterialTheme.typography.bodyLarge
+        else -> MaterialTheme.typography.labelMedium.copy(
+            fontSize = 10.sp,
+            lineHeight = 14.sp
+        )
     }
 
     Surface(
         modifier = Modifier
             .height(dimensionResource(R.dimen._37))
-            .wrapContentWidth()
+            .wrapContentWidth(unbounded = true)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
@@ -306,10 +318,12 @@ private fun PixoTryItButton(
         color = AccentWhite
     ) {
         Box(
-            modifier = Modifier.padding(
-                horizontal = dimensionResource(R.dimen._14),
-                vertical = dimensionResource(R.dimen._8)
-            ),
+            modifier = Modifier
+                .wrapContentWidth(unbounded = true)
+                .padding(
+                    horizontal = dimensionResource(R.dimen._16),
+                    vertical = dimensionResource(R.dimen._8)
+                ),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -317,7 +331,8 @@ private fun PixoTryItButton(
                 color = BackgroundPrimary,
                 style = compactTextStyle,
                 maxLines = 1,
-                softWrap = false
+                softWrap = false,
+                overflow = TextOverflow.Clip
             )
         }
     }
@@ -325,8 +340,7 @@ private fun PixoTryItButton(
 
 @Composable
 fun PixoPaywallCardsBackground(
-    modifier: Modifier = Modifier,
-    @DrawableRes imageRes: Int = R.drawable.paywall_cards
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
@@ -335,8 +349,8 @@ fun PixoPaywallCardsBackground(
             .background(BackgroundPrimary)
             .clipToBounds()
     ) {
-        Image(
-            painter = painterResource(imageRes),
+        AsyncImage(
+            model = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/paywall_cards.webp",
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
@@ -374,7 +388,7 @@ private const val FULLSCREEN_BOTTOM_GRADIENT_HEIGHT_FRACTION = 0.35f
 
 @Composable
 fun PixoTokensGhostFace(
-    @DrawableRes imageRes: Int,
+    image: RemoteImageAsset,
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
@@ -383,12 +397,25 @@ fun PixoTokensGhostFace(
             .fillMaxSize()
             .background(BackgroundPrimary)
     ) {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        when (image) {
+            is RemoteImageAsset.Local -> {
+                Image(
+                    painter = painterResource(id = image.res),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            is RemoteImageAsset.Remote -> {
+                AsyncImage(
+                    model = image.url,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
 
         Box(
             modifier = Modifier
@@ -398,7 +425,9 @@ fun PixoTokensGhostFace(
                 .background(
                     Brush.verticalGradient(
                         colorStops = arrayOf(
-                            PixoBackgroundConstants.GRADIENT_START to BackgroundPrimary.copy(alpha = PixoBackgroundConstants.TRANSPARENT_ALPHA),
+                            PixoBackgroundConstants.GRADIENT_START to BackgroundPrimary.copy(
+                                alpha = PixoBackgroundConstants.TRANSPARENT_ALPHA
+                            ),
                             PixoBackgroundConstants.GRADIENT_END to BackgroundPrimary
                         )
                     )
@@ -418,8 +447,8 @@ fun Onb14(
             .fillMaxSize()
             .background(BackgroundPrimary)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.onb14),
+        AsyncImage(
+            model = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/onb14.webp",
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -460,8 +489,8 @@ fun RateBackGround(
             .background(BackgroundPrimary),
         contentAlignment = Alignment.TopCenter
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.rate),
+        AsyncImage(
+            model = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/rate.webp",
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -488,7 +517,9 @@ private fun PixoTokensGhostFacePreview() {
                 .background(BackgroundPrimary)
         ) {
             PixoTokensGhostFace(
-                imageRes = R.drawable.tokens_hostface
+                image = RemoteImageAsset.Remote(
+                    url = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/tokens_hostface.webp"
+                )
             )
         }
     }
@@ -592,15 +623,16 @@ private fun PixoPromptPictureFilled(
                 }
             )
     ) {
-        AsyncImage(
-            model = imageUri,
-            contentDescription = stringResource(id = R.string.cd_prompt_image),
-            contentScale = ContentScale.Crop,
-            placeholder = null,
-            error = painterResource(id = R.drawable.tools_prompt_image),
-            fallback = painterResource(id = R.drawable.tools_prompt_image),
-            modifier = Modifier.fillMaxSize()
-        )
+        if (imageUri.isNotBlank()) {
+            AsyncImage(
+                model = imageUri,
+                contentDescription = stringResource(id = R.string.cd_prompt_image),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else {
+            PixoImagePlaceholder()
+        }
 
         Box(
             modifier = Modifier
@@ -708,7 +740,6 @@ enum class PixoHistoryCardState {
 fun PixoHistoryCard(
     state: PixoHistoryCardState,
     modifier: Modifier = Modifier,
-    @DrawableRes imageRes: Int = R.drawable.history_image,
     onCloseClick: (() -> Unit)? = null,
     onTryAgainClick: (() -> Unit)? = null,
     onClick: (() -> Unit)? = null
@@ -731,7 +762,6 @@ fun PixoHistoryCard(
 
         PixoHistoryCardState.Image -> PixoHistoryImageCard(
             modifier = modifier,
-            imageRes = imageRes,
             onClick = onClick
         )
     }
@@ -910,7 +940,6 @@ private fun PixoHistoryErrorCard(
 
 @Composable
 private fun PixoHistoryImageCard(
-    @DrawableRes imageRes: Int,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null
 ) {
@@ -919,12 +948,7 @@ private fun PixoHistoryImageCard(
         onClick = onClick,
         paddingValues = PaddingValues()
     ) {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = stringResource(id = R.string.cd_history_image),
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+        PixoImagePlaceholder()
 
         Text(
             modifier = Modifier
@@ -1029,7 +1053,6 @@ private fun PixoHistoryPreviewContainer(
 @Composable
 fun PixoTemplateCapturedPicture(
     imageUri: String?,
-    @DrawableRes placeholderImageRes: Int,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onRemoveClick: () -> Unit
@@ -1038,16 +1061,7 @@ fun PixoTemplateCapturedPicture(
         modifier = modifier
             .size(dimensionResource(R.dimen._56))
     ) {
-        AsyncImage(
-            model = imageUri.takeIf { !it.isNullOrBlank() },
-            contentDescription = null,
-            placeholder = if (imageUri.isNullOrBlank()) {
-                painterResource(placeholderImageRes)
-            } else {
-                null
-            },
-            error = painterResource(placeholderImageRes),
-            fallback = painterResource(placeholderImageRes),
+        Box(
             modifier = Modifier
                 .matchParentSize()
                 .clip(RoundedCornerShape(dimensionResource(R.dimen._100)))
@@ -1055,9 +1069,19 @@ fun PixoTemplateCapturedPicture(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
                     onClick = onClick
-                ),
-            contentScale = ContentScale.Crop
-        )
+                )
+        ) {
+            if (!imageUri.isNullOrBlank()) {
+                AsyncImage(
+                    model = imageUri,
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                PixoImagePlaceholder()
+            }
+        }
 
         Box(
             modifier = Modifier
@@ -1121,7 +1145,6 @@ fun PixoTemplateGenerateActions(
     ) {
         PixoTemplateCapturedPicture(
             imageUri = imageUri,
-            placeholderImageRes = R.drawable.template_v2_image,
             onClick = onPictureClick,
             onRemoveClick = onPictureRemoveClick
         )

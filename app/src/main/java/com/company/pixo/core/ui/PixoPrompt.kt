@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -377,10 +379,12 @@ fun PixoPromptTextField(
 ) {
     PixoPromptTextFieldContainer(modifier = modifier) {
         Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
             text = value,
             color = LabelTertiary,
-            style = MaterialTheme.typography.bodySmall,
-            maxLines = 3
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
@@ -390,13 +394,19 @@ fun PixoPromptBulletTextField(
     modifier: Modifier = Modifier
 ) {
     PixoPromptTextFieldContainer(modifier = modifier) {
-        PixoPromptBulletText(
-            textRes = R.string.upscale_image_prompt_blurry_image
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+        ) {
+            PixoPromptBulletText(
+                textRes = R.string.upscale_image_prompt_blurry_image
+            )
 
-        PixoPromptBulletText(
-            textRes = R.string.upscale_image_prompt_restore_sharpness
-        )
+            PixoPromptBulletText(
+                textRes = R.string.upscale_image_prompt_restore_sharpness
+            )
+        }
     }
 }
 

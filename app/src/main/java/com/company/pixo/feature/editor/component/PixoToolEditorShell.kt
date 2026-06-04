@@ -1,8 +1,8 @@
 package com.company.pixo.feature.editor.component
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import com.company.pixo.R
 import com.company.pixo.core.theme.BackgroundPrimary
+import com.company.pixo.core.theme.BgSurface400
 import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
 
@@ -24,7 +24,6 @@ import com.company.pixo.core.ui.PixoTopBarVariant
 fun PixoToolEditorShell(
     imageUri: String,
     @StringRes titleRes: Int,
-    @DrawableRes placeholderImageRes: Int,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
@@ -39,16 +38,11 @@ fun PixoToolEditorShell(
             titleRes = titleRes,
             onBackClick = onBackClick
         )
-        val isPreview = LocalInspectionMode.current
 
-        AsyncImage(
-            model = imageUri.takeIf {
-                it.isNotBlank() && !isPreview
-            },
-            contentDescription = null,
-            placeholder = painterResource(placeholderImageRes),
-            error = painterResource(placeholderImageRes),
-            fallback = painterResource(placeholderImageRes),
+        val isPreview = LocalInspectionMode.current
+        val shouldShowImage = imageUri.isNotBlank() && !isPreview
+
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
@@ -57,10 +51,31 @@ fun PixoToolEditorShell(
                     start = dimensionResource(R.dimen._16),
                     end = dimensionResource(R.dimen._16),
                     bottom = dimensionResource(R.dimen._16)
-                ),
-            contentScale = ContentScale.Crop
-        )
+                )
+        ) {
+            if (shouldShowImage) {
+                AsyncImage(
+                    model = imageUri,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                PixoImagePlaceholder()
+            }
+        }
 
         content()
     }
+}
+
+@Composable
+fun PixoImagePlaceholder(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(BgSurface400)
+    )
 }

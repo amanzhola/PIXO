@@ -49,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.style.TextOverflow
 import com.company.pixo.core.theme.AccentRed
 import com.company.pixo.core.theme.AccentWhite
 import com.company.pixo.core.theme.DialogBackground
@@ -521,7 +522,7 @@ fun PixoMediaLibraryPermissionDialog(
     Box(
         modifier = modifier
             .width(dimensionResource(R.dimen._300))
-            .height(dimensionResource(R.dimen._278))
+            .heightIn(min = dimensionResource(R.dimen._300))
     ) {
         Column(
             modifier = Modifier
@@ -649,7 +650,7 @@ fun PixoMediaLibraryPermissionDialog(
 
             Text(
                 modifier = Modifier
-                    .width(dimensionResource(R.dimen._272))
+                    .fillMaxWidth()
                     .align(Alignment.Start),
                 text = stringResource(
                     R.string.media_permission_title,
@@ -658,7 +659,8 @@ fun PixoMediaLibraryPermissionDialog(
                 color = DialogGlassTextPrimary,
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Start,
-                maxLines = 3
+                maxLines = 4,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.weight(1f))

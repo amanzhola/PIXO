@@ -22,7 +22,6 @@ fun PixoRemoveBackgroundEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.tool_remove_background,
-        placeholderImageRes = R.drawable.tools_remove_background_camera_image,
         modifier = modifier,
         onBackClick = onBackClick
     ) {

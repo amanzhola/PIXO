@@ -32,7 +32,6 @@ fun PixoHairStyleEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.tool_hair_studio,
-        placeholderImageRes = R.drawable.tools_hair_styler_camera_image,
         modifier = modifier,
         onBackClick = onBackClick
     ) {

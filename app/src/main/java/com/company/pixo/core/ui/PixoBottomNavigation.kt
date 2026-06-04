@@ -8,12 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,14 +43,13 @@ fun PixoBottomNavigation(
 ) {
     Row(
         modifier = modifier
-            .height(dimensionResource(R.dimen._111))
+            .fillMaxWidth()
             .background(BackgroundPrimary)
-            .padding(
-                horizontal = dimensionResource(R.dimen._16)
-            )
-            .windowInsetsPadding(WindowInsets.navigationBars),
+            .navigationBarsPadding()
+            .height(dimensionResource(R.dimen._72))
+            .padding(horizontal = dimensionResource(R.dimen._16)),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Top
+        verticalAlignment = Alignment.CenterVertically
     ) {
         MainTab.entries.forEach { tab ->
             PixoBottomNavigationItem(

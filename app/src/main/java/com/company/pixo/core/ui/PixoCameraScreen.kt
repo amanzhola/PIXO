@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.AsyncImage
 import com.company.pixo.R
 import com.company.pixo.core.theme.AccentPrimary
 import com.company.pixo.core.theme.AccentWhite
@@ -64,10 +65,8 @@ fun PixoCameraScreen(
                     .weight(1f)
                     .fillMaxWidth()
             ) {
-                Image(
-                    painter = painterResource(
-                        R.drawable.tools_glam_makeup_camera_image
-                    ),
+                AsyncImage(
+                    model = "https://raw.githubusercontent.com/amanzhola/PIXO/feature/onboarding-assets-backend/server-assets/assets/onboarding/tools_glam_makeup_camera_image.webp",
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop

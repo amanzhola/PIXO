@@ -27,7 +27,6 @@ fun PixoGlamMakeupEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.tool_glam_makeup,
-        placeholderImageRes = R.drawable.tools_glam_makeup_camera_image,
         modifier = modifier,
         onBackClick = onBackClick
     ) {

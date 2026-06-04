@@ -1,6 +1,7 @@
 package com.company.pixo.feature.result
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,11 +30,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.company.pixo.R
 import com.company.pixo.core.theme.BackgroundPrimary
+import com.company.pixo.core.theme.BgSurface400
+import com.company.pixo.core.theme.LabelSecondary
 import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.ui.PixoDeleteClipDialog
 import com.company.pixo.core.ui.PixoResultActionButtons
@@ -200,15 +207,21 @@ private fun PixoPromptFlowResultImage(
         modifier = modifier
             .clip(RoundedCornerShape(dimensionResource(R.dimen._16)))
     ) {
-        AsyncImage(
-            model = resultImageUrl,
-            contentDescription = null,
-            placeholder = painterResource(R.drawable.tools_prompt_sceen_test),
-            error = painterResource(R.drawable.tools_prompt_sceen_test),
-            fallback = painterResource(R.drawable.tools_prompt_sceen_test),
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        val painter = rememberAsyncImagePainter(model = resultImageUrl)
+        val state = painter.state
+
+        if (resultImageUrl.isNullOrBlank() || state is AsyncImagePainter.State.Error) {
+            PixoResultPlaceholder(
+                url = resultImageUrl
+            )
+        } else {
+            Image(
+                painter = painter,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
 
         Box(
             modifier = Modifier
@@ -225,6 +238,28 @@ private fun PixoPromptFlowResultImage(
     }
 }
 
+@Composable
+fun PixoResultPlaceholder(
+    url: String?,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(BgSurface400)
+            .padding(dimensionResource(R.dimen._16)),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = url.takeUnless { it.isNullOrBlank() }
+                ?: stringResource(R.string.mock_result_pending),
+            color = LabelSecondary,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+}
+
 @Preview(
     name = "Pixo / Prompt Flow Result Screen",
     showBackground = true,
@@ -235,7 +270,7 @@ private fun PixoPromptFlowResultImage(
 private fun PixoPromptFlowResultScreenPreview() {
     PixoTheme {
         PixoPromptFlowResultScreen(
-            resultImageUrl = "android.resource://com.company.pixo/${R.drawable.tools_ghibli_look}",
+            resultImageUrl = null,
             onCloseClick = {},
             onSaveClick = { true },
             onShareClick = { true },

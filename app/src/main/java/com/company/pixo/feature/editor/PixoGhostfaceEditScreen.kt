@@ -27,7 +27,6 @@ fun PixoGhostfaceEditScreen(
     PixoToolEditorShell(
         imageUri = imageUri,
         titleRes = R.string.tool_ghost_face,
-        placeholderImageRes = R.drawable.tools_ghostface_camera_image,
         modifier = modifier,
         onBackClick = onBackClick
     ) {
