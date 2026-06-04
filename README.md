@@ -17,6 +17,111 @@
 
 ---
 
+AI Photo Editor built with Kotlin + Jetpack Compose.
+
+## 🌿 Active Development Branch
+
+| Branch                              | Purpose                                    |
+| ----------------------------------- | ------------------------------------------ |
+| `main`                              | Stable project overview                    |
+| `feature/onboarding-assets-backend` | Remote Assets Migration + APK Optimization |
+
+🔗 Branch:
+
+```text
+https://github.com/amanzhola/PIXO/tree/feature/onboarding-assets-backend
+```
+
+---
+
+# 📊 Project Metrics
+
+| Category                   | Before               | After                       | Improvement      | Notes                     |
+| -------------------------- | -------------------- | --------------------------- | ---------------- | ------------------------- |
+| 📦 APK Size (Debug)        | 124 MB               | 20.7 MB                     | -83%             | Local development build   |
+| 🚀 APK Size (Release)      | 124 MB+              | 5.07 MB                     | -95.9%           | R8 + Resource Shrinking   |
+| 🖼️ Asset Storage          | APK Resources        | Remote Assets               | Externalized     | GitHub-hosted assets      |
+| 📁 PNG Assets              | 40+ files            | Mostly WebP                 | Reduced          | Optimized resources       |
+| 🎭 Placeholders            | Per-screen drawables | Shared Compose placeholders | Unified          | Less duplication          |
+| 🧠 Result Images           | Local drawables      | URL-based architecture      | Backend-ready    | Future server integration |
+| 📚 History Images          | Local drawables      | URL-based architecture      | Backend-ready    | Future server integration |
+| 🎨 Templates               | Local resources      | Remote assets               | Backend-ready    | Easier updates            |
+| ⚡ Build Optimization       | Disabled             | Enabled                     | Complete         | R8 enabled                |
+| 🧹 Resource Shrinking      | Disabled             | Enabled                     | Complete         | Unused resources removed  |
+| 📦 Material Icons Extended | Included             | Removed                     | Reduced APK size | Dependency cleanup        |
+
+---
+
+# 🏆 Major Achievements
+
+| Achievement                         | Result                       |
+| ----------------------------------- | ---------------------------- |
+| 🚀 APK Optimization                 | **124 MB → 5.07 MB Release** |
+| 📉 APK Reduction                    | **-95.9%**                   |
+| 🌐 Remote Asset Architecture        | ✅ Completed                  |
+| 🖼️ PNG → WebP Migration            | ✅ Completed                  |
+| 🎭 Shared Placeholder System        | ✅ Completed                  |
+| 🧠 Backend-ready Image Pipeline     | ✅ Completed                  |
+| 📚 History Persistence              | ✅ Completed                  |
+| 💾 Save to Gallery                  | ✅ Completed                  |
+| 📤 Share Image Flow                 | ✅ Completed                  |
+| 🧩 Template Generation Architecture | ✅ Completed                  |
+| ✍️ Prompt Generation Architecture   | ✅ Completed                  |
+| 🏗️ Clean Architecture              | ✅ Completed                  |
+| ⚙️ Koin DI                          | ✅ Completed                  |
+| 🗄️ Room Persistence                | ✅ Completed                  |
+| 🌐 Retrofit Networking              | ✅ Completed                  |
+| 🎨 Jetpack Compose UI               | ✅ Completed                  |
+
+---
+
+# 🤖 AI Features
+
+| Module            | Status     | Count | Notes                 |
+| ----------------- | ---------- | ----- | --------------------- |
+| 🛠️ Tool Flows    | ✅ Complete | 11    | AI tools              |
+| 🎨 Template Flows | ✅ Complete | 24    | Template generation   |
+| ✍️ Prompt Flow    | ✅ Complete | 1     | Prompt generation     |
+| 📚 History Flow   | ✅ Complete | 1     | Save / Retry / Delete |
+| 🖼️ Result Flow   | ✅ Complete | 1     | Save / Share          |
+| 📷 Camera Flow    | ✅ Complete | 1     | Capture image         |
+| 🖼️ Gallery Flow  | ✅ Complete | 1     | Pick image            |
+
+---
+
+# 📂 Remote Assets Structure
+
+| Folder                                   | Purpose                  |
+| ---------------------------------------- | ------------------------ |
+| 📁 assets/onboarding                     | Onboarding screens       |
+| 📁 assets/tools                          | Tool previews            |
+| 📁 assets/tools/header                   | Tool headers             |
+| 📁 assets/templates                      | Template catalog         |
+| 📁 assets/prompt                         | Prompt assets            |
+| 📁 assets/paywall                        | Paywall assets           |
+| 📁 assets/paywall/versions               | Paywall variations       |
+| 📁 assets/tokens                         | Token screen assets      |
+| 📁 assets/camera                         | Camera assets            |
+| 📁 assets/smile_edit                     | Smile Edit assets        |
+| 📁 assets/bottomsheet/albums             | Album picker assets      |
+| 📁 assets/bottomsheet/photo-requirements | Photo requirement assets |
+
+---
+
+# 🎯 Current Milestone
+
+✅ Remote Assets Migration Complete
+
+✅ APK Optimization Complete
+
+✅ Backend-ready Media Architecture Complete
+
+✅ 124 MB → 5.07 MB Release APK
+
+✅ Ready for Backend Integration
+
+---
+
 # 📌 Project Overview
 
 | 🚀 Product      | 📱 Platform      | 🧠 Type        | 🏢 Requested By | ⏳ Requested Timeline | 📊 My Estimate     | ✅ Final Timeline      | 🎯 Result              |
