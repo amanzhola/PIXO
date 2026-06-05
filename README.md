@@ -218,7 +218,7 @@ https://github.com/amanzhola/PIXO/tree/feature/onboarding-assets-backend
 
 ---
 
-| [AI Enhancer](docs/ai_enhancer/README.md) | [Glam Makeup](docs/glam_makeup/README.md) | Remove Objects | Remove Background | Skin Improve | Upscale Image | Change Scene | Hair Studio | [Smile Edit](docs/smile_edit/README.md) | Ghostface | Ghibli | 
+| [AI Enhancer](docs/ai_enhancer/README.md) | [Glam Makeup](docs/glam_makeup/README.md) | [Remove Objects](docs/remove_objects/README.md)  | Remove Background | Skin Improve | Upscale Image | Change Scene | Hair Studio | [Smile Edit](docs/smile_edit/README.md) | Ghostface | Ghibli | 
 
 ---
 

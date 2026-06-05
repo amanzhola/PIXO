@@ -125,10 +125,13 @@ fun NavGraphBuilder.mainDestination(
                     backendType = ToolBackendType.PROMPT,
                     serverAction = "prompt",
                     sourceImageUrl = null,
-                    sourceImageUri = state.imageUri,
+                    sourceImageUri = state.imageUris.firstOrNull(),
+                    sourceImageUris = state.imageUris,
                     prompt = state.promptText,
                     templateId = null,
-                    options = emptyMap(),
+                    options = mapOf(
+                        "imageCount" to state.imageUris.size.toString()
+                    ),
                     tokenCost = if (isCartoonPrompt) {
                         4
                     } else {
@@ -145,7 +148,7 @@ fun NavGraphBuilder.mainDestination(
                 actions.createGenerationWithValidation(
                     request = request,
                     requiredFieldsValid = state.promptText.isNotBlank() &&
-                            !state.imageUri.isNullOrBlank(),
+                            state.imageUris.isNotEmpty(),
                     onConsentDismiss = onDismiss,
                 )
             },

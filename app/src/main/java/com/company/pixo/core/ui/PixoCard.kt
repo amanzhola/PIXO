@@ -285,26 +285,10 @@ private fun PixoTryItButton(
     text: String,
     onClick: () -> Unit
 ) {
-    val isAscii = text.all { it.code <= 127 }
-
-    val compactTextStyle = when {
-        isAscii -> MaterialTheme.typography.bodyLarge
-
-        text.length > 12 -> MaterialTheme.typography.labelSmall.copy(
-            fontSize = 8.sp,
-            lineHeight = 10.sp
-        )
-
-        text.length > 7 -> MaterialTheme.typography.labelMedium.copy(
-            fontSize = 9.sp,
-            lineHeight = 12.sp
-        )
-
-        else -> MaterialTheme.typography.labelMedium.copy(
-            fontSize = 10.sp,
-            lineHeight = 14.sp
-        )
-    }
+    val compactTextStyle = pixoCompactTextStyleForLanguage(
+        text = text,
+        asciiStyle = MaterialTheme.typography.bodyLarge
+    )
 
     Surface(
         modifier = Modifier

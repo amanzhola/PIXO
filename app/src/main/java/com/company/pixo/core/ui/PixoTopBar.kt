@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
@@ -30,6 +32,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import com.company.pixo.core.navigation.DEBUG_TOKENS_BALANCE
 
 enum class PixoTopBarVariant {
@@ -173,23 +177,33 @@ fun PixoTopBar(
             }
 
             PixoTopBarVariant.Result -> {
-                TopBarLeft(
-                    modifier = Modifier.align(Alignment.CenterStart)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterStart),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     PixoIconButton(
                         variant = PixoIconButtonVariant.CloseLeft,
                         contentDescription = stringResource(R.string.common_close),
                         onClick = onCloseClick
                     )
-                }
 
-                TopBarCenter(
-                    modifier = Modifier.align(Alignment.Center)
-                ) {
-                    PixoScreenTitle(
-                        titleRes = titleRes,
-                        onClick = onTitleClick
+                    Spacer(
+                        modifier = Modifier.width(dimensionResource(R.dimen._16))
                     )
+
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = dimensionResource(R.dimen._16)),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        PixoScreenTitle(
+                            titleRes = titleRes,
+                            onClick = onTitleClick
+                        )
+                    }
                 }
             }
 
@@ -319,7 +333,13 @@ private fun TopBarCenter(
     content: @Composable () -> Unit
 ) {
     Box(
-        modifier = modifier.height(dimensionResource(R.dimen._44)),
+        modifier = modifier
+        .fillMaxWidth()
+        .height(dimensionResource(R.dimen._44))
+        .padding(
+            start = dimensionResource(R.dimen._16),
+            end = dimensionResource(R.dimen._16)
+        ),
         contentAlignment = Alignment.Center
     ) {
         content()
@@ -346,10 +366,20 @@ private fun PixoScreenTitle(
 ) {
     if (titleRes == null) return
 
+    val title = stringResource(titleRes)
+
     Text(
         text = stringResource(titleRes),
         color = LabelPrimary,
-        style = MaterialTheme.typography.titleMedium,
+        style = pixoCompactTextStyleForLanguage(
+            text = title,
+            asciiStyle = MaterialTheme.typography.titleMedium
+        ).copy(
+            fontSize = 14.sp,
+            lineHeight = 18.sp
+        ),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
         modifier = Modifier.clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = null,

@@ -239,7 +239,7 @@ fun AppNavHost() {
         if (uri != null && target != null) {
             when (target) {
                 GalleryPickTarget.Prompt -> {
-                    promptViewModel.setImageUri(uri.toString())
+                    promptViewModel.addImageUri(uri.toString())
                 }
 
                 else -> {

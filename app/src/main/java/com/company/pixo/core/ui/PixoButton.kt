@@ -985,10 +985,10 @@ private fun PixoSettingsButton(
                     horizontal = dimensionResource(R.dimen._10),
                     vertical = dimensionResource(R.dimen._10)
                 ),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
+                modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen._8)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -1000,6 +1000,7 @@ private fun PixoSettingsButton(
                 )
 
                 Text(
+                    modifier = Modifier.weight(1f),
                     text = stringResource(textRes),
                     color = AccentWhite,
                     style = MaterialTheme.typography.bodyLarge,

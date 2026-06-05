@@ -11,5 +11,6 @@ data class GenerationCreateRequest(
     val options: Map<String, String>,
     val tokenCost: Int,
     val outputCount: Int,
-    val historyIdentity: String
+    val historyIdentity: String,
+    val sourceImageUris: List<String> = emptyList()
 )

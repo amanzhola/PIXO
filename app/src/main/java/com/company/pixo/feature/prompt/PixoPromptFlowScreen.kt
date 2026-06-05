@@ -1,15 +1,15 @@
 package com.company.pixo.feature.prompt
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,10 +48,10 @@ private fun getPromptGenerateTextRes(promptText: String): Int {
 fun PixoPromptFlowScreen(
     modifier: Modifier = Modifier,
     promptText: String,
-    imageUri: String?,
+    imageUris: List<String>,
     onPromptTextChange: (String) -> Unit,
     onPictureClick: () -> Unit,
-    onPictureRemoveClick: () -> Unit,
+    onPictureRemoveClick: (String) -> Unit,
     hasActiveSubscription: Boolean = false,
     tokens: String = "1000",
     onTokenBalanceClick: () -> Unit = {},
@@ -62,7 +61,7 @@ fun PixoPromptFlowScreen(
     onTabClick: (MainTab) -> Unit,
 ) {
     val hasPrompt = promptText.isNotBlank()
-    val hasPicture = !imageUri.isNullOrBlank()
+    val hasPicture = imageUris.isNotEmpty()
     val canGenerate = hasPrompt && hasPicture
 
     val generateTextRes = getPromptGenerateTextRes(promptText)
@@ -89,7 +88,7 @@ fun PixoPromptFlowScreen(
 
             PixoPromptFlowScreenContent(
                 promptText = promptText,
-                imageUri = imageUri,
+                imageUris = imageUris,
                 onPromptTextChange = onPromptTextChange,
                 onPictureClick = onPictureClick,
                 onPictureRemoveClick = onPictureRemoveClick,
@@ -134,12 +133,15 @@ fun PixoPromptFlowScreen(
 @Composable
 fun PixoPromptFlowScreenContent(
     promptText: String,
-    imageUri: String?,
+    imageUris: List<String>,
     modifier: Modifier = Modifier,
     onPromptTextChange: (String) -> Unit,
     onPictureClick: () -> Unit,
-    onPictureRemoveClick: () -> Unit,
+    onPictureRemoveClick: (String) -> Unit,
 ) {
+    val maxImages = 4
+    val canAddMore = imageUris.size < maxImages
+
     Column(
         modifier
             .fillMaxWidth()
@@ -175,16 +177,31 @@ fun PixoPromptFlowScreenContent(
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen._8)))
 
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = dimensionResource(id = R.dimen._8))
-        ) {
-            PixoPromptPicture(
-                imageUri = imageUri,
-                onClick = onPictureClick,
-                onRemoveClick = onPictureRemoveClick
+                .padding(start = dimensionResource(id = R.dimen._8)),
+            horizontalArrangement = Arrangement.spacedBy(
+                dimensionResource(id = R.dimen._8)
             )
+        ) {
+            imageUris.forEach { uri ->
+                PixoPromptPicture(
+                    imageUri = uri,
+                    onClick = onPictureClick,
+                    onRemoveClick = {
+                        onPictureRemoveClick(uri)
+                    }
+                )
+            }
+
+            if (canAddMore) {
+                PixoPromptPicture(
+                    imageUri = null,
+                    onClick = onPictureClick,
+                    onRemoveClick = null
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -202,8 +219,12 @@ private fun PixoPromptFlowScreenGenerateFourPreview() {
     PixoTheme {
         PixoPromptFlowScreen(
             promptText = stringResource(id = R.string.prompt_dialog_cartoon),
-            imageUri = "preview://prompt_image",
-            onPromptTextChange = {},
+            imageUris = listOf(
+                "preview://prompt_image_1",
+                "preview://prompt_image_2",
+                "preview://prompt_image_3",
+                "preview://prompt_image_4"
+            ),onPromptTextChange = {},
             onPictureClick = {},
             onPictureRemoveClick = {},
             onGetProClick = {},
@@ -225,7 +246,12 @@ private fun PixoPromptFlowScreenGenerateTwoPreview() {
     PixoTheme {
         PixoPromptFlowScreen(
             promptText = stringResource(id = R.string.prompt_dialog_headshot),
-            imageUri = "preview://prompt_image",
+            imageUris = listOf(
+                "preview://prompt_image_1",
+                "preview://prompt_image_2",
+                "preview://prompt_image_3",
+                "preview://prompt_image_4"
+            ),
             onPromptTextChange = {},
             onPictureClick = {},
             onPictureRemoveClick = {},
@@ -247,7 +273,12 @@ private fun PixoPromptFlowScreenGenerateTwoPreview() {
 private fun PixoPromptFlowScreenEmptyPreview() {
     PixoPromptFlowScreen(
         promptText = "",
-        imageUri = "preview://prompt_image",
+        imageUris = listOf(
+            "preview://prompt_image_1",
+            "preview://prompt_image_2",
+            "preview://prompt_image_3",
+            "preview://prompt_image_4"
+        ),
         onPromptTextChange = {},
         onPictureClick = {},
         onPictureRemoveClick = {},

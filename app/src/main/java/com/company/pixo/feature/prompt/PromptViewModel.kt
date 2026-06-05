@@ -16,9 +16,32 @@ class PromptViewModel : ViewModel() {
         }
     }
 
-    fun setImageUri(uri: String?) {
+    fun addImageUri(uri: String) {
+        _uiState.update { state ->
+            state.copy(
+                imageUris = (state.imageUris + uri).distinct().take(4),
+                imageUri = uri
+            )
+        }
+    }
+
+    fun removeImageUri(uri: String) {
+        _uiState.update { state ->
+            val nextUris = state.imageUris.filterNot { it == uri }
+
+            state.copy(
+                imageUris = nextUris,
+                imageUri = nextUris.firstOrNull()
+            )
+        }
+    }
+
+    fun clearImages() {
         _uiState.update {
-            it.copy(imageUri = uri)
+            it.copy(
+                imageUris = emptyList(),
+                imageUri = null
+            )
         }
     }
 

@@ -57,7 +57,7 @@ fun PromptFlowRoute(
     ) {
         PixoPromptFlowScreen(
             promptText = uiState.promptText,
-            imageUri = uiState.imageUri,
+            imageUris = uiState.imageUris,
             onPromptTextChange = viewModel::onPromptTextChange,
             onPictureClick = {
                 restoreKeyboardAfterRequirements = imeVisible
@@ -66,8 +66,8 @@ fun PromptFlowRoute(
 
                 showPhotoRequirementsSheet = true
             },
-            onPictureRemoveClick = {
-                viewModel.setImageUri(null)
+            onPictureRemoveClick = {uri ->
+                viewModel.removeImageUri(uri)
             },
             hasActiveSubscription = hasActiveSubscription,
             tokens = tokens,

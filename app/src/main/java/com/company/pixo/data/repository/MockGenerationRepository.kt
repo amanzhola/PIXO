@@ -1,6 +1,7 @@
 package com.company.pixo.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.company.pixo.core.navigation.PixoDebugConfig
 import com.company.pixo.data.db.dao.HistoryDao
 import com.company.pixo.data.db.entity.HistoryEntity
@@ -52,6 +53,12 @@ class MockGenerationRepository(
     override suspend fun createGeneration(
         request: GenerationCreateRequest
     ): GenerationCreateResult {
+
+        Log.d(
+            "PROMPT_IMAGES",
+            "tool=${request.toolType}, sourceImageUri=${request.sourceImageUri}, count=${request.sourceImageUris.size}, uris=${request.sourceImageUris}"
+        )
+
         val taskId = "mock_task_${UUID.randomUUID()}"
         val currentCount = generationCounter.incrementAndGet()
 
