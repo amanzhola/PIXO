@@ -31,19 +31,19 @@
 
 | Step 1                                                                         | Step 2                                                                  | Step 3                                                                 | Step 4                                                                  |
 | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| <img src="screenshots/camera_flow/1_Remove%20Objects%20Card2.png" width="150"> | <img src="screenshots/camera_flow/2_Remove%20Objects2.png" width="150"> | <img src="screenshots/camera_flow/3_Remove%20Objects.png" width="150"> | <img src="screenshots/camera_flow/4_Remove%20Objects1.png" width="150"> |
+| <img src="screenshots/Camera%20Flow/1_Remove%20Objects%20Card2.png" width="150"> | <img src="screenshots/Camera%20Flow/2_Remove%20Objects2.png" width="150"> | <img src="screenshots/Camera%20Flow/3_Remove%20Objects.png" width="150"> | <img src="screenshots/Camera%20Flow/4_Remove%20Objects1.png" width="150"> |
 
 | Step 5                                                                | Step 6                                                                         | Step 7                                                       | Step 8                                                                              |
 | --------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
-| <img src="screenshots/camera_flow/5_Camera%20Dialog.png" width="150"> | <img src="screenshots/camera_flow/6_Camera%20Android%20Alert.png" width="150"> | <img src="screenshots/camera_flow/7_Camera.png" width="150"> | <img src="screenshots/camera_flow/8_Edit%20Screen%20%28Camera%292.png" width="150"> |
+| <img src="screenshots/Camera%20Flow/5_Camera%20Dialog.png" width="150"> | <img src="screenshots/Camera%20Flow/6_Camera%20Android%20Alert.png" width="150"> | <img src="screenshots/Camera%20Flow/7_Camera.png" width="150"> | <img src="screenshots/Camera%20Flow/8_Edit%20Screen%20%28Camera%292.png" width="150"> |
 
 | Step 9                                                                            | Step 10                                                                             | Step 11                                                                             | Step 12                                                                                                  |
 | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| <img src="screenshots/camera_flow/9_Edit%20Screen%28Passive%292.png" width="150"> | <img src="screenshots/camera_flow/10_Edit%20Screen%28Entering%292.png" width="150"> | <img src="screenshots/camera_flow/11_Edit%20Screen%20%28Camera%29.png" width="150"> | <img src="screenshots/camera_flow/12_Generation%20Alert%20Button%20Sheet%28Passive%292.png" width="150"> |
+| <img src="screenshots/Camera%20Flow/9_Edit%20Screen%28Passive%292.png" width="150"> | <img src="screenshots/Camera%20Flow/10_Edit%20Screen%28Entering%292.png" width="150"> | <img src="screenshots/Camera%20Flow/11_Edit%20Screen%20%28Camera%29.png" width="150"> | <img src="screenshots/Camera%20Flow/12_Generation%20Alert%20Button%20Sheet%28Passive%292.png" width="150"> |
 
 | Step 13                                                                                     | Step 14                                                                     | Step 15                                                                 |
 | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| <img src="screenshots/camera_flow/13_Generation%20Alert%20Bottom%20Sheet2.png" width="150"> | <img src="screenshots/camera_flow/14_Generation%20Screen1.png" width="150"> | <img src="screenshots/camera_flow/15_Result%20Screen1.png" width="150"> |
+| <img src="screenshots/Camera%20Flow/13_Generation%20Alert%20Bottom%20Sheet2.png" width="150"> | <img src="screenshots/Camera%20Flow/14_Generation%20Screen1.png" width="150"> | <img src="screenshots/Camera%20Flow/15_Result%20Screen1.png" width="150"> |
 
 ---
 
@@ -51,15 +51,15 @@
 
 | Library 1                                                                      | Library 2                                                               | Library 3                                                                                     | Library 4                                                                         |
 | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| <img src="screenshots/library_flow/1_Remove%20Objects%20Card.png" width="150"> | <img src="screenshots/library_flow/2_Library%20Dialog.png" width="150"> | <img src="screenshots/library_flow/3_Libary%20Bottom%20Sheet%20Requirements.png" width="150"> | <img src="screenshots/library_flow/4_Local%20Library%20Choosing.png" width="150"> |
+| <img src="screenshots/Library%20Flow/1_Remove%20Objects%20Card.png" width="150"> | <img src="screenshots/Library%20Flow/2_Library%20Dialog.png" width="150"> | <img src="screenshots/Library%20Flow/3_Libary%20Bottom%20Sheet%20Requirements.png" width="150"> | <img src="screenshots/Library%20Flow/4_Local%20Library%20Choosing.png" width="150"> |
 
 | Library 5                                                                         | Library 6                                                                        | Library 7                                                                          | Library 8                                                                         |
 | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| <img src="screenshots/library_flow/5_Edit%20Screen%28Passive%29.png" width="150"> | <img src="screenshots/library_flow/6_Edit%20Screen%28Typing%29.png" width="150"> | <img src="screenshots/library_flow/7_Edit%20Screen%28Entering%29.png" width="150"> | <img src="screenshots/library_flow/8_Edit%20Screen%28Library%29.png" width="150"> |
+| <img src="screenshots/Library%20Flow/5_Edit%20Screen%28Passive%29.png" width="150"> | <img src="screenshots/Library%20Flow/6_Edit%20Screen%28Typing%29.png" width="150"> | <img src="screenshots/Library%20Flow/7_Edit%20Screen%28Entering%29.png" width="150"> | <img src="screenshots/Library%20Flow/8_Edit%20Screen%28Library%29.png" width="150"> |
 
 | Library 9                                                                                               | Library 10                                                                                  | Library 11                                                                   | Library 12                                                               |
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| <img src="screenshots/library_flow/9_Generation%20Alert%20Button%20Sheet%28Passive%29.png" width="150"> | <img src="screenshots/library_flow/10_Generation%20Alert%20Botton%20Sheet.png" width="150"> | <img src="screenshots/library_flow/11_Generation%20Screen2.png" width="150"> | <img src="screenshots/library_flow/12_Reulst%20Screen2.png" width="150"> |
+| <img src="screenshots/Library%20Flow/9_Generation%20Alert%20Button%20Sheet%28Passive%29.png" width="150"> | <img src="screenshots/Library%20Flow/10_Generation%20Alert%20Botton%20Sheet.png" width="150"> | <img src="screenshots/Library%20Flow/11_Generation%20Screen2.png" width="150"> | <img src="screenshots/Library%20Flow/12_Reulst%20Screen2.png" width="150"> |
 
 ---
 
@@ -95,7 +95,7 @@ docs/
            ├── 5_Settings Screen.png
            ├── 6_Token Screen(x).png
            ├── 6_Token Screen.png
-           ├── camera_flow/
+           ├── Camera Flow/
            │    ├── 1_Remove Objects Card2.png
            │    ├── 2_Remove Objects2.png
            │    ├── 3_Remove Objects.png
@@ -111,7 +111,7 @@ docs/
            │    ├── 13_Generation Alert Bottom Sheet2.png
            │    ├── 14_Generation Screen1.png
            │    └── 15_Result Screen1.png
-           └── library_flow/
+           └── Library Flow/
                 ├── 1_Remove Objects Card.png
                 ├── 2_Library Dialog.png
                 ├── 3_Libary Bottom Sheet Requirements.png
