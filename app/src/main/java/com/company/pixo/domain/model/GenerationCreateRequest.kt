@@ -1,5 +1,8 @@
 package com.company.pixo.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class GenerationCreateRequest(
     val toolType: ToolType,
     val backendType: ToolBackendType,

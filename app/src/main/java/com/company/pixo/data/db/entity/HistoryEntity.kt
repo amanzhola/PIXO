@@ -13,5 +13,6 @@ data class HistoryEntity(
     val status: String,
     val prompt: String?,
     val createdAt: Long,
-    val errorMessage: String?
+    val errorMessage: String?,
+    val requestJson: String? = null
 )

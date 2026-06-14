@@ -12,7 +12,9 @@ val databaseModule = module {
             context = androidContext(),
             klass = PixoDatabase::class.java,
             name = "pixo_database"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     single {

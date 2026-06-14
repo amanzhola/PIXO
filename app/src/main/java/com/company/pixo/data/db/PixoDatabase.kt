@@ -9,7 +9,7 @@ import com.company.pixo.data.db.entity.HistoryEntity
     entities = [
         HistoryEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class PixoDatabase : RoomDatabase() {

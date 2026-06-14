@@ -15,6 +15,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.company.pixo.R
+import com.company.pixo.domain.model.GenerationStatus
 import com.company.pixo.domain.model.ToolType
 import com.company.pixo.domain.repository.GenerationRepository
 import com.company.pixo.domain.repository.HistoryRepository
@@ -64,7 +65,6 @@ fun NavGraphBuilder.resultDestination(
     generationRepository: GenerationRepository,
     mediaRepository: MediaRepository,
     historyRepository: HistoryRepository,
-    actions: AppNavigationActions,
     useGenericTemplateTitleState: MutableState<Boolean>
 ) {
     composable(
@@ -195,10 +195,32 @@ fun NavGraphBuilder.resultDestination(
             },
             onRegenerateClick = {
                 scope.launch {
-                    val request = generationRepository.getRequest(taskId)
+                    val result = generationRepository.regenerate(taskId)
 
-                    if (request != null) {
-                        actions.createGenerationWithValidation(request)
+                    val targetToolType = toolType ?: ToolType.PROMPT
+
+                    when (result.status) {
+                        is GenerationStatus.Processing -> {
+                            navController.navigate(
+                                AppRoute.Generation.createRoute(result.taskId, targetToolType)
+                            )
+                        }
+
+                        is GenerationStatus.Success -> {
+                            navController.navigate(
+                                AppRoute.Result.createRoute(
+                                    generationId = result.taskId,
+                                    toolType = targetToolType,
+                                    templateId = templateId
+                                )
+                            )
+                        }
+
+                        is GenerationStatus.Error -> {
+                            resultImageUrl = null
+                        }
+
+                        else -> Unit
                     }
                 }
             },

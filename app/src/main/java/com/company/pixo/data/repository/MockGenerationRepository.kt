@@ -24,6 +24,12 @@ import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * Dev-only repository.
+ * Not used in production DI.
+ * Kept for UI tests and offline previews.
+ */
+
 class MockGenerationRepository(
     private val context: Context,
     private val historyDao: HistoryDao

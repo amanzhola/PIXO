@@ -1,5 +1,6 @@
 package com.company.pixo.feature.result
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,13 +27,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.company.pixo.R
@@ -46,6 +47,7 @@ import com.company.pixo.core.ui.PixoToast
 import com.company.pixo.core.ui.PixoTopBar
 import com.company.pixo.core.ui.PixoTopBarVariant
 import kotlinx.coroutines.launch
+
 
 private enum class ResultToastState {
     Saved,
@@ -203,17 +205,22 @@ private fun PixoPromptFlowResultImage(
     resultImageUrl: String?,
     modifier: Modifier = Modifier
 ) {
+    Log.d("RESULT_SCREEN", "resultImageUrl=$resultImageUrl")
+
+    val painter = rememberAsyncImagePainter(
+        model = resultImageUrl
+    )
+
+    val state = painter.state
+
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(dimensionResource(R.dimen._16)))
+            .background(BgSurface400),
+        contentAlignment = Alignment.Center
     ) {
-        val painter = rememberAsyncImagePainter(model = resultImageUrl)
-        val state = painter.state
-
-        if (resultImageUrl.isNullOrBlank() || state is AsyncImagePainter.State.Error) {
-            PixoResultPlaceholder(
-                url = resultImageUrl
-            )
+        if (resultImageUrl.isNullOrBlank()) {
+            PixoResultPlaceholder(url = resultImageUrl)
         } else {
             Image(
                 painter = painter,
@@ -221,20 +228,39 @@ private fun PixoPromptFlowResultImage(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-        }
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            0f to Color.Transparent,
-                            1f to BackgroundPrimary.copy(alpha = 0.616f)
-                        )
+            when (state) {
+                is AsyncImagePainter.State.Loading -> {
+                    Text(
+                        text = "Loading image...\n$resultImageUrl",
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(16.dp)
                     )
-                )
-        )
+                }
+
+                is AsyncImagePainter.State.Error -> {
+                    Text(
+                        text = "IMAGE LOAD ERROR:\n$resultImageUrl\n\n${state.result.throwable.message}",
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(16.dp)
+                    )
+
+                    Log.e(
+                        "COIL_RESULT",
+                        "error url=$resultImageUrl",
+                        state.result.throwable
+                    )
+                }
+
+                is AsyncImagePainter.State.Success -> {
+                    Log.d("COIL_RESULT", "success url=$resultImageUrl")
+                }
+
+                else -> Unit
+            }
+        }
     }
 }
 

@@ -46,6 +46,7 @@ import com.company.pixo.domain.model.PixoToolConfigs
 import com.company.pixo.domain.model.RemoteImageAsset
 
 data class PixoTemplateItem(
+    val templateId: String,
     @StringRes val titleRes: Int,
     val image: RemoteImageAsset
 )
@@ -53,6 +54,7 @@ data class PixoTemplateItem(
 val pixoTemplateItems: List<PixoTemplateItem> =
     PixoToolConfigs.templateTools.map { config ->
         PixoTemplateItem(
+            templateId = config.templateId.orEmpty(),
             titleRes = config.titleRes,
             image = config.previewBefore
         )

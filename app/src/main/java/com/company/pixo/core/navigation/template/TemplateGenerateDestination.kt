@@ -37,7 +37,7 @@ fun NavGraphBuilder.templateGenerateDestination(
         )
     ) { backStackEntry ->
 
-        val templateId = backStackEntry.arguments
+        val routeTemplateId = backStackEntry.arguments
             ?.getString("templateId")
             .orEmpty()
 
@@ -45,8 +45,21 @@ fun NavGraphBuilder.templateGenerateDestination(
             ?.getString("imageUri")
             .orEmpty()
 
-        val index = templateId.toIntOrNull() ?: 0
-        val template = pixoTemplateItems.getOrNull(index) ?: pixoTemplateItems.first()
+        val safeImageUri = imageUri
+            .takeIf { it.isNotBlank() && it != "null" }
+            .orEmpty()
+
+        val templateIndex = routeTemplateId.toIntOrNull()
+
+        val template = if (templateIndex != null) {
+            pixoTemplateItems.getOrNull(templateIndex)
+                ?: pixoTemplateItems.first()
+        } else {
+            pixoTemplateItems.firstOrNull { it.templateId == routeTemplateId }
+                ?: pixoTemplateItems.first()
+        }
+
+        val serverTemplateId = template.templateId
 
         val titleRes = if (useGenericTemplateTitleState.value) {
             R.string.template_title
@@ -57,7 +70,7 @@ fun NavGraphBuilder.templateGenerateDestination(
         PixoTemplateDetailsRoute(
             templateImage = template.image,
             templateTitleRes = titleRes,
-            capturedImageUri = imageUri,
+            capturedImageUri = safeImageUri,
             onTitleClick = {
                 println("TITLE CLICKED TemplateGenerate")
                 useGenericTemplateTitleState.value = !useGenericTemplateTitleState.value
@@ -66,37 +79,42 @@ fun NavGraphBuilder.templateGenerateDestination(
                 navController.popBackStack()
             },
             onCameraClick = {
-                openCameraFlow(templateId)
+                openCameraFlow(routeTemplateId)
             },
             onPhotoLibraryClick = {
                 openGalleryPicker(
-                    GalleryPickTarget.Template(templateId)
+                    GalleryPickTarget.Template(routeTemplateId)
                 )
             },
             onPictureRemoveClick = {
                 navController.popBackStack()
             },
             onGenerateClick = {
+                println("TEMPLATE_GENERATE routeTemplateId=$routeTemplateId")
+                println("TEMPLATE_GENERATE serverTemplateId=$serverTemplateId")
+                println("TEMPLATE_GENERATE imageUri=$imageUri")
+                println("TEMPLATE_GENERATE safeImageUri=$safeImageUri")
+
                 val request = GenerationCreateRequest(
                     toolType = ToolType.TEMPLATE,
                     backendType = ToolBackendType.TEMPLATE,
                     serverAction = "template",
                     sourceImageUrl = null,
-                    sourceImageUri = imageUri,
+                    sourceImageUri = safeImageUri,
                     prompt = null,
-                    templateId = templateId,
+                    templateId = serverTemplateId,
                     options = mapOf(
-                        "templateId" to templateId,
+                        "templateId" to serverTemplateId,
                         "templateTitleRes" to template.titleRes.toString()
                     ),
                     tokenCost = 2,
                     outputCount = 2,
-                    historyIdentity = "TEMPLATE_$templateId"
+                    historyIdentity = "TEMPLATE_$serverTemplateId"
                 )
 
                 actions.createGenerationWithValidation(
                     request = request,
-                    requiredFieldsValid = imageUri.isNotBlank()
+                    requiredFieldsValid = safeImageUri.isNotBlank()
                 )
             }
         )

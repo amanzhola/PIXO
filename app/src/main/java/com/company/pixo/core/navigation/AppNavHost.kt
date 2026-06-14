@@ -364,7 +364,6 @@ fun AppNavHost() {
             generationRepository = generationRepository,
             mediaRepository = mediaRepository,
             historyRepository = historyRepository,
-            actions = actions,
             useGenericTemplateTitleState = useGenericTemplateTitleState
         )
 
