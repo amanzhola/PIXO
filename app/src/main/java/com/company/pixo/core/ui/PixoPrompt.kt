@@ -44,6 +44,9 @@ import com.company.pixo.core.theme.LabelSecondary
 import com.company.pixo.core.theme.LabelTertiary
 import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.theme.TextIconWhite24
+import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.ToolOptionSample
+import com.company.pixo.domain.model.ToolType
 
 data class PixoTextFieldItem(
     val hint: String,
@@ -602,12 +605,13 @@ private fun PixoPromptTextFieldGhostFacePreview() {
 
 @Composable
 fun PixoAiEnhancerScreenContent(
-    selectedOption: PixoProcessingOption,
+    selectedOption: ToolOptionSample,
+    options: List<ToolOptionSample>,
     showPromptSwitch: Boolean,
     customPrompt: String,
     onPromptInfoClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onOptionClick: (PixoProcessingOption) -> Unit,
+    onOptionClick: (ToolOptionSample) -> Unit,
     onPromptCheckedChange: (Boolean) -> Unit,
     onGenerateClick: () -> Unit,
     promptSwitchChecked: Boolean,
@@ -624,6 +628,7 @@ fun PixoAiEnhancerScreenContent(
         ) {
             PixoProcessingOptionsSelector(
                 modifier = Modifier.fillMaxWidth(),
+                options = options,
                 selectedOption = selectedOption,
                 onOptionClick = onOptionClick
             )
@@ -639,8 +644,10 @@ fun PixoAiEnhancerScreenContent(
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen._16)))
             }
             PixoHdEnhancePromptInfo(
-                firstBulletRes = selectedOption.firstBulletRes(),
-                secondBulletRes = selectedOption.secondBulletRes(),
+                firstBulletRes = selectedOption.firstBulletRes
+                    ?: R.string.ai_enhancer_hd_quality,
+                secondBulletRes = selectedOption.secondBulletRes
+                    ?: R.string.ai_enhancer_hd_natural,
                 customPrompt = customPrompt,
                 onClick = onPromptInfoClick
             )
@@ -732,6 +739,13 @@ private fun PixoHdEnhanceBulletText(
 )
 @Composable
 private fun PixoAiEnhancerScreenContentCollapsedPreview() {
+
+    val options = PixoToolConfigs
+        .findByType(ToolType.AI_ENHANCER)
+        ?.optionConfig
+        ?.samples
+        .orEmpty()
+
     PixoTheme {
         Box(
             modifier = Modifier
@@ -741,7 +755,8 @@ private fun PixoAiEnhancerScreenContentCollapsedPreview() {
         ) {
             PixoAiEnhancerScreenContent(
                 modifier = Modifier.height(dimensionResource(R.dimen._280)),
-                selectedOption = PixoProcessingOption.HdEnhance,
+                selectedOption = options.first(),
+                options = options,
                 showPromptSwitch = false,
                 customPrompt = "",
                 onPromptInfoClick = {},
@@ -762,6 +777,13 @@ private fun PixoAiEnhancerScreenContentCollapsedPreview() {
 )
 @Composable
 private fun PixoAiEnhancerScreenContentExpandedPreview() {
+
+    val options = PixoToolConfigs
+        .findByType(ToolType.AI_ENHANCER)
+        ?.optionConfig
+        ?.samples
+        .orEmpty()
+
     PixoTheme {
         Box(
             modifier = Modifier
@@ -771,7 +793,8 @@ private fun PixoAiEnhancerScreenContentExpandedPreview() {
         ) {
             PixoAiEnhancerScreenContent(
                 modifier = Modifier.height(dimensionResource(R.dimen._280)),
-                selectedOption = PixoProcessingOption.HdEnhance,
+                selectedOption = options.first(),
+                options = options,
                 showPromptSwitch = true,
                 customPrompt = "",
                 onPromptInfoClick = {},

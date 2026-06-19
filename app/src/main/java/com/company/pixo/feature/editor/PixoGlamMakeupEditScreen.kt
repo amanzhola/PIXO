@@ -10,17 +10,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.company.pixo.R
 import com.company.pixo.core.theme.PixoTheme
 import com.company.pixo.core.ui.PixoGlamMakeupScreenContent
-import com.company.pixo.core.ui.PixoMakeupStyle
+import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.ToolOptionSample
+import com.company.pixo.domain.model.ToolType
 import com.company.pixo.feature.editor.component.PixoToolEditorShell
 
 @Composable
 fun PixoGlamMakeupEditScreen(
     imageUri: String,
-    selectedStyle: PixoMakeupStyle,
+    selectedStyle: ToolOptionSample,
+    styles: List<ToolOptionSample>,
     optionalDetails: String,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onStyleClick: (PixoMakeupStyle) -> Unit,
+    onStyleClick: (ToolOptionSample) -> Unit,
     onOptionalDetailsClick: () -> Unit,
     onGenerateClick: () -> Unit
 ) {
@@ -32,6 +35,7 @@ fun PixoGlamMakeupEditScreen(
     ) {
         PixoGlamMakeupScreenContent(
             selectedStyle = selectedStyle,
+            styles = styles,
             optionalDetails = optionalDetails,
             onStyleClick = onStyleClick,
             onOptionalDetailsClick = onOptionalDetailsClick,
@@ -63,9 +67,19 @@ private fun PixoGlamMakeupEditScreenEmptyPreview() {
 )
 @Composable
 private fun PixoGlamMakeupEditScreenFilledPreview() {
+    val styles = PixoToolConfigs
+        .findByType(ToolType.GLAM_MAKEUP)
+        ?.optionConfig
+        ?.samples
+        .orEmpty()
+
+    if (styles.isEmpty()) {
+        return
+    }
+
     PixoTheme {
         var selectedStyle by remember {
-            mutableStateOf(PixoMakeupStyle.NaturalGlow)
+            mutableStateOf(styles.first())
         }
 
         val optionalDetails = "Smooth skin, natural glow, soft lips"
@@ -73,6 +87,7 @@ private fun PixoGlamMakeupEditScreenFilledPreview() {
         PixoGlamMakeupEditScreen(
             imageUri = "content://pixo/preview_image.jpg",
             selectedStyle = selectedStyle,
+            styles = styles,
             optionalDetails = optionalDetails,
             onBackClick = {},
             onStyleClick = { style ->

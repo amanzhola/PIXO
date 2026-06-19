@@ -161,75 +161,16 @@ class AppNavigationActions(
         imageUri: String
     ) {
         when (toolType) {
-            ToolType.AI_ENHANCER -> {
-                navController.navigate(
-                    AppRoute.AiEnhancerEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.GLAM_MAKEUP -> {
-                navController.navigate(
-                    AppRoute.GlamMakeupEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.REMOVE_OBJECTS -> {
-                navController.navigate(
-                    AppRoute.RemoveObjectsEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.REMOVE_BACKGROUND -> {
-                navController.navigate(
-                    AppRoute.RemoveBackgroundEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.SKIN_IMPROVE -> {
-                navController.navigate(
-                    AppRoute.SkinImproveEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.UPSCALE_IMAGE -> {
-                navController.navigate(
-                    AppRoute.UpscaleImageEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.CHANGE_SCENE -> {
-                navController.navigate(
-                    AppRoute.ChangeSceneEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.HAIR_STUDIO -> {
-                navController.navigate(
-                    AppRoute.HairStyleEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.SMILE_EDIT -> {
-                navController.navigate(
-                    AppRoute.SmileEditEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.GHOSTFACE -> {
-                navController.navigate(
-                    AppRoute.GhostfaceEdit.createRoute(imageUri)
-                )
-            }
-
-            ToolType.GHIBLI -> {
-                navController.navigate(
-                    AppRoute.GhibliEdit.createRoute(imageUri)
-                )
-            }
-
             ToolType.PROMPT,
-            ToolType.TEMPLATE -> {
-                // handled separately
+            ToolType.TEMPLATE -> Unit
+
+            else -> {
+                navController.navigate(
+                    AppRoute.Editor.createRoute(
+                        toolType = toolType,
+                        imageUri = imageUri
+                    )
+                )
             }
         }
     }

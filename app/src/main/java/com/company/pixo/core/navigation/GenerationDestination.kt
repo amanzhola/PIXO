@@ -15,8 +15,7 @@ import com.company.pixo.domain.model.GenerationStatus
 import com.company.pixo.domain.repository.GenerationRepository
 import com.company.pixo.feature.generation.PixoGenerationScreen
 import com.company.pixo.feature.main.MainTab
-
-import android.util.Log
+import androidx.compose.runtime.mutableFloatStateOf
 
 fun NavGraphBuilder.generationDestination(
     navController: NavHostController,
@@ -53,17 +52,12 @@ fun NavGraphBuilder.generationDestination(
             ToolType.valueOf(toolTypeName)
         }.getOrNull()
 
-        Log.d(
-            "HistoryLoadingClick",
-            "GenerationDestination opened taskId=$taskId, toolType=$toolType"
-        )
-
         val templateId = backStackEntry.arguments
             ?.getString("templateId")
             .orEmpty()
 
         var progress by remember {
-            mutableStateOf(0f)
+            mutableFloatStateOf(0f)
         }
 
         var errorMessage by remember {
@@ -99,6 +93,7 @@ fun NavGraphBuilder.generationDestination(
                                     popUpTo(AppRoute.Generation.route) {
                                         inclusive = true
                                     }
+                                    launchSingleTop = true
                                 }
                             }
                         }

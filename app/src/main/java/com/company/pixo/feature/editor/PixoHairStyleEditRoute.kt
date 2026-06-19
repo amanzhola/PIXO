@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,12 +22,8 @@ import com.company.pixo.R
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.LabelPrimary
 import com.company.pixo.core.ui.PixoOptionalDetailsBottomSheetContent
-
-private enum class HairStyleField {
-    Hairstyle,
-    Length,
-    Color
-}
+import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.ToolType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,50 +37,50 @@ fun PixoHairStyleEditRoute(
         color: String
     ) -> Unit = { _, _, _ -> }
 ) {
-    var hairstyle by remember {
-        mutableStateOf("")
+    val config = remember {
+        PixoToolConfigs.findByType(ToolType.HAIR_STUDIO)
     }
 
-    var length by remember {
-        mutableStateOf("")
+    val samples = remember(config) {
+        config?.optionConfig?.samples.orEmpty()
     }
 
-    var color by remember {
-        mutableStateOf("")
-    }
+    val hairstyleId = samples.firstOrNull { it.id == "hairstyle" }?.id ?: "hairstyle"
+    val lengthId = samples.firstOrNull { it.id == "length" }?.id ?: "length"
+    val colorId = samples.firstOrNull { it.id == "color" }?.id ?: "color"
 
-    var activeField by remember {
-        mutableStateOf<HairStyleField?>(null)
-    }
+    var hairstyle by rememberSaveable { mutableStateOf("") }
+    var length by rememberSaveable { mutableStateOf("") }
+    var color by rememberSaveable { mutableStateOf("") }
 
-    var bottomSheetValue by remember {
-        mutableStateOf("")
-    }
-
-    val canGenerate =
-        hairstyle.isNotBlank() &&
-                length.isNotBlank() &&
-                color.isNotBlank()
+    var activeFieldId by rememberSaveable { mutableStateOf<String?>(null) }
+    var bottomSheetValue by rememberSaveable { mutableStateOf("") }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     PixoHairStyleEditScreen(
         imageUri = imageUri,
         hairstyle = hairstyle,
         length = length,
         color = color,
-        canGenerate = canGenerate,
+        canGenerate = hairstyle.isNotBlank() ||
+                length.isNotBlank() ||
+                color.isNotBlank(),
         modifier = modifier,
         onBackClick = onBackClick,
         onHairstyleClick = {
-            activeField = HairStyleField.Hairstyle
+            activeFieldId = hairstyleId
             bottomSheetValue = hairstyle
+            showBottomSheet = true
         },
         onLengthClick = {
-            activeField = HairStyleField.Length
+            activeFieldId = lengthId
             bottomSheetValue = length
+            showBottomSheet = true
         },
         onColorClick = {
-            activeField = HairStyleField.Color
+            activeFieldId = colorId
             bottomSheetValue = color
+            showBottomSheet = true
         },
         onGenerateClick = {
             onGenerateClick(
@@ -94,10 +91,10 @@ fun PixoHairStyleEditRoute(
         }
     )
 
-    if (activeField != null) {
+    if (showBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = {
-                activeField = null
+                showBottomSheet = false
             },
             containerColor = BackgroundPrimary,
             dragHandle = {
@@ -112,34 +109,54 @@ fun PixoHairStyleEditRoute(
             }
         ) {
             PixoOptionalDetailsBottomSheetContent(
-                title = when (activeField) {
-                    HairStyleField.Hairstyle -> stringResource(R.string.hair_style_details_hint_1)
-                    HairStyleField.Length -> stringResource(R.string.hair_style_details_hint_2)
-                    HairStyleField.Color -> stringResource(R.string.hair_style_details_hint_3)
-                    null -> ""
+                title = when (activeFieldId) {
+                    hairstyleId -> stringResource(R.string.hair_style_details_hint_1)
+                    lengthId -> stringResource(R.string.hair_style_details_hint_2)
+                    colorId -> stringResource(R.string.hair_style_details_hint_3)
+                    else -> stringResource(R.string.hair_style_details_title)
                 },
-                hint = when (activeField) {
-                    HairStyleField.Hairstyle -> stringResource(R.string.hair_style_hint)
-                    HairStyleField.Length -> stringResource(R.string.hair_style_details_hint_2)
-                    HairStyleField.Color -> stringResource(R.string.hair_style_details_hint_3)
-                    null -> ""
+                hint = when (activeFieldId) {
+                    hairstyleId -> samples
+                        .firstOrNull { it.id == hairstyleId }
+                        ?.example
+                        .orEmpty()
+                        .ifBlank {
+                            stringResource(R.string.hair_style_details_hint_1)
+                        }
+
+                    lengthId -> samples
+                        .firstOrNull { it.id == lengthId }
+                        ?.example
+                        .orEmpty()
+                        .ifBlank {
+                            stringResource(R.string.hair_style_details_hint_2)
+                        }
+
+                    colorId -> samples
+                        .firstOrNull { it.id == colorId }
+                        ?.example
+                        .orEmpty()
+                        .ifBlank {
+                            stringResource(R.string.hair_style_details_hint_3)
+                        }
+
+                    else -> ""
                 },
                 value = bottomSheetValue,
-                onValueChange = {
-                    bottomSheetValue = it
+                onValueChange = { value ->
+                    bottomSheetValue = value
                 },
                 onCloseClick = {
-                    activeField = null
+                    showBottomSheet = false
                 },
                 onConfirmClick = {
-                    when (activeField) {
-                        HairStyleField.Hairstyle -> hairstyle = bottomSheetValue
-                        HairStyleField.Length -> length = bottomSheetValue
-                        HairStyleField.Color -> color = bottomSheetValue
-                        null -> Unit
+                    when (activeFieldId) {
+                        hairstyleId -> hairstyle = bottomSheetValue
+                        lengthId -> length = bottomSheetValue
+                        colorId -> color = bottomSheetValue
                     }
 
-                    activeField = null
+                    showBottomSheet = false
                 }
             )
         }

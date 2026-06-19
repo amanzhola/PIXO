@@ -16,13 +16,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.company.pixo.R
 import com.company.pixo.domain.model.GenerationStatus
+import com.company.pixo.domain.model.PixoToolConfigs
 import com.company.pixo.domain.model.ToolType
 import com.company.pixo.domain.repository.GenerationRepository
 import com.company.pixo.domain.repository.HistoryRepository
 import com.company.pixo.domain.repository.MediaRepository
 import com.company.pixo.feature.main.MainTab
 import com.company.pixo.feature.result.PixoPromptFlowResultScreen
-import com.company.pixo.feature.templates.pixoTemplateItems
 import kotlinx.coroutines.launch
 
 private fun resultTitleRes(
@@ -35,10 +35,8 @@ private fun resultTitleRes(
             if (useGenericTemplateTitle) {
                 R.string.template_title
             } else {
-                val index = templateId.toIntOrNull() ?: 0
-
-                pixoTemplateItems
-                    .getOrNull(index)
+                PixoToolConfigs
+                    .findTemplateById(templateId)
                     ?.titleRes
                     ?: R.string.template_title
             }
@@ -98,21 +96,66 @@ fun NavGraphBuilder.resultDestination(
             ?.getString("templateId")
             .orEmpty()
 
-        BackHandler {
-            navController.navigate(
-                AppRoute.Main.createRoute(MainTab.Prompts)
-            ) {
-                popUpTo(AppRoute.Main.route) {
-                    inclusive = false
-                }
-                launchSingleTop = true
-            }
-        }
-
         val taskId = backStackEntry.arguments
             ?.getString("generationId")
             .orEmpty()
-        Log.d("HistoryDelete", "Result opened taskId=$taskId, toolType=$toolType")
+
+        fun navigateBackFromResult() {
+            when (toolType) {
+                ToolType.TEMPLATE -> {
+                    navController.navigate(
+                        AppRoute.Main.createRoute(MainTab.Templates)
+                    ) {
+                        popUpTo(AppRoute.Main.route) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
+                    }
+                }
+
+                ToolType.PROMPT -> {
+                    navController.navigate(
+                        AppRoute.Main.createRoute(MainTab.Prompts)
+                    ) {
+                        popUpTo(AppRoute.Main.route) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
+                    }
+                }
+
+                null -> {
+                    navController.navigate(
+                        AppRoute.Main.createRoute(MainTab.Tools)
+                    ) {
+                        popUpTo(AppRoute.Main.route) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
+                    }
+                }
+
+                else -> {
+                    navController.navigate(
+                        AppRoute.ToolMain.createRoute(toolType)
+                    ) {
+                        popUpTo(AppRoute.Main.route) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
+                    }
+                }
+            }
+        }
+
+        BackHandler {
+            navigateBackFromResult()
+        }
+
+        Log.d(
+            "HistoryDelete",
+            "Result opened taskId=$taskId, toolType=$toolType"
+        )
 
         var resultImageUrl by remember {
             mutableStateOf<String?>(null)
@@ -141,35 +184,7 @@ fun NavGraphBuilder.resultDestination(
                 }
             },
             onCloseClick = {
-                when (toolType) {
-                    ToolType.TEMPLATE -> {
-                        navController.navigate(AppRoute.Main.createRoute(MainTab.Templates)) {
-                            popUpTo(AppRoute.Main.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                    }
-
-                    ToolType.PROMPT -> {
-                        navController.navigate(AppRoute.Main.createRoute(MainTab.Prompts)) {
-                            popUpTo(AppRoute.Main.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                    }
-
-                    null -> {
-                        navController.navigate(AppRoute.Main.createRoute(MainTab.Tools)) {
-                            popUpTo(AppRoute.Main.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                    }
-
-                    else -> {
-                        navController.navigate(AppRoute.ToolMain.createRoute(toolType)) {
-                            popUpTo(AppRoute.Main.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                    }
-                }
+                navigateBackFromResult()
             },
             onSaveClick = {
                 val imageUrl = resultImageUrl
@@ -202,7 +217,11 @@ fun NavGraphBuilder.resultDestination(
                     when (result.status) {
                         is GenerationStatus.Processing -> {
                             navController.navigate(
-                                AppRoute.Generation.createRoute(result.taskId, targetToolType)
+                                AppRoute.Generation.createRoute(
+                                    taskId = result.taskId,
+                                    toolType = targetToolType,
+                                    templateId = templateId
+                                )
                             )
                         }
 
@@ -213,7 +232,9 @@ fun NavGraphBuilder.resultDestination(
                                     toolType = targetToolType,
                                     templateId = templateId
                                 )
-                            )
+                            ) {
+                                launchSingleTop = true
+                            }
                         }
 
                         is GenerationStatus.Error -> {

@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.dimensionResource
@@ -52,13 +55,16 @@ fun PixoToolEditorShell(
                     end = dimensionResource(R.dimen._16),
                     bottom = dimensionResource(R.dimen._16)
                 )
+                .clip(RoundedCornerShape(dimensionResource(R.dimen._20)))
+                .background(BgSurface400)
         ) {
             if (shouldShowImage) {
                 AsyncImage(
                     model = imageUri,
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center
                 )
             } else {
                 PixoImagePlaceholder()

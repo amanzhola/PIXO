@@ -32,8 +32,6 @@ fun NavGraphBuilder.mainDestination(
     actions: AppNavigationActions,
     hasActiveSubscription: Boolean,
     showTokenBalanceInMainTabs: Boolean,
-    repeatPaywallShown: Boolean,
-    onRepeatPaywallShownChange: (Boolean) -> Unit,
     openGalleryPicker: (GalleryPickTarget) -> Unit,
     promptViewModel: PromptViewModel,
     generationRepository: GenerationRepository,
@@ -169,10 +167,10 @@ fun NavGraphBuilder.mainDestination(
                 )
             },
 
-            onTemplateClick = { templateIndex ->
+            onTemplateClick = { templateId ->
                 navController.navigate(
                     AppRoute.TemplateDetails.createRoute(
-                        templateId = templateIndex.toString()
+                        templateId = templateId
                     )
                 )
             },

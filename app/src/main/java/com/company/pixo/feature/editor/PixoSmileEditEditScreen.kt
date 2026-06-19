@@ -15,11 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,18 +36,14 @@ import com.company.pixo.feature.editor.component.PixoImagePlaceholder
 @Composable
 fun PixoSmileEditEditScreen(
     imageUri: String,
+    smileLevel: Int,
+    showSmileSample: Boolean,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onGenerateClick: (Int) -> Unit
+    onSmileLevelChange: (Int) -> Unit,
+    onSmileSampleClick: () -> Unit,
+    onGenerateClick: () -> Unit
 ) {
-    var smileLevel by remember {
-        mutableIntStateOf(0)
-    }
-
-    var showSmileSample by remember {
-        mutableStateOf(false)
-    }
-
     val sampleImageRes = smilePreviewRes(smileLevel)
 
     Column(
@@ -85,9 +77,7 @@ fun PixoSmileEditEditScreen(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
-                        onClick = {
-                            showSmileSample = !showSmileSample
-                        }
+                        onClick = onSmileSampleClick
                     )
             ) {
                 if (showSmileSample) {
@@ -97,7 +87,6 @@ fun PixoSmileEditEditScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
-
                 } else {
                     if (imageUri.isNotBlank()) {
                         AsyncImage(
@@ -129,12 +118,12 @@ fun PixoSmileEditEditScreen(
                     dimensionResource(R.dimen._16)
                 )
             )
+
             PixoSmileIntensitySlider(
                 level = smileLevel,
-                onLevelChange = {
-                    smileLevel = it
-                }
+                onLevelChange = onSmileLevelChange
             )
+
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen._8)))
 
             PixoButton(
@@ -145,9 +134,7 @@ fun PixoSmileEditEditScreen(
                     .padding(bottom = dimensionResource(R.dimen._8)),
                 enabled = true,
                 trailingIconRes = R.drawable.ic_sparkle,
-                onClick = {
-                    onGenerateClick(smileLevel)
-                }
+                onClick = onGenerateClick
             )
         }
     }

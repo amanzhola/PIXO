@@ -1,6 +1,5 @@
 package com.company.pixo.feature.editor.component
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,14 +17,13 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import com.company.pixo.R
 import com.company.pixo.core.theme.BackgroundPrimary
@@ -48,16 +46,10 @@ fun PixoSinglePromptEditScreen(
     onValueChange: (String) -> Unit,
     onBackClick: () -> Unit,
     onGenerateClick: () -> Unit,
-    sheetTitle: String = fieldTitle,
 ) {
 
-    var showBottomSheet by remember {
-        mutableStateOf(false)
-    }
-
-    var pendingValue by remember {
-        mutableStateOf(value)
-    }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var pendingValue by rememberSaveable(value) { mutableStateOf(value) }
 
     Column(
         modifier = modifier

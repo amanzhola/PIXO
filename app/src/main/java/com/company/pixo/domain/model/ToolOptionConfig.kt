@@ -11,6 +11,8 @@ data class ToolOptionConfig(
 data class ToolOptionSample(
     val id: String,
     @StringRes val titleRes: Int? = null,
+    val firstBulletRes: Int? = null,
+    val secondBulletRes: Int? = null,
     val serverValue: String,
     val example: String? = null
 )

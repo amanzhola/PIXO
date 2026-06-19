@@ -43,7 +43,7 @@ fun MainScreen(
     onGhibliLookClick: (ToolPhotoSourceScreenVariant) -> Unit = { _ -> },
     onTemplatesLockedClick: () -> Unit = {},
     onPromptsLockedClick: () -> Unit = {},
-    onTemplateClick: (Int) -> Unit = {},
+    onTemplateClick: (String) -> Unit = {},
     onPromptPhotoClick: () -> Unit = {},
     promptViewModel: PromptViewModel? = null,
     onHistoryImageClick: (String, ToolType?) -> Unit = { _, _ -> },

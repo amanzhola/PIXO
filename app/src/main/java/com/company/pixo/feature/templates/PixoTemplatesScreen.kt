@@ -1,6 +1,5 @@
 package com.company.pixo.feature.templates
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -43,22 +42,6 @@ import androidx.compose.ui.draw.clip
 import com.company.pixo.core.theme.LabelPrimary
 import com.company.pixo.core.ui.PixoPhotoRequirementsBottomSheet
 import com.company.pixo.domain.model.PixoToolConfigs
-import com.company.pixo.domain.model.RemoteImageAsset
-
-data class PixoTemplateItem(
-    val templateId: String,
-    @StringRes val titleRes: Int,
-    val image: RemoteImageAsset
-)
-
-val pixoTemplateItems: List<PixoTemplateItem> =
-    PixoToolConfigs.templateTools.map { config ->
-        PixoTemplateItem(
-            templateId = config.templateId.orEmpty(),
-            titleRes = config.titleRes,
-            image = config.previewBefore
-        )
-    }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,11 +53,11 @@ fun PixoTemplatesScreen(
     onGetProClick: () -> Unit = {},
     onTokenBalanceClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
-    onTemplateClick: (Int) -> Unit,
+    onTemplateClick: (String) -> Unit,
     onTabClick: (MainTab) -> Unit,
 ) {
-    var selectedTemplateIndex by remember {
-        mutableStateOf<Int?>(null)
+    var selectedTemplateId by remember {
+        mutableStateOf<String?>(null)
     }
 
     var showRequirementsSheet by remember {
@@ -84,6 +67,8 @@ fun PixoTemplatesScreen(
     val requirementsSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
+
+    val templates = PixoToolConfigs.templateTools
 
     Column(
         modifier = modifier
@@ -123,12 +108,12 @@ fun PixoTemplatesScreen(
                 )
             }
 
-            itemsIndexed(pixoTemplateItems) { index, item ->
+            items(templates) { template ->
                 PixoTemplatePreviewCard(
-                    titleRes = item.titleRes,
-                    image = item.image,
+                    titleRes = template.titleRes,
+                    image = template.previewBefore,
                     onClick = {
-                        selectedTemplateIndex = index
+                        selectedTemplateId = template.templateId
                         showRequirementsSheet = true
                     }
                 )
@@ -165,8 +150,9 @@ fun PixoTemplatesScreen(
                 },
                 onContinueClick = {
                     showRequirementsSheet = false
-                    selectedTemplateIndex?.let { index ->
-                        onTemplateClick(index)
+
+                    selectedTemplateId?.let { templateId ->
+                        onTemplateClick(templateId)
                     }
                 }
             )

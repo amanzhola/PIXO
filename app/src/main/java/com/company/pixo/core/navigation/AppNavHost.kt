@@ -30,17 +30,6 @@ import com.company.pixo.core.navigation.settings.openTermsOfUse
 import com.company.pixo.core.navigation.settings.shareWithFriends
 import com.company.pixo.core.navigation.template.templateDetailsDestination
 import com.company.pixo.core.navigation.template.templateGenerateDestination
-import com.company.pixo.core.navigation.tools.aiEnhancerEditDestination
-import com.company.pixo.core.navigation.tools.changeSceneEditDestination
-import com.company.pixo.core.navigation.tools.ghibliEditDestination
-import com.company.pixo.core.navigation.tools.ghostfaceEditDestination
-import com.company.pixo.core.navigation.tools.glamMakeupEditDestination
-import com.company.pixo.core.navigation.tools.hairStyleEditDestination
-import com.company.pixo.core.navigation.tools.removeBackgroundEditDestination
-import com.company.pixo.core.navigation.tools.removeObjectsEditDestination
-import com.company.pixo.core.navigation.tools.skinImproveEditDestination
-import com.company.pixo.core.navigation.tools.smileEditEditDestination
-import com.company.pixo.core.navigation.tools.upscaleImageEditDestination
 import com.company.pixo.core.permissions.CameraImageUriFactory
 import com.company.pixo.core.ui.PixoAiProcessingBottomSheetHost
 import com.company.pixo.core.ui.permission.PixoCameraPermissionDeniedDialog
@@ -291,10 +280,6 @@ fun AppNavHost() {
                 actions = actions,
                 hasActiveSubscription = hasActiveSubscription,
                 showTokenBalanceInMainTabs = showTokenBalanceInMainTabs,
-                repeatPaywallShown = repeatPaywallShown,
-                onRepeatPaywallShownChange = {
-                    repeatPaywallShown = it
-                },
                 openGalleryPicker = { target: GalleryPickTarget ->
                     openGalleryPicker(target)
                 },
@@ -352,8 +337,10 @@ fun AppNavHost() {
         )
 
         editorDestination(
-            navController = navController
+            navController = navController,
+            actions = actions
         )
+
         generationDestination(
             navController = navController,
             generationRepository = generationRepository
@@ -367,61 +354,6 @@ fun AppNavHost() {
             useGenericTemplateTitleState = useGenericTemplateTitleState
         )
 
-        glamMakeupEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        removeObjectsEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        hairStyleEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        changeSceneEditDestination(
-            navController = navController,
-            generationRepository = generationRepository
-        )
-
-        aiEnhancerEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        skinImproveEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        upscaleImageEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        ghibliEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        ghostfaceEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        smileEditEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
-        removeBackgroundEditDestination(
-            navController = navController,
-            actions = actions
-        )
-
         templateDetailsDestination(
             navController = navController,
             useGenericTemplateTitleState = useGenericTemplateTitleState,
@@ -430,8 +362,7 @@ fun AppNavHost() {
             },
             openGalleryPicker = { target ->
                 openGalleryPicker(target)
-            },
-            actions = actions
+            }
         )
 
         templateGenerateDestination(

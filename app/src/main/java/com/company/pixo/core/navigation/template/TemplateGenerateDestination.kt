@@ -11,10 +11,8 @@ import com.company.pixo.core.navigation.AppNavigationActions
 import com.company.pixo.core.navigation.AppRoute
 import com.company.pixo.core.navigation.GalleryPickTarget
 import com.company.pixo.domain.model.GenerationCreateRequest
-import com.company.pixo.domain.model.ToolBackendType
-import com.company.pixo.domain.model.ToolType
+import com.company.pixo.domain.model.PixoToolConfigs
 import com.company.pixo.feature.templates.PixoTemplateDetailsRoute
-import com.company.pixo.feature.templates.pixoTemplateItems
 
 fun NavGraphBuilder.templateGenerateDestination(
     navController: NavHostController,
@@ -49,17 +47,11 @@ fun NavGraphBuilder.templateGenerateDestination(
             .takeIf { it.isNotBlank() && it != "null" }
             .orEmpty()
 
-        val templateIndex = routeTemplateId.toIntOrNull()
+        val template =
+            PixoToolConfigs.findTemplateById(routeTemplateId)
+                ?: return@composable
 
-        val template = if (templateIndex != null) {
-            pixoTemplateItems.getOrNull(templateIndex)
-                ?: pixoTemplateItems.first()
-        } else {
-            pixoTemplateItems.firstOrNull { it.templateId == routeTemplateId }
-                ?: pixoTemplateItems.first()
-        }
-
-        val serverTemplateId = template.templateId
+        val serverTemplateId = template.templateId ?: return@composable
 
         val titleRes = if (useGenericTemplateTitleState.value) {
             R.string.template_title
@@ -68,11 +60,10 @@ fun NavGraphBuilder.templateGenerateDestination(
         }
 
         PixoTemplateDetailsRoute(
-            templateImage = template.image,
+            templateImage = template.previewBefore,
             templateTitleRes = titleRes,
             capturedImageUri = safeImageUri,
             onTitleClick = {
-                println("TITLE CLICKED TemplateGenerate")
                 useGenericTemplateTitleState.value = !useGenericTemplateTitleState.value
             },
             onBackClick = {
@@ -90,26 +81,21 @@ fun NavGraphBuilder.templateGenerateDestination(
                 navController.popBackStack()
             },
             onGenerateClick = {
-                println("TEMPLATE_GENERATE routeTemplateId=$routeTemplateId")
-                println("TEMPLATE_GENERATE serverTemplateId=$serverTemplateId")
-                println("TEMPLATE_GENERATE imageUri=$imageUri")
-                println("TEMPLATE_GENERATE safeImageUri=$safeImageUri")
 
                 val request = GenerationCreateRequest(
-                    toolType = ToolType.TEMPLATE,
-                    backendType = ToolBackendType.TEMPLATE,
-                    serverAction = "template",
+                    toolType = template.type,
+                    backendType = template.backendType,
+                    serverAction = template.serverAction,
                     sourceImageUrl = null,
                     sourceImageUri = safeImageUri,
-                    prompt = null,
+                    prompt = template.defaultPrompt,
                     templateId = serverTemplateId,
                     options = mapOf(
-                        "templateId" to serverTemplateId,
-                        "templateTitleRes" to template.titleRes.toString()
+                        "templateId" to serverTemplateId
                     ),
-                    tokenCost = 2,
-                    outputCount = 2,
-                    historyIdentity = "TEMPLATE_$serverTemplateId"
+                    tokenCost = template.generation.tokenCost,
+                    outputCount = template.generation.defaultOutputCount,
+                    historyIdentity = template.historyIdentity
                 )
 
                 actions.createGenerationWithValidation(

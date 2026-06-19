@@ -31,6 +31,8 @@ import com.company.pixo.core.theme.BackgroundTertiary
 import com.company.pixo.core.theme.LabelQuintuple
 import com.company.pixo.core.theme.PixoShapes
 import com.company.pixo.core.theme.PixoTheme
+import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.ToolType
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -63,6 +65,7 @@ import com.company.pixo.core.theme.PhotoSourceIcon
 import com.company.pixo.core.theme.PhotoSourceText
 import com.company.pixo.core.theme.SeparatorSecondary
 import com.company.pixo.core.theme.SettingsChevron
+import com.company.pixo.domain.model.ToolOptionSample
 
 enum class PixoButtonSize {
     Main,
@@ -1143,135 +1146,73 @@ private fun PixoSelectorChip(
     }
 }
 
-enum class PixoMakeupStyle {
-    NaturalGlow,
-    GentleGlam,
-    RichGlam,
-    EveningLook
-}
-
-fun PixoMakeupStyle.toServerTitle(): String {
-    return when (this) {
-        PixoMakeupStyle.NaturalGlow -> "Natural Glow"
-        PixoMakeupStyle.GentleGlam -> "Gentle Glam"
-        PixoMakeupStyle.RichGlam -> "Rich Glam"
-        PixoMakeupStyle.EveningLook -> "Evening Look"
-    }
-}
-
 @Composable
 fun PixoMakeupStyleSelector(
-    selectedStyle: PixoMakeupStyle,
+    styles: List<ToolOptionSample>,
+    selectedStyle: ToolOptionSample,
     modifier: Modifier = Modifier,
-    onStyleClick: (PixoMakeupStyle) -> Unit
+    onStyleClick: (ToolOptionSample) -> Unit
 ) {
     PixoHorizontalChipSelector(
         modifier = modifier,
         titleRes = R.string.glam_makeup_style_title
     ) {
-        PixoSelectorChip(
-            textRes = R.string.glam_makeup_style_natural_glow,
-            selected = selectedStyle == PixoMakeupStyle.NaturalGlow,
-            onClick = { onStyleClick(PixoMakeupStyle.NaturalGlow) }
-        )
+        styles.forEach { style ->
+            val titleRes = style.titleRes ?: return@forEach
 
-        PixoSelectorChip(
-            textRes = R.string.glam_makeup_style_gentle_glam,
-            selected = selectedStyle == PixoMakeupStyle.GentleGlam,
-            onClick = { onStyleClick(PixoMakeupStyle.GentleGlam) }
-        )
-
-        PixoSelectorChip(
-            textRes = R.string.glam_makeup_style_rich_glam,
-            selected = selectedStyle == PixoMakeupStyle.RichGlam,
-            onClick = { onStyleClick(PixoMakeupStyle.RichGlam) }
-        )
-
-        PixoSelectorChip(
-            textRes = R.string.glam_makeup_style_evening_look,
-            selected = selectedStyle == PixoMakeupStyle.EveningLook,
-            onClick = { onStyleClick(PixoMakeupStyle.EveningLook) }
-        )
-    }
-}
-
-enum class PixoProcessingOption {
-    HdEnhance,
-    PortraitRetouch,
-    LightFix,
-    ColorBoost
-}
-
-fun PixoProcessingOption.toServerName(): String {
-    return when (this) {
-        PixoProcessingOption.HdEnhance -> "HD Enhance"
-        PixoProcessingOption.PortraitRetouch -> "Portrait Retouch"
-        PixoProcessingOption.LightFix -> "Light Fix"
-        PixoProcessingOption.ColorBoost -> "Color Boost"
-    }
-}
-
-fun PixoProcessingOption.firstBulletRes(): Int {
-    return when (this) {
-        PixoProcessingOption.HdEnhance -> R.string.ai_enhancer_hd_quality
-        PixoProcessingOption.PortraitRetouch -> R.string.ai_enhancer_portrait_quality
-        PixoProcessingOption.LightFix -> R.string.ai_enhancer_light_quality
-        PixoProcessingOption.ColorBoost -> R.string.ai_enhancer_color_quality
-    }
-}
-
-fun PixoProcessingOption.secondBulletRes(): Int {
-    return when (this) {
-        PixoProcessingOption.HdEnhance -> R.string.ai_enhancer_hd_natural
-        PixoProcessingOption.PortraitRetouch -> R.string.ai_enhancer_portrait_natural
-        PixoProcessingOption.LightFix -> R.string.ai_enhancer_light_natural
-        PixoProcessingOption.ColorBoost -> R.string.ai_enhancer_color_natural
+            PixoSelectorChip(
+                textRes = titleRes,
+                selected = selectedStyle.id == style.id,
+                onClick = {
+                    onStyleClick(style)
+                }
+            )
+        }
     }
 }
 
 @Composable
 fun PixoProcessingOptionsSelector(
-    selectedOption: PixoProcessingOption,
+    options: List<ToolOptionSample>,
+    selectedOption: ToolOptionSample,
     modifier: Modifier = Modifier,
-    onOptionClick: (PixoProcessingOption) -> Unit
+    onOptionClick: (ToolOptionSample) -> Unit
 ) {
     PixoHorizontalChipSelector(
         modifier = modifier,
         titleRes = R.string.ai_enhancer_processing_options_title
     ) {
-        PixoSelectorChip(
-            textRes = R.string.ai_enhancer_option_hd_enhance,
-            selected = selectedOption == PixoProcessingOption.HdEnhance,
-            onClick = { onOptionClick(PixoProcessingOption.HdEnhance) }
-        )
+        options.forEach { option ->
+            val titleRes = option.titleRes
 
-        PixoSelectorChip(
-            textRes = R.string.ai_enhancer_option_portrait_retouch,
-            selected = selectedOption == PixoProcessingOption.PortraitRetouch,
-            onClick = { onOptionClick(PixoProcessingOption.PortraitRetouch) }
-        )
-
-        PixoSelectorChip(
-            textRes = R.string.ai_enhancer_option_light_fix,
-            selected = selectedOption == PixoProcessingOption.LightFix,
-            onClick = { onOptionClick(PixoProcessingOption.LightFix) }
-        )
-
-        PixoSelectorChip(
-            textRes = R.string.ai_enhancer_option_color_boost,
-            selected = selectedOption == PixoProcessingOption.ColorBoost,
-            onClick = { onOptionClick(PixoProcessingOption.ColorBoost) }
-        )
+            if (titleRes != null) {
+                PixoSelectorChip(
+                    textRes = titleRes,
+                    selected = selectedOption.id == option.id,
+                    onClick = {
+                        onOptionClick(option)
+                    }
+                )
+            }
+        }
     }
 }
 
 @Preview(name = "PixoButton / Processing Options Selector", showBackground = true)
 @Composable
 private fun PixoProcessingOptionsSelectorPreview() {
+
+    val options = PixoToolConfigs
+        .findByType(ToolType.AI_ENHANCER)
+        ?.optionConfig
+        ?.samples
+        .orEmpty()
+    
     PixoButtonPreviewContainer {
         PixoProcessingOptionsSelector(
             modifier = Modifier.fillMaxWidth(),
-            selectedOption = PixoProcessingOption.HdEnhance,
+            options = options,
+            selectedOption = options.first(),
             onOptionClick = {}
         )
     }
@@ -1280,10 +1221,21 @@ private fun PixoProcessingOptionsSelectorPreview() {
 @Preview(name = "PixoButton / Makeup Style Selector", showBackground = true)
 @Composable
 private fun PixoMakeupStyleSelectorPreview() {
+    val styles = PixoToolConfigs
+        .findByType(ToolType.GLAM_MAKEUP)
+        ?.optionConfig
+        ?.samples
+        .orEmpty()
+
+    if (styles.isEmpty()) {
+        return
+    }
+
     PixoButtonPreviewContainer {
         PixoMakeupStyleSelector(
             modifier = Modifier.fillMaxWidth(),
-            selectedStyle = PixoMakeupStyle.NaturalGlow,
+            styles = styles,
+            selectedStyle = styles.first(),
             onStyleClick = {}
         )
     }

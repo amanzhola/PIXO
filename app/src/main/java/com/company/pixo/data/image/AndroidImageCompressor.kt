@@ -22,7 +22,8 @@ class AndroidImageCompressor(
                 BitmapFactory.decodeStream(input)
             } ?: error("Unable to decode image: $localImageUri")
 
-        val maxSide = 1280
+//        val maxSide = 1280
+        val maxSide = 640
 
         val width = originalBitmap.width
         val height = originalBitmap.height

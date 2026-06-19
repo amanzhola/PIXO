@@ -43,6 +43,9 @@ import com.company.pixo.core.theme.LabelPrimary
 import com.company.pixo.core.theme.LabelTertiary
 import com.company.pixo.core.theme.PhotoSourceButtonBackground
 import com.company.pixo.core.theme.PixoTheme
+import com.company.pixo.domain.model.ToolOptionSample
+import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.ToolType
 
 @Composable
 fun PixoOnbTextBlock(
@@ -313,10 +316,11 @@ private fun PixoProTemplatesBlockOnb17Preview() {
 
 @Composable
 fun PixoGlamMakeupScreenContent(
-    selectedStyle: PixoMakeupStyle,
+    selectedStyle: ToolOptionSample,
+    styles: List<ToolOptionSample>,
     optionalDetails: String,
     modifier: Modifier = Modifier,
-    onStyleClick: (PixoMakeupStyle) -> Unit,
+    onStyleClick: (ToolOptionSample) -> Unit,
     onGenerateClick: () -> Unit,
     onOptionalDetailsClick: () -> Unit,
 ) {
@@ -329,6 +333,7 @@ fun PixoGlamMakeupScreenContent(
     ) {
         PixoMakeupStyleSelector(
             modifier = Modifier.fillMaxWidth(),
+            styles = styles,
             selectedStyle = selectedStyle,
             onStyleClick = onStyleClick
         )
@@ -371,6 +376,16 @@ fun PixoGlamMakeupScreenContent(
 )
 @Composable
 private fun PixoGlamMakeupScreenContentInactivePreview() {
+    val styles = PixoToolConfigs
+        .findByType(ToolType.GLAM_MAKEUP)
+        ?.optionConfig
+        ?.samples
+        .orEmpty()
+
+    if (styles.isEmpty()) {
+        return
+    }
+
     PixoTheme {
         Box(
             modifier = Modifier
@@ -379,7 +394,8 @@ private fun PixoGlamMakeupScreenContentInactivePreview() {
             contentAlignment = Alignment.TopCenter
         ) {
             PixoGlamMakeupScreenContent(
-                selectedStyle = PixoMakeupStyle.NaturalGlow,
+                selectedStyle = styles.first(),
+                styles = styles,
                 optionalDetails = "",
                 onStyleClick = {},
                 onGenerateClick = {},
@@ -397,6 +413,16 @@ private fun PixoGlamMakeupScreenContentInactivePreview() {
 )
 @Composable
 private fun PixoGlamMakeupScreenContentActivePreview() {
+    val styles = PixoToolConfigs
+        .findByType(ToolType.GLAM_MAKEUP)
+        ?.optionConfig
+        ?.samples
+        .orEmpty()
+
+    if (styles.isEmpty()) {
+        return
+    }
+
     PixoTheme {
         Box(
             modifier = Modifier
@@ -405,7 +431,8 @@ private fun PixoGlamMakeupScreenContentActivePreview() {
             contentAlignment = Alignment.TopCenter
         ) {
             PixoGlamMakeupScreenContent(
-                selectedStyle = PixoMakeupStyle.NaturalGlow,
+                selectedStyle = styles.first(),
+                styles = styles,
                 optionalDetails = stringResource(R.string.glam_makeup_style_preview_text),
                 onStyleClick = {},
                 onGenerateClick = {},

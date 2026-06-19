@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,9 +22,9 @@ import com.company.pixo.R
 import com.company.pixo.core.theme.BackgroundPrimary
 import com.company.pixo.core.theme.LabelPrimary
 import com.company.pixo.core.ui.PixoOptionalDetailsBottomSheetContent
-import com.company.pixo.core.ui.PixoProcessingOption
-import com.company.pixo.core.ui.firstBulletRes
-import com.company.pixo.core.ui.toServerName
+import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.domain.model.ToolOptionSample
+import com.company.pixo.domain.model.ToolType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,44 +33,39 @@ fun PixoAiEnhancerEditRoute(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onGenerateClick: (
-        selectedOption: PixoProcessingOption,
+        selectedOption: ToolOptionSample,
         customPrompt: String
     ) -> Unit = { _, _ -> }
 ) {
-    var selectedOption by remember {
-        mutableStateOf(PixoProcessingOption.HdEnhance)
+    val config = remember { PixoToolConfigs.findByType(ToolType.AI_ENHANCER) }
+    val options = remember(config) { config?.optionConfig?.samples.orEmpty() }
+    if (options.isEmpty()) {
+        return
     }
+    var selectedOptionId by rememberSaveable {
+        mutableStateOf(options.first().id)
+    }
+    val selectedOption = options.firstOrNull { option ->
+        option.id == selectedOptionId
+    } ?: options.first()
 
-    var showPromptSwitch by remember {
-        mutableStateOf(false)
-    }
-
-    var customPrompt by remember {
-        mutableStateOf("")
-    }
-
-    var bottomSheetValue by remember {
-        mutableStateOf("")
-    }
-
-    var showBottomSheet by remember {
-        mutableStateOf(false)
-    }
-
-    var promptSwitchChecked by remember {
-        mutableStateOf(true)
-    }
+    var showPromptSwitch by rememberSaveable { mutableStateOf(false) }
+    var customPrompt by rememberSaveable { mutableStateOf("") }
+    var bottomSheetValue by rememberSaveable { mutableStateOf("") }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var promptSwitchChecked by rememberSaveable { mutableStateOf(true) }
 
     PixoAiEnhancerEditScreen(
         imageUri = imageUri,
         selectedOption = selectedOption,
+        options = options,
         showPromptSwitch = showPromptSwitch,
         promptSwitchChecked = promptSwitchChecked,
         customPrompt = customPrompt,
         modifier = modifier,
         onBackClick = onBackClick,
         onOptionClick = { option ->
-            selectedOption = option
+            selectedOptionId = option.id
         },
         onPromptInfoClick = {
             showPromptSwitch = true
@@ -108,8 +104,8 @@ fun PixoAiEnhancerEditRoute(
             }
         ) {
             PixoOptionalDetailsBottomSheetContent(
-                title = selectedOption.toServerName(),
-                hint = stringResource(selectedOption.firstBulletRes()),
+                title = stringResource(selectedOption.titleRes ?: R.string.tool_ai_enhancer),
+                hint = stringResource(selectedOption.firstBulletRes ?: R.string.ai_enhancer_hd_quality),
                 value = bottomSheetValue,
                 onValueChange = {
                     bottomSheetValue = it

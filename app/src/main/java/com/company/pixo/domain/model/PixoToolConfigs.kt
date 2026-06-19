@@ -10,7 +10,7 @@ object PixoToolConfigs {
             type = ToolType.AI_ENHANCER,
             backendType = ToolBackendType.AI_ENHANCER,
             flowType = ToolFlowType.TOOL_WITH_PHOTO_AND_OPTIONS,
-            optionsType = ToolOptionsType.NONE,
+            optionsType = ToolOptionsType.AI_ENHANCER_MODE,
             titleRes = R.string.tool_ai_enhancer,
             subtitleRes = R.string.onboarding_ai_photo_enhancer_subtitle,
             previewBefore = RemoteImageAsset.Remote(
@@ -22,6 +22,40 @@ object PixoToolConfigs {
             generation = ToolGenerationConfig(
                 tokenCost = 2,
                 defaultOutputCount = 1
+            ),
+            optionConfig = ToolOptionConfig(
+                type = ToolOptionsType.AI_ENHANCER_MODE,
+                titleRes = R.string.ai_enhancer_processing_options_title,
+                samples = listOf(
+                    ToolOptionSample(
+                        id = "hd_enhance",
+                        titleRes = R.string.ai_enhancer_option_hd_enhance,
+                        serverValue = "hd_enhance",
+                        firstBulletRes = R.string.ai_enhancer_hd_quality,
+                        secondBulletRes = R.string.ai_enhancer_hd_natural
+                    ),
+                    ToolOptionSample(
+                        id = "portrait_retouch",
+                        titleRes = R.string.ai_enhancer_option_portrait_retouch,
+                        serverValue = "portrait_retouch",
+                        firstBulletRes = R.string.ai_enhancer_portrait_quality,
+                        secondBulletRes = R.string.ai_enhancer_portrait_natural
+                    ),
+                    ToolOptionSample(
+                    id = "light_fix",
+                        titleRes = R.string.ai_enhancer_option_light_fix,
+                        serverValue = "light_fix",
+                        firstBulletRes = R.string.ai_enhancer_light_quality,
+                        secondBulletRes = R.string.ai_enhancer_light_natural
+                    ),
+                    ToolOptionSample(
+                    id = "color_boost",
+                        titleRes = R.string.ai_enhancer_option_color_boost,
+                        serverValue = "color_boost",
+                        firstBulletRes = R.string.ai_enhancer_color_quality,
+                        secondBulletRes = R.string.ai_enhancer_color_natural
+                    )
+                )
             ),
             requiresUserPhoto = true,
             requiresPrompt = false,

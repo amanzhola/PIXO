@@ -9,5 +9,6 @@ enum class ToolOptionsType {
     SMILE_INTENSITY,
     CHANGE_SCENE_TEXT,
     PROMPT_TEXT,
-    TEMPLATE_ID
+    TEMPLATE_ID,
+    AI_ENHANCER_MODE
 }

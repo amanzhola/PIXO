@@ -7,18 +7,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.company.pixo.R
-import com.company.pixo.core.navigation.AppNavigationActions
 import com.company.pixo.core.navigation.AppRoute
 import com.company.pixo.core.navigation.GalleryPickTarget
+import com.company.pixo.domain.model.PixoToolConfigs
 import com.company.pixo.feature.templates.PixoTemplateDetailsRoute
-import com.company.pixo.feature.templates.pixoTemplateItems
 
 fun NavGraphBuilder.templateDetailsDestination(
     navController: NavHostController,
     useGenericTemplateTitleState: MutableState<Boolean>,
     openCameraFlow: (String) -> Unit,
-    openGalleryPicker: (GalleryPickTarget.Template) -> Unit,
-    actions: AppNavigationActions
+    openGalleryPicker: (GalleryPickTarget.Template) -> Unit
 ) {
     composable(
         route = AppRoute.TemplateDetails.route,
@@ -33,8 +31,11 @@ fun NavGraphBuilder.templateDetailsDestination(
             ?.getString("templateId")
             .orEmpty()
 
-        val index = templateId.toIntOrNull() ?: 0
-        val template = pixoTemplateItems.getOrNull(index) ?: pixoTemplateItems.first()
+        val template =
+            PixoToolConfigs.findTemplateById(templateId)
+                ?: return@composable
+
+        val serverTemplateId = template.templateId ?: return@composable
 
         val titleRes = if (useGenericTemplateTitleState.value) {
             R.string.template_title
@@ -43,18 +44,18 @@ fun NavGraphBuilder.templateDetailsDestination(
         }
 
         PixoTemplateDetailsRoute(
-            templateImage = template.image,
+            templateImage = template.previewBefore,
             templateTitleRes = titleRes,
             capturedImageUri = null,
             onBackClick = {
                 navController.popBackStack()
             },
             onCameraClick = {
-                openCameraFlow(templateId)
+                openCameraFlow(serverTemplateId)
             },
             onPhotoLibraryClick = {
                 openGalleryPicker(
-                    GalleryPickTarget.Template(templateId)
+                    GalleryPickTarget.Template(serverTemplateId)
                 )
             },
             onPictureRemoveClick = {},
