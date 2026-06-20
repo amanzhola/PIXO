@@ -20,6 +20,7 @@ import com.company.pixo.feature.editor.PixoSkinImproveEditRoute
 import com.company.pixo.feature.editor.PixoSmileEditRoute
 import com.company.pixo.feature.editor.PixoUpscaleImageEditRoute
 import com.company.pixo.feature.editor.component.PixoSinglePromptEditRoute
+import com.company.pixo.feature.main.MainTab
 
 fun NavGraphBuilder.editorDestination(
     navController: NavHostController,
@@ -50,12 +51,23 @@ fun NavGraphBuilder.editorDestination(
             ?.getString("imageUri")
             .orEmpty()
 
+        fun navigateBackToTools() {
+            navController.navigate(
+                AppRoute.Main.createRoute(MainTab.Tools)
+            ) {
+                popUpTo(AppRoute.Main.route) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+            }
+        }
+
         when (toolType) {
             ToolType.AI_ENHANCER -> {
                 PixoAiEnhancerEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = { selectedOption, _ ->
                         val config = PixoToolConfigs.findByType(ToolType.AI_ENHANCER)
@@ -89,7 +101,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoGlamMakeupEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = { selectedStyle, optionalDetails ->
                         val config = PixoToolConfigs.findByType(ToolType.GLAM_MAKEUP)
@@ -127,7 +139,7 @@ fun NavGraphBuilder.editorDestination(
                     fieldTitle = stringResource(R.string.remove_objects_style_title),
                     fieldHint = stringResource(R.string.remove_objects_style_hint),
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = { value ->
                         val config = PixoToolConfigs.findByType(ToolType.REMOVE_OBJECTS)
@@ -159,7 +171,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoRemoveBackgroundEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = { backgroundType ->
                         val config = PixoToolConfigs.findByType(ToolType.REMOVE_BACKGROUND)
@@ -193,7 +205,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoSkinImproveEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = {
                         val config = PixoToolConfigs.findByType(ToolType.SKIN_IMPROVE)
@@ -225,7 +237,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoUpscaleImageEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = {
                         val config = PixoToolConfigs.findByType(ToolType.UPSCALE_IMAGE)
@@ -260,7 +272,7 @@ fun NavGraphBuilder.editorDestination(
                     fieldTitle = stringResource(R.string.change_scene_describe_title),
                     fieldHint = stringResource(R.string.change_scene_hint),
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = { value ->
                         val config = PixoToolConfigs.findByType(ToolType.CHANGE_SCENE)
@@ -292,7 +304,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoHairStyleEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = { hairstyle, length, color ->
                         val config = PixoToolConfigs.findByType(ToolType.HAIR_STUDIO)
@@ -341,7 +353,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoSmileEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = { smileLevel ->
                         val config = PixoToolConfigs.findByType(ToolType.SMILE_EDIT)
@@ -375,7 +387,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoGhostfaceEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = {
                         val config = PixoToolConfigs.findByType(ToolType.GHOSTFACE)
@@ -407,7 +419,7 @@ fun NavGraphBuilder.editorDestination(
                 PixoGhibliEditRoute(
                     imageUri = imageUri,
                     onBackClick = {
-                        navController.popBackStack()
+                        navigateBackToTools()
                     },
                     onGenerateClick = {
                         val config = PixoToolConfigs.findByType(ToolType.GHIBLI)

@@ -219,7 +219,7 @@ object PixoToolConfigs {
             titleRes = R.string.tool_upscale_image,
             subtitleRes = R.string.onboarding_upscale_image_subtitle,
             previewBefore = RemoteImageAsset.Remote(
-                url = "${PixoRemoteAssets.TOOLS}/tools_upscale_image1.jpg"
+                url = "${PixoRemoteAssets.TOOLS}/tools_upscale_image1.webp"
             ),
             previewAfter = RemoteImageAsset.Remote(
                 url = "${PixoRemoteAssets.TOOLS}/tools_upscale_image2.webp"
