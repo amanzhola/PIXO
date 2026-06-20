@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.company.pixo.R
@@ -51,7 +50,7 @@ fun MainScreen(
     onHistoryErrorRetryClick: (String, ToolType?) -> Unit = { _, _ -> },
     onHistoryErrorDeleteClick: (String) -> Unit = {},
 ) {
-    var selectedTab by remember(initialTab) {
+    var selectedTab by rememberSaveable {
         mutableStateOf(initialTab)
     }
 
