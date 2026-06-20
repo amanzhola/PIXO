@@ -10,6 +10,7 @@ import com.company.pixo.R
 import com.company.pixo.core.navigation.AppRoute
 import com.company.pixo.core.navigation.GalleryPickTarget
 import com.company.pixo.domain.model.PixoToolConfigs
+import com.company.pixo.feature.main.MainTab
 import com.company.pixo.feature.templates.PixoTemplateDetailsRoute
 
 fun NavGraphBuilder.templateDetailsDestination(
@@ -43,12 +44,23 @@ fun NavGraphBuilder.templateDetailsDestination(
             template.titleRes
         }
 
+        fun navigateBackToTemplates() {
+            navController.navigate(
+                AppRoute.Main.createRoute(MainTab.Templates)
+            ) {
+                popUpTo(AppRoute.Main.route) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+            }
+        }
+
         PixoTemplateDetailsRoute(
             templateImage = template.previewBefore,
             templateTitleRes = titleRes,
             capturedImageUri = null,
             onBackClick = {
-                navController.popBackStack()
+                navigateBackToTemplates()
             },
             onCameraClick = {
                 openCameraFlow(serverTemplateId)

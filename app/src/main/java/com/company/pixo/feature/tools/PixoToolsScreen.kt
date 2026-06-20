@@ -87,7 +87,6 @@ fun PixoToolsScreen(
             val titleTextStyle = MaterialTheme.typography.titleSmall
             val density = LocalDensity.current
             val horizontalSpacing = dimensionResource(id = R.dimen._8)
-            val screenHorizontalPadding = dimensionResource(id = R.dimen._16)
 
             LazyColumn(
                 modifier = Modifier
@@ -259,7 +258,7 @@ private fun rememberPixoToolItems(): List<PixoToolItem> {
             PixoToolItem(
                 R.string.tool_upscale_image,
                 listOf(
-                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_upscale_image1.jpg"),
+                    RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_upscale_image1.webp"),
                     RemoteImageAsset.Remote("${PixoRemoteAssets.TOOLS}/tools_upscale_image2.webp")
                 )
             ),
