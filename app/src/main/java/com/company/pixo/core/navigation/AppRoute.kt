@@ -95,4 +95,15 @@ sealed class AppRoute(
             return "template_generate/${Uri.encode(templateId)}?imageUri=${Uri.encode(imageUri)}"
         }
     }
+
+    data object RemoveObjectsRefine : AppRoute(
+        route = "remove_objects_refine/{taskId}/{imageUrl}"
+    ) {
+        fun createRoute(
+            taskId: String,
+            imageUrl: String
+        ): String {
+            return "remove_objects_refine/$taskId/${Uri.encode(imageUrl)}"
+        }
+    }
 }

@@ -30,6 +30,7 @@ import com.company.pixo.core.navigation.settings.openTermsOfUse
 import com.company.pixo.core.navigation.settings.shareWithFriends
 import com.company.pixo.core.navigation.template.templateDetailsDestination
 import com.company.pixo.core.navigation.template.templateGenerateDestination
+import com.company.pixo.core.navigation.tools.removeObjectsRefineDestination
 import com.company.pixo.core.permissions.CameraImageUriFactory
 import com.company.pixo.core.ui.PixoAiProcessingBottomSheetHost
 import com.company.pixo.core.ui.permission.PixoCameraPermissionDeniedDialog
@@ -74,10 +75,6 @@ fun AppNavHost() {
 
     var pendingCameraImageUri by remember {
         mutableStateOf<Uri?>(null)
-    }
-
-    var repeatPaywallShown by rememberSaveable {
-        mutableStateOf(false)
     }
 
     val tokenBalance by tokenRepository
@@ -271,37 +268,33 @@ fun AppNavHost() {
             preferences = preferences,
             coroutineScope = coroutineScope
         )
-        tokenBalance.let {
-            mainDestination(
-                navController = navController,
-                preferences = preferences,
-                tokenRepository = tokenRepository,
-                coroutineScope = coroutineScope,
-                actions = actions,
-                hasActiveSubscription = hasActiveSubscription,
-                showTokenBalanceInMainTabs = showTokenBalanceInMainTabs,
-                openGalleryPicker = { target: GalleryPickTarget ->
-                    openGalleryPicker(target)
-                },
-                promptViewModel = promptViewModel,
-                generationRepository = generationRepository,
-                historyRepository = historyRepository,
-            )
-        }
+        mainDestination(
+            navController = navController,
+            preferences = preferences,
+            tokenRepository = tokenRepository,
+            coroutineScope = coroutineScope,
+            actions = actions,
+            hasActiveSubscription = hasActiveSubscription,
+            showTokenBalanceInMainTabs = showTokenBalanceInMainTabs,
+            openGalleryPicker = { target: GalleryPickTarget ->
+                openGalleryPicker(target)
+            },
+            promptViewModel = promptViewModel,
+            generationRepository = generationRepository,
+            historyRepository = historyRepository,
+        )
 
-        tokenBalance.let {
-            settingsDestination(
-                navController = navController,
-                actions = actions,
-                hasActiveSubscription = hasActiveSubscription,
-                showTokenBalanceInSettings = showTokenBalanceInSettings,
-                tokenRepository = tokenRepository,
-                onContactUsClick = { activity.openContactEmail() },
-                onShareWithFriendsClick = { activity.shareWithFriends() },
-                onPrivacyPolicyClick = { activity.openPrivacyPolicy() },
-                onTermsOfUseClick = { activity.openTermsOfUse() }
-            )
-        }
+        settingsDestination(
+            navController = navController,
+            actions = actions,
+            hasActiveSubscription = hasActiveSubscription,
+            showTokenBalanceInSettings = showTokenBalanceInSettings,
+            tokenRepository = tokenRepository,
+            onContactUsClick = { activity.openContactEmail() },
+            onShareWithFriendsClick = { activity.shareWithFriends() },
+            onPrivacyPolicyClick = { activity.openPrivacyPolicy() },
+            onTermsOfUseClick = { activity.openTermsOfUse() }
+        )
 
         paywallDestination(
             navController = navController
@@ -375,6 +368,12 @@ fun AppNavHost() {
                 openGalleryPicker(target)
             },
             actions = actions
+        )
+
+        removeObjectsRefineDestination(
+            navController = navController,
+            actions = actions,
+            generationRepository = generationRepository
         )
     }
 

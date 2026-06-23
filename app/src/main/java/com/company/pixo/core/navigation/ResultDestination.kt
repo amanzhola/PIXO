@@ -209,6 +209,17 @@ fun NavGraphBuilder.resultDestination(
                 }
             },
             onRegenerateClick = {
+
+                if (toolType == ToolType.REMOVE_OBJECTS && !resultImageUrl.isNullOrBlank()) {
+                    navController.navigate(
+                        AppRoute.RemoveObjectsRefine.createRoute(
+                            taskId = taskId,
+                            imageUrl = resultImageUrl.orEmpty()
+                        )
+                    )
+                    return@PixoPromptFlowResultScreen
+                }
+
                 scope.launch {
                     val result = generationRepository.regenerate(taskId)
 
